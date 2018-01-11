@@ -1,0 +1,8 @@
+{
+  "name": "rusia_admon",
+  "app_id": "",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
+}
