@@ -12,7 +12,9 @@ import {NomPage} from '../pages/nom/nom';
 import {PagoPage} from '../pages/pago/pago';
 import {SalarioPage} from '../pages/salario/salario';
 import {SolPage} from '../pages/sol/sol';
+import {SincPage} from '../pages/sinc/sinc';
 
+import {IonicStorageModule} from '@ionic/storage';
 
 import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
@@ -28,11 +30,13 @@ import {SplashScreen} from '@ionic-native/splash-screen';
         NomPage,
         PagoPage,
         SalarioPage,
-        SolPage
+        SolPage,
+        SincPage
     ],
     imports: [
         BrowserModule,
         IonicModule.forRoot(MyApp),
+        IonicStorageModule.forRoot()
     ],
     bootstrap: [IonicApp],
     entryComponents: [
@@ -45,7 +49,8 @@ import {SplashScreen} from '@ionic-native/splash-screen';
         NomPage,
         PagoPage,
         SalarioPage,
-        SolPage
+        SolPage,
+        SincPage
     ],
     providers: [
         StatusBar,
