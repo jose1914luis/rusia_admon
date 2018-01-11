@@ -6,13 +6,264 @@
 -->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>tourDetail</ion-title>
-  </ion-navbar>
+    <ion-navbar>
+        <ion-title>Detalles del Tour</ion-title>
+    </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+
+    <ion-grid>                 
+        <ion-row>  
+            <ion-col col-3>
+                <b>Código:</b>
+            </ion-col>
+            <ion-col col-8>
+                {{item.codigo}}
+            </ion-col>       
+        </ion-row>
+        <ion-row>  
+            <ion-col col-3>
+                <b>Nombre:</b>
+            </ion-col>
+            <ion-col col-8>
+                {{item.name}}
+            </ion-col>       
+        </ion-row>
+        <ion-row>  
+            <ion-col col-3>
+                <b>Ciudad:</b>
+            </ion-col>
+            <ion-col col-8>
+                {{item.company_id[1]}}
+            </ion-col>       
+        </ion-row>
+        <ion-row>  
+            <ion-col col-3>
+                <b>Fecha Inicio</b>
+            </ion-col>
+            <ion-col col-3>
+                {{item.date_begin}}
+            </ion-col>       
+            <ion-col col-2>
+                <b>Fecha Fin</b>
+            </ion-col>
+            <ion-col col-3>
+                {{item.date_end}}
+            </ion-col> 
+        </ion-row>
+        <ion-row>  
+            <ion-col col-2>
+                <b>Es Extra</b>
+            </ion-col>
+            <ion-col col-2>
+                {{item.is_extra}}
+            </ion-col>       
+            <ion-col col-2>
+                <b>Es Gratis</b>
+            </ion-col>
+            <ion-col col-2>
+                {{item.is_free}}
+            </ion-col>    
+            <ion-col col-2>
+                <b>Es Privada</b>
+            </ion-col>
+            <ion-col col-2>
+                {{item.is_private}}
+            </ion-col>    
+        </ion-row>
+        <ion-row>  
+            <ion-col col-3>
+                <b>Salario Min</b>
+            </ion-col>      
+            <ion-col col-3>
+                <b>Salario Max</b>
+            </ion-col>
+            <ion-col col-3>
+                <b>Salario Extra</b>
+            </ion-col>   
+        </ion-row>
+        <ion-row>  
+            <ion-col col-3>
+                {{item.salario_maximo}}
+            </ion-col>      
+            <ion-col col-3>
+                {{item.salario_maximo}}
+            </ion-col>
+            <ion-col col-3>
+                {{item.salario_maximo}}
+            </ion-col>   
+        </ion-row>
+        <ion-row>  
+            <ion-col col-2>
+                <b>1 PAX</b>
+            </ion-col>             
+            <ion-col col-2>
+                <b>2 PAX</b>
+            </ion-col>   
+            <ion-col col-2>
+                <b>3 PAX</b>
+            </ion-col>   
+            <ion-col col-2>
+                <b>4 PAX</b>
+            </ion-col>   
+            <ion-col col-2>
+                <b>5 PAX</b>
+            </ion-col>   
+            <ion-col col-2>
+                <b>6 PAX</b>
+            </ion-col>   
+        </ion-row>
+        <ion-row>  
+            <ion-col col-2>
+                {{item.cost_one}}
+            </ion-col>             
+            <ion-col col-2>
+                {{item.cost_two}}
+            </ion-col>   
+            <ion-col col-2>
+                {{item.cost_three}}
+            </ion-col>   
+            <ion-col col-2>
+                {{item.cost_four}}
+            </ion-col>   
+            <ion-col col-2>
+                {{item.cost_five}}
+            </ion-col>   
+            <ion-col col-2>
+                {{item.cost_six}}
+            </ion-col>   
+        </ion-row>
+        
+        <ion-row>  
+            <ion-col col-2>
+                <b>7 PAX</b>
+            </ion-col>             
+            <ion-col col-2>
+                <b>8 PAX</b>
+            </ion-col>   
+            <ion-col col-2>
+                <b>9 PAX</b>
+            </ion-col>   
+            <ion-col col-2>
+                <b>10 PAX</b>
+            </ion-col>   
+            <ion-col col-4>
+                <b>Mas de 10 PAX</b>
+            </ion-col>   
+        </ion-row>
+        
+        <ion-row>  
+            <ion-col col-2>
+                {{item.cost_seven}}
+            </ion-col>             
+            <ion-col col-2>
+                {{item.cost_eigh}}
+            </ion-col>   
+            <ion-col col-2>
+                {{item.cost_nine}}
+            </ion-col>   
+            <ion-col col-2>
+                {{item.cost_ten}}
+            </ion-col>   
+            <ion-col col-4>
+                {{item.cost_more_ten}}
+            </ion-col>     
+        </ion-row>
+        
+        <ion-row>  
+            <ion-col col-4>
+                <b>Precio por PAX</b>
+            </ion-col>             
+        </ion-row>
+       <ion-row>  
+            <ion-col col-2>
+                <b>1 PAX</b>
+            </ion-col>             
+            <ion-col col-2>
+                <b>2 PAX</b>
+            </ion-col>   
+            <ion-col col-2>
+                <b>3 PAX</b>
+            </ion-col>   
+            <ion-col col-2>
+                <b>4 PAX</b>
+            </ion-col>   
+            <ion-col col-2>
+                <b>5 PAX</b>
+            </ion-col>   
+            <ion-col col-2>
+                <b>6 PAX</b>
+            </ion-col>   
+        </ion-row>
+        
+        <ion-row>  
+            <ion-col col-2>
+                {{item.gasto_one}}
+            </ion-col>             
+            <ion-col col-2>
+                {{item.gasto_two}}
+            </ion-col>   
+            <ion-col col-2>
+                {{item.gasto_three}}
+            </ion-col>   
+            <ion-col col-2>
+                {{item.gasto_four}}
+            </ion-col>   
+            <ion-col col-2>
+                {{item.gasto_five}}
+            </ion-col>   
+            <ion-col col-2>
+                {{item.gasto_six}}
+            </ion-col>   
+        </ion-row>
+        <ion-row>  
+            <ion-col col-2>
+                <b>7 PAX</b>
+            </ion-col>             
+            <ion-col col-2>
+                <b>8 PAX</b>
+            </ion-col>   
+            <ion-col col-2>
+                <b>9 PAX</b>
+            </ion-col>   
+            <ion-col col-2>
+                <b>10 PAX</b>
+            </ion-col>   
+            <ion-col col-4>
+                <b>Mas de 10 PAX</b>
+            </ion-col>   
+        </ion-row>
+        
+        <ion-row>  
+            <ion-col col-2>
+                {{item.gasto_seven}}
+            </ion-col>             
+            <ion-col col-2>
+                {{item.gasto_eigh}}
+            </ion-col>   
+            <ion-col col-2>
+                {{item.gasto_nine}}
+            </ion-col>   
+            <ion-col col-2>
+                {{item.gasto_ten}}
+            </ion-col>   
+            <ion-col col-4>
+                {{item.gasto_more_ten}}
+            </ion-col>     
+        </ion-row>
+        <ion-row>  
+            <ion-col col-4>
+                <b>Descripción</b>
+            </ion-col>             
+        </ion-row>
+         <ion-row>  
+            <ion-col col-auto>
+                {{item.description}}
+            </ion-col>             
+        </ion-row>
+    </ion-grid>
 
 </ion-content>

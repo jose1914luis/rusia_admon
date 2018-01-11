@@ -17,7 +17,7 @@
 
     <ion-grid *ngFor="let item of tours; let i = index" (click)="ejecute(item)">      
 
-        <ion-row>  
+        <ion-row align-items-start>  
             <ion-col col-3>
                 <b>Código:</b>
             </ion-col>
@@ -25,7 +25,7 @@
                 {{item.codigo}}
             </ion-col>       
         </ion-row>
-        <ion-row>  
+        <ion-row align-items-start>  
             <ion-col col-3>
                 <b>Nombre:</b>
             </ion-col>
@@ -33,7 +33,7 @@
                 {{item.name}}
             </ion-col>       
         </ion-row>
-        <ion-row>  
+        <ion-row align-items-start>  
             <ion-col col-3>
                 <b>Ciudad:</b>
             </ion-col>
@@ -41,7 +41,7 @@
                 {{item.company_id[1]}}
             </ion-col>       
         </ion-row>
-        <ion-row>  
+        <ion-row align-items-start>  
             <ion-col col-3>
                 <b>Fecha Inicio</b>
             </ion-col>
@@ -55,7 +55,7 @@
                 {{item.date_end}}
             </ion-col> 
         </ion-row>
-         <ion-row>  
+         <ion-row align-items-start class="borde">  
             <ion-col col-2>
                 <b>Es Extra</b>
             </ion-col>
