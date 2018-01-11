@@ -14,8 +14,11 @@ import {SalarioPage} from '../pages/salario/salario';
 import {SolPage} from '../pages/sol/sol';
 import {SincPage} from '../pages/sinc/sinc';
 
-import {IonicStorageModule} from '@ionic/storage';
+import {CityDetailPage} from '../pages/city-detail/city-detail';
+import {TourDetailPage} from '../pages/tour-detail/tour-detail';
 
+import {IonicStorageModule} from '@ionic/storage';
+import {Network} from '@ionic-native/network';
 import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
 
@@ -31,7 +34,9 @@ import {SplashScreen} from '@ionic-native/splash-screen';
         PagoPage,
         SalarioPage,
         SolPage,
-        SincPage
+        SincPage,
+        CityDetailPage,
+        TourDetailPage
     ],
     imports: [
         BrowserModule,
@@ -50,9 +55,12 @@ import {SplashScreen} from '@ionic-native/splash-screen';
         PagoPage,
         SalarioPage,
         SolPage,
-        SincPage
+        SincPage,
+        CityDetailPage,
+        TourDetailPage
     ],
     providers: [
+        Network,
         StatusBar,
         SplashScreen,
         {provide: ErrorHandler, useClass: IonicErrorHandler}

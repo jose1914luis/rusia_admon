@@ -10,12 +10,12 @@
         <ion-list *ngIf="!cargar">
             <ion-item>
                 <ion-label color="primary" stacked>Usuario</ion-label>
-                <ion-input type="email"  [(ngModel)]="CONEXION.username" required name='username' placeholder="Ingresa Usuario"></ion-input>
+                <ion-input type="email"  [(ngModel)]="conexion.username" required name='username' placeholder="Ingresa Usuario"></ion-input>
             </ion-item>
 
             <ion-item>
                 <ion-label color="primary" stacked>Contraseña</ion-label>
-                <ion-input type="password" [(ngModel)]="CONEXION.password" required name='password'  placeholder="Ingresa Contraseña"></ion-input>
+                <ion-input type="password" [(ngModel)]="conexion.password" required name='password'  placeholder="Ingresa Contraseña"></ion-input>
             </ion-item>
             <ion-item>
                 <button ion-button block type="submit">Login</button>
