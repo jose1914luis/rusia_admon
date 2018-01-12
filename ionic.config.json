@@ -1,8 +1,14 @@
 {
-  "name": "rusia_admon",
-  "app_id": "",
-  "type": "ionic-angular",
-  "integrations": {
-    "cordova": {}
-  }
+    "name": "rusia_admon",
+    "app_id": "",
+    "type": "ionic-angular",
+    "integrations": {
+        "cordova": {}
+    },
+    "proxies": [
+        {
+            "path": "/api",
+            "proxyUrl": "http://moscutourgratis.com:8069"
+        }
+    ]
 }
