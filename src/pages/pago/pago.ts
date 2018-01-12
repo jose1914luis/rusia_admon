@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {NavController, NavParams, AlertController} from 'ionic-angular';
 import {global} from '../../components/credenciales/credenciales';
-import {CityDetailPage} from '../../pages/city-detail/city-detail';
+import {PagoDetailPage} from '../../pages/pago-detail/pago-detail';
 
 declare var OdooApi: any;
 
@@ -63,7 +63,7 @@ export class PagoPage {
 
     ejecute(item) {
 
-        this.navCtrl.push(CityDetailPage, {item: item});
+        this.navCtrl.push(PagoDetailPage, {item: item});
     }
 }
 

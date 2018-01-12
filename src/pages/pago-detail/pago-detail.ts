@@ -1,24 +1,30 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
-/**
- * Generated class for the PagoDetailPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
 @Component({
   selector: 'page-pago-detail',
   templateUrl: 'pago-detail.html',
 })
 export class PagoDetailPage {
 
+  item;
+  editable = false;
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+      this.item = this.navParams.get('item');
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad PagoDetailPage');
   }
+  
+   editar() {
+
+        if (!this.editable) {
+            this.editable = true;
+        } else {
+            this.editable = false;
+        }
+    }
+
 
 }
