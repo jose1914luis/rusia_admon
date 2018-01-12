@@ -16,6 +16,7 @@ import {SincPage} from '../pages/sinc/sinc';
 
 import {CityDetailPage} from '../pages/city-detail/city-detail';
 import {TourDetailPage} from '../pages/tour-detail/tour-detail';
+import {SalarioDetailPage} from '../pages/salario-detail/salario-detail';
 
 import {IonicStorageModule} from '@ionic/storage';
 import {Network} from '@ionic-native/network';
@@ -37,7 +38,8 @@ import {SplashScreen} from '@ionic-native/splash-screen';
         SolPage,
         SincPage,
         CityDetailPage,
-        TourDetailPage
+        TourDetailPage,
+        SalarioDetailPage
     ],
     imports: [
         BrowserModule,
@@ -59,7 +61,8 @@ import {SplashScreen} from '@ionic-native/splash-screen';
         SolPage,
         SincPage,
         CityDetailPage,
-        TourDetailPage
+        TourDetailPage,
+        SalarioDetailPage
     ],
     providers: [
         Network,

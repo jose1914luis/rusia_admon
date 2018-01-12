@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {NavController, NavParams, AlertController} from 'ionic-angular';
 import {global} from '../../components/credenciales/credenciales';
-import {CityDetailPage} from '../../pages/city-detail/city-detail';
+import {SalarioDetailPage} from '../../pages/salario-detail/salario-detail';
 
 declare var OdooApi: any;
 
@@ -12,6 +12,8 @@ declare var OdooApi: any;
 export class SalarioPage {
 
     items;
+    cargar = true;
+    mensaje = '';
     constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController) {
 
         var self = this;
@@ -25,7 +27,8 @@ export class SalarioPage {
                     ['name', 'sala_guia', 'city_id', 'total_metro']).then(
                     function (value2) {
                         console.log(value2);
-                        //self.items = value2
+                        self.items = value2
+                        self.cargar = false;
                     },
                     function () {
                         self.presentAlert('Falla', 'Imposible Conectar');
@@ -60,7 +63,7 @@ export class SalarioPage {
 
     ejecute(item) {
 
-        this.navCtrl.push(CityDetailPage, {item: item});
+        this.navCtrl.push(SalarioDetailPage, {item: item});
     }
 }
 
