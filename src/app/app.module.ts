@@ -19,6 +19,7 @@ import {TourDetailPage} from '../pages/tour-detail/tour-detail';
 
 import {IonicStorageModule} from '@ionic/storage';
 import {Network} from '@ionic-native/network';
+import {NgCalendarModule} from 'ionic2-calendar';
 import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
 
@@ -40,6 +41,7 @@ import {SplashScreen} from '@ionic-native/splash-screen';
     ],
     imports: [
         BrowserModule,
+        NgCalendarModule,
         IonicModule.forRoot(MyApp),
         IonicStorageModule.forRoot()
     ],
