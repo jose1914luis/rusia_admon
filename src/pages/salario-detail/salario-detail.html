@@ -1,38 +1,46 @@
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>Detalles salario</ion-title>
-  </ion-navbar>
+    <ion-navbar>
+        <ion-title>Detalles salario</ion-title>
+    </ion-navbar>
 
 </ion-header>
 
-<ion-content>  
+<ion-content padding>  
     <form (ngSubmit)="this.conectarApp(true)">
-        
+
         <ion-list *ngIf="!cargar">
             <ion-item>
                 <ion-label color="primary" stacked>Semana</ion-label>
-                <ion-input type="text"  [(ngModel)]="item.name" required name='name' ></ion-input>
+                <ion-input type="text"  [(ngModel)]="item.name" [readonly]="!editable" name='name' ></ion-input>
             </ion-item>
 
             <ion-item>
                 <ion-label color="primary" stacked>Ciudad</ion-label>
-                <ion-input type="text"  [(ngModel)]=item.city_id[1]" required name='city_id' ></ion-input>
+                <ion-input type="text"  [(ngModel)]="item.city_id[1]" [readonly]="!editable" name='city_id' ></ion-input>
             </ion-item>
-            
+
             <ion-item>
                 <ion-label color="primary" stacked>Salario</ion-label>
-                <ion-input type="text"  [(ngModel)]="item.sala_guia" required name='sala_guia' ></ion-input>
+                <ion-input type="text"  [(ngModel)]="item.sala_guia" [readonly]="!editable" name='sala_guia' ></ion-input>
             </ion-item>
 
             <ion-item>
                 <ion-label color="primary" stacked>Total Metro</ion-label>
-                <ion-input type="text"  [(ngModel)]="item.total_metro" required name='total_metro' ></ion-input>
+                <ion-input type="text"  [(ngModel)]="item.total_metro" [readonly]="!editable" name='total_metro' ></ion-input>
             </ion-item>
-            
-            <ion-item>
-                <button ion-button block type="submit">Guardar</button>
-            </ion-item>
+
         </ion-list>
     </form>
+
+    <ion-segment color="primary">
+        <ion-segment-button value="friends" (ionSelect)="editar()">
+            Editar
+        </ion-segment-button>
+        <ion-segment-button value="guardar" (ionSelect)="guardar()">
+            Guardar
+        </ion-segment-button>
+    </ion-segment>
+
+
 </ion-content>

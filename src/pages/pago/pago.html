@@ -3,13 +3,18 @@
         <button ion-button menuToggle>
             <ion-icon name="menu"></ion-icon>
         </button>
-        <ion-title>Pago diario</ion-title>
+        <ion-title>Pago Diario</ion-title>
     </ion-navbar>
 </ion-header>
 
 
 <ion-content>
 
+    <div *ngIf="cargar" style="text-align: center">    
+        <ion-spinner name="circles"></ion-spinner><br>
+        <b>Cargando...</b>
+    </div>
+    
     <ion-grid *ngFor="let item of items; let i = index" (click)="ejecute(item)">      
 
         <ion-row>     
