@@ -8,15 +8,44 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content >
 
-    <ion-grid>      
+    <ion-grid *ngFor="let item of items; let i = index" (click)="ejecute(item)">      
 
-        <ion-row *ngFor="let item of items; let i = index" (click)="ejecute(item)">     
-            <ion-col col-12>
-                <h3>{{item.name[1]}}</h3>
-                <p>{{item.administrador[1]}}</p>
+        <ion-row>     
+            <ion-col col-2>
+                <b>Nombre</b>                
             </ion-col>                   
+            <ion-col col-8>
+                {{item.name}}
+            </ion-col>   
+        </ion-row>
+
+        <ion-row>     
+            <ion-col col-2>
+                <b>Email</b>                
+            </ion-col>     
+            <ion-col col-8>
+                {{item.email[1]}}
+            </ion-col> 
+        </ion-row>
+
+        <ion-row >     
+            <ion-col col-2>
+                <b>Teléfono</b>                
+            </ion-col>       
+            <ion-col col-8>
+                {{item.telefono}}
+            </ion-col>             
+        </ion-row>
+        
+        <ion-row  class="borde">     
+            <ion-col col-2>
+                <b>Hotel</b>                
+            </ion-col>       
+            <ion-col col-8>
+                {{item.nombre_hotel}}
+            </ion-col>             
         </ion-row>
 
     </ion-grid>

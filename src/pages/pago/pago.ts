@@ -7,9 +7,9 @@ declare var OdooApi: any;
 
 @Component({
     selector: 'page-ciudad',
-    templateUrl: 'clientes.html',
+    templateUrl: 'pago.html',
 })
-export class ClientesPage {
+export class PagoPage {
 
     items;
     constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController) {
@@ -21,9 +21,9 @@ export class ClientesPage {
                 //                odoo.search_read('tours.clientes.email', [['id', '!=', '0']], ['name', 'ilike']).then(
                 //                    function (value) {
                 //                        console.log(value);
-                odoo.search_read('tours.clientes', [['id', '!=', '0']],
-                    ['name', 'ilike', 'email', 'telefono', 'nombre_hotel',
-                        'active_email', 'is_padrino', 'pago_tarjeta', 'padre', 'observaciones']).then(
+                odoo.search_read('tours.nomina', [['id', '!=', '0']],
+                    ['name', 'semana', 'city_id', 'pax_pago', 'total_rub',
+                        'total_eur', 'total_usd', 'total_res', 'total_metro', 'state']).then(
                     function (value2) {
                         console.log(value2);
                         self.items = value2
@@ -64,3 +64,4 @@ export class ClientesPage {
         this.navCtrl.push(CityDetailPage, {item: item});
     }
 }
+

@@ -1,0 +1,86 @@
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Pago diario</ion-title>
+    </ion-navbar>
+</ion-header>
+
+
+<ion-content>
+
+    <ion-grid *ngFor="let item of items; let i = index" (click)="ejecute(item)">      
+
+        <ion-row>     
+            <ion-col col-2>
+                <b>Guía</b>                
+            </ion-col>                   
+            <ion-col col-8>
+                {{item.name[1]}}
+            </ion-col>   
+        </ion-row>
+
+        <ion-row>     
+            <ion-col col-2>
+                <b>Semana</b>                
+            </ion-col>     
+            <ion-col col-8>
+                {{item.semana}}
+            </ion-col> 
+        </ion-row>
+
+        <ion-row >     
+            <ion-col col-2>
+                <b>PAX pago</b>                
+            </ion-col>       
+            <ion-col col-2>
+                {{item.pax_pago}}
+            </ion-col>             
+            <ion-col col-2>
+                <b>Pagado</b>                
+            </ion-col>       
+            <ion-col col-2>
+                {{item.state}}
+            </ion-col>  
+        </ion-row>
+        
+         <ion-row >     
+            <ion-col col-2>
+                <b>EUR</b>                
+            </ion-col>       
+            <ion-col col-2>
+                {{item.total_eur}}
+            </ion-col>             
+            <ion-col col-2>
+                <b>USD</b>                
+            </ion-col>       
+            <ion-col col-2>
+                {{item.total_usd}}
+            </ion-col>  
+             <ion-col col-2>
+                <b>RUB</b>                
+            </ion-col>       
+            <ion-col col-2>
+                {{item.total_usd}}
+            </ion-col>  
+        </ion-row>
+        
+        <ion-row  class="borde">     
+            <ion-col col-2>
+                <b>Reserva</b>                
+            </ion-col>       
+            <ion-col col-2>
+                {{item.total_res}}
+            </ion-col>             
+            <ion-col col-2>
+                <b>Metro</b>                
+            </ion-col>       
+            <ion-col col-2>
+                {{item.total_metro}}
+            </ion-col>  
+        </ion-row>
+
+    </ion-grid>
+
+</ion-content>
