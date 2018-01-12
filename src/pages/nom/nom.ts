@@ -6,7 +6,7 @@ import {CityDetailPage} from '../../pages/city-detail/city-detail';
 declare var OdooApi: any;
 
 @Component({
-    selector: 'page-ciudad',
+    selector: 'page-nom',
     templateUrl: 'nom.html',
 })
 export class NomPage {

@@ -6,10 +6,10 @@ import {CityDetailPage} from '../../pages/city-detail/city-detail';
 declare var OdooApi: any;
 
 @Component({
-    selector: 'page-ciudad',
-    templateUrl: 'pago.html',
+    selector: 'page-salario',
+    templateUrl: 'salario.html',
 })
-export class PagoPage {
+export class SalarioPage {
 
     items;
     constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController) {
@@ -21,12 +21,11 @@ export class PagoPage {
                 //                odoo.search_read('tours.clientes.email', [['id', '!=', '0']], ['name', 'ilike']).then(
                 //                    function (value) {
                 //                        console.log(value);
-                odoo.search_read('tours.pago.guia', [['id', '!=', '0']],
-                    ['name', 'semana', 'tours_id', 'guia_user_id', 'city_id',
-                        'total_eur', 'total_usd', 'total_res', 'total_metro', 'pax_pago', 'state', 'concepto']).then(
+                odoo.search_read('tours.gastos.generales', [['id', '!=', '0']],
+                    ['name', 'sala_guia', 'city_id', 'total_metro']).then(
                     function (value2) {
                         console.log(value2);
-                        self.items = value2
+                        //self.items = value2
                     },
                     function () {
                         self.presentAlert('Falla', 'Imposible Conectar');
