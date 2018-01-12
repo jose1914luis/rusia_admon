@@ -1,0 +1,24 @@
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Clientes</ion-title>
+    </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+
+    <ion-grid>      
+
+        <ion-row *ngFor="let item of items; let i = index" (click)="ejecute(item)">     
+            <ion-col col-12>
+                <h3>{{item.name[1]}}</h3>
+                <p>{{item.administrador[1]}}</p>
+            </ion-col>                   
+        </ion-row>
+
+    </ion-grid>
+
+</ion-content>
