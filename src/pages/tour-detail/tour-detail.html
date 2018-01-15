@@ -11,7 +11,7 @@
     </ion-navbar>
     <!-- Segment buttons with icons -->
     <ion-segment [(ngModel)]="icons">
-        <ion-segment-button value="camera" icon-start>
+        <ion-segment-button value="camera" icon-start (click)="editar()">
             <ion-icon ios="ios-create" md="md-create"></ion-icon>
             Editar
         </ion-segment-button>
@@ -31,7 +31,7 @@
                 <b>Código:</b>
             </ion-col>
             <ion-col col-8>
-                <ion-input name="codigo" type="text" [(ngModel)]="item.codigo"></ion-input>                
+                <ion-input name="codigo"  [readonly]="!editable" type="text" [(ngModel)]="item.codigo"></ion-input>                
             </ion-col>       
         </ion-row>
         <ion-row align-items-center>  
@@ -39,7 +39,7 @@
                 <b>Nombre:</b>
             </ion-col>
             <ion-col col-8>
-                <ion-textarea rows="3" [(ngModel)]="item.name"></ion-textarea>      
+                <ion-textarea rows="3" [readonly]="!editable" [(ngModel)]="item.name"></ion-textarea>      
             </ion-col>       
         </ion-row>
         <ion-row align-items-center>  
@@ -47,7 +47,7 @@
                 <b>Ciudad:</b>
             </ion-col>
             <ion-col col-8>
-                <ion-input name="company_id" type="text" [(ngModel)]="item.company_id[1]"></ion-input>                
+                <ion-input name="company_id"  [readonly]="!editable" type="text" [(ngModel)]="item.company_id[1]"></ion-input>                
             </ion-col>       
         </ion-row>
         <ion-row align-items-center>  
@@ -55,13 +55,13 @@
                 <b>Fecha Inicio</b>
             </ion-col>
             <ion-col col-3>
-                <ion-input name="date_begin" type="text" [(ngModel)]="item.date_begin"></ion-input>
+                <ion-input name="date_begin"  [readonly]="!editable" type="text" [(ngModel)]="item.date_begin"></ion-input>
             </ion-col>       
             <ion-col col-3>
                 <b>Fecha Fin</b>
             </ion-col>
             <ion-col col-3>
-                <ion-input name="date_end" type="text" [(ngModel)]="item.date_end"></ion-input>                
+                <ion-input name="date_end"  [readonly]="!editable" type="text" [(ngModel)]="item.date_end"></ion-input>                
             </ion-col> 
         </ion-row>
         <ion-row align-items-center>  
@@ -69,19 +69,19 @@
                 <b>Es Extra?</b>
             </ion-col>
             <ion-col col-1>
-                <ion-checkbox [(ngModel)]="item.is_extra"></ion-checkbox>
+                <ion-checkbox  [disabled] = "!editable" [(ngModel)]="item.is_extra"></ion-checkbox>
             </ion-col>       
             <ion-col col-3>
                 <b>Es Gratis?</b>
             </ion-col>
             <ion-col col-1>
-                <ion-checkbox [(ngModel)]="item.is_free"></ion-checkbox>
+                <ion-checkbox  [disabled] = "!editable" [(ngModel)]="item.is_free"></ion-checkbox>
             </ion-col>    
             <ion-col col-3>
                 <b>Es Privada?</b>
             </ion-col>
             <ion-col col-1>
-                <ion-checkbox [(ngModel)]="item.is_private"></ion-checkbox>        
+                <ion-checkbox  [disabled] = "!editable" [(ngModel)]="item.is_private"></ion-checkbox>        
             </ion-col>    
         </ion-row>
 
@@ -98,13 +98,13 @@
         </ion-row>
         <ion-row align-items-center>  
             <ion-col col-3>
-                <ion-input name="salario_maximo" type="number" [(ngModel)]="item.salario_maximo"></ion-input>                
+                <ion-input name="salario_maximo"  [readonly]="!editable" type="number" [(ngModel)]="item.salario_maximo"></ion-input>                
             </ion-col>      
             <ion-col col-3>
-                <ion-input name="salario_maximo" type="number" [(ngModel)]="item.salario_maximo"></ion-input>                
+                <ion-input name="salario_maximo"  [readonly]="!editable" type="number" [(ngModel)]="item.salario_maximo"></ion-input>                
             </ion-col>
             <ion-col col-3>
-                <ion-input name="salario_maximo" type="number" [(ngModel)]="item.salario_maximo"></ion-input>                
+                <ion-input name="salario_maximo"  [readonly]="!editable" type="number" [(ngModel)]="item.salario_maximo"></ion-input>                
             </ion-col>   
         </ion-row>
         <ion-row align-items-center>  
@@ -134,26 +134,26 @@
         </ion-row>
         <ion-row align-items-center>  
             <ion-col col-2>
-                <ion-input name="cost_one" type="number" [(ngModel)]="item.cost_one"></ion-input>                
+                <ion-input name="cost_one"  [readonly]="!editable" type="number" [(ngModel)]="item.cost_one"></ion-input>                
             </ion-col>             
             <ion-col col-2>
-                <ion-input name="cost_two" type="number" [(ngModel)]="item.cost_two"></ion-input>
+                <ion-input name="cost_two"  [readonly]="!editable" type="number" [(ngModel)]="item.cost_two"></ion-input>
 
             </ion-col>   
             <ion-col col-2>
-                <ion-input name="cost_three" type="number" [(ngModel)]="item.cost_three"></ion-input>
+                <ion-input name="cost_three"  [readonly]="!editable" type="number" [(ngModel)]="item.cost_three"></ion-input>
 
             </ion-col>   
             <ion-col col-2>
-                <ion-input  name="cost_four" type="number" [(ngModel)]="item.cost_four"></ion-input>
+                <ion-input  name="cost_four"  [readonly]="!editable" type="number" [(ngModel)]="item.cost_four"></ion-input>
 
             </ion-col>   
             <ion-col col-2>
-                <ion-input  name="cost_five" type="number" [(ngModel)]="item.cost_five"></ion-input>
+                <ion-input  name="cost_five"  [readonly]="!editable" type="number" [(ngModel)]="item.cost_five"></ion-input>
 
             </ion-col>   
             <ion-col col-2>
-                <ion-input  name="cost_six" type="number" [(ngModel)]="item.cost_six"></ion-input>
+                <ion-input  name="cost_six"  [readonly]="!editable" type="number" [(ngModel)]="item.cost_six"></ion-input>
 
             </ion-col>   
         </ion-row>
@@ -178,23 +178,23 @@
 
         <ion-row align-items-center>  
             <ion-col col-2>
-                <ion-input  name="cost_seven" type="number" [(ngModel)]="item.cost_seven"></ion-input>
+                <ion-input  name="cost_seven"  [readonly]="!editable" type="number" [(ngModel)]="item.cost_seven"></ion-input>
 
             </ion-col>             
             <ion-col col-2>
-                <ion-input  name="cost_eigh" type="number" [(ngModel)]="item.cost_eigh"></ion-input>
+                <ion-input  name="cost_eigh"  [readonly]="!editable" type="number" [(ngModel)]="item.cost_eigh"></ion-input>
 
             </ion-col>   
             <ion-col col-2>
-                <ion-input  name="cost_nine" type="number" [(ngModel)]="item.cost_nine"></ion-input>
+                <ion-input  name="cost_nine"  [readonly]="!editable" type="number" [(ngModel)]="item.cost_nine"></ion-input>
 
             </ion-col>   
             <ion-col col-2>
-                <ion-input  name="cost_ten" type="number" [(ngModel)]="item.cost_ten"></ion-input>
+                <ion-input  name="cost_ten"  [readonly]="!editable" type="number" [(ngModel)]="item.cost_ten"></ion-input>
 
             </ion-col>   
             <ion-col col-4>
-                <ion-input  name="cost_more_ten" type="number" [(ngModel)]="item.cost_more_ten"></ion-input>
+                <ion-input  name="cost_more_ten"  [readonly]="!editable" type="number" [(ngModel)]="item.cost_more_ten"></ion-input>
 
             </ion-col>     
         </ion-row>
@@ -227,27 +227,27 @@
 
         <ion-row align-items-center>  
             <ion-col col-2>
-                <ion-input  name="gasto_one" type="number" [(ngModel)]="item.gasto_one"></ion-input>
+                <ion-input  name="gasto_one"  [readonly]="!editable" type="number" [(ngModel)]="item.gasto_one"></ion-input>
 
             </ion-col>             
             <ion-col col-2>
-                <ion-input  name="gasto_two" type="number" [(ngModel)]="item.gasto_two"></ion-input>
+                <ion-input  name="gasto_two"  [readonly]="!editable" type="number" [(ngModel)]="item.gasto_two"></ion-input>
 
             </ion-col>   
             <ion-col col-2>
-                <ion-input  name="gasto_three" type="number" [(ngModel)]="item.gasto_three"></ion-input>
+                <ion-input  name="gasto_three"  [readonly]="!editable" type="number" [(ngModel)]="item.gasto_three"></ion-input>
 
             </ion-col>   
             <ion-col col-2>
-                <ion-input  name="gasto_four" type="number" [(ngModel)]="item.gasto_four"></ion-input>
+                <ion-input  name="gasto_four"  [readonly]="!editable" type="number" [(ngModel)]="item.gasto_four"></ion-input>
 
             </ion-col>   
             <ion-col col-2>
-                <ion-input  name="gasto_five" type="number" [(ngModel)]="item.gasto_five"></ion-input>
+                <ion-input  name="gasto_five"  [readonly]="!editable" type="number" [(ngModel)]="item.gasto_five"></ion-input>
 
             </ion-col>   
             <ion-col col-2>
-                <ion-input  name="" type="number" [(ngModel)]="item.gasto_six"></ion-input>
+                <ion-input  name=""  [readonly]="!editable" type="number" [(ngModel)]="item.gasto_six"></ion-input>
 
             </ion-col>   
         </ion-row>
@@ -271,23 +271,23 @@
 
         <ion-row align-items-center>  
             <ion-col col-2>
-                <ion-input  name="gasto_seven" type="number" [(ngModel)]="item.gasto_seven"></ion-input>
+                <ion-input  name="gasto_seven"  [readonly]="!editable" type="number" [(ngModel)]="item.gasto_seven"></ion-input>
 
             </ion-col>             
             <ion-col col-2>
-                <ion-input  name="gasto_eigh" type="number" [(ngModel)]="item.gasto_eigh"></ion-input>
+                <ion-input  name="gasto_eigh"  [readonly]="!editable" type="number" [(ngModel)]="item.gasto_eigh"></ion-input>
 
             </ion-col>   
             <ion-col col-2>
-                <ion-input  name="gasto_nine" type="number" [(ngModel)]="item.gasto_nine"></ion-input>
+                <ion-input  name="gasto_nine"  [readonly]="!editable" type="number" [(ngModel)]="item.gasto_nine"></ion-input>
 
             </ion-col>   
             <ion-col col-2>
-                <ion-input  name="gasto_ten" type="number" [(ngModel)]="item.gasto_ten"></ion-input>
+                <ion-input  name="gasto_ten"  [readonly]="!editable" type="number" [(ngModel)]="item.gasto_ten"></ion-input>
 
             </ion-col>   
             <ion-col col-4>
-                <ion-input  name="gasto_more_ten" type="number" [(ngModel)]="item.gasto_more_ten"></ion-input>
+                <ion-input  name="gasto_more_ten"  [readonly]="!editable" type="number" [(ngModel)]="item.gasto_more_ten"></ion-input>
 
             </ion-col>     
         </ion-row>
@@ -298,7 +298,7 @@
         </ion-row>
         <ion-row align-items-center>  
             <ion-col col-12>
-                <ion-textarea rows="6" [(ngModel)]="item.description"></ion-textarea>
+                <ion-textarea rows="6"  [readonly]="!editable" [(ngModel)]="item.description"></ion-textarea>
             </ion-col>             
         </ion-row>
     </ion-grid>
