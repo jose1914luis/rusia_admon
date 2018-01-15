@@ -1,5 +1,5 @@
 export const global = {
-    url: '/api',
+    url: '/api', //url: 'http://moscutourgratis.com:8069',
     port: '8069',
     db: 'Free_Tour_Russia',
     username: 'fernandez.bermudez.jonatan@gmail.com',

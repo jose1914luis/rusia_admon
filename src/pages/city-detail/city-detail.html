@@ -56,23 +56,23 @@
             </ion-col> 
         </ion-row>
          <ion-row align-items-start class="borde">  
-            <ion-col col-2>
-                <b>Es Extra</b>
+            <ion-col col-3>
+                <b>Es Extra?</b>
             </ion-col>
-            <ion-col col-2>
-                {{item.is_extra}}
+            <ion-col col-1>
+                {{!!item.is_extra ? 'Si' : 'No'}}
             </ion-col>       
-             <ion-col col-2>
-                <b>Es Gratis</b>
+             <ion-col col-3>
+                <b>Es Gratis?</b>
             </ion-col>
-            <ion-col col-2>
-                {{item.is_free}}
+            <ion-col col-1>
+                {{!!item.is_free ? 'Si' : 'No'}}
             </ion-col>    
-             <ion-col col-2>
-                <b>Es Privada</b>
+             <ion-col col-3>
+                <b>Es Privada?</b>
             </ion-col>
-            <ion-col col-2>
-                {{item.is_private}}
+            <ion-col col-1>
+                {{!!item.is_private ? 'Si' : 'No'}}                
             </ion-col>    
         </ion-row>
     </ion-grid>

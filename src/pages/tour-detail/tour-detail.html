@@ -9,94 +9,110 @@
     <ion-navbar>
         <ion-title>Detalles del Tour</ion-title>
     </ion-navbar>
-
+    <!-- Segment buttons with icons -->
+    <ion-segment [(ngModel)]="icons">
+        <ion-segment-button value="camera" icon-start>
+            <ion-icon ios="ios-create" md="md-create"></ion-icon>
+            Editar
+        </ion-segment-button>
+        <ion-segment-button value="bookmark" icon-start>
+            <ion-icon ios="ios-cloud-upload" md="md-cloud-upload"></ion-icon>
+            Guardar
+        </ion-segment-button>
+    </ion-segment>
 </ion-header>
 
 
 <ion-content>
 
     <ion-grid>                 
-        <ion-row>  
+        <ion-row align-items-center>  
             <ion-col col-3>
                 <b>Código:</b>
             </ion-col>
             <ion-col col-8>
-                {{item.codigo}}
+                <ion-input name="codigo" type="text" [(ngModel)]="item.codigo"></ion-input>                
             </ion-col>       
         </ion-row>
-        <ion-row>  
+        <ion-row align-items-center>  
             <ion-col col-3>
                 <b>Nombre:</b>
             </ion-col>
             <ion-col col-8>
-                {{item.name}}
+                <ion-textarea rows="3" [(ngModel)]="item.name"></ion-textarea>      
             </ion-col>       
         </ion-row>
-        <ion-row>  
+        <ion-row align-items-center>  
             <ion-col col-3>
                 <b>Ciudad:</b>
             </ion-col>
             <ion-col col-8>
-                {{item.company_id[1]}}
+                <ion-input name="company_id" type="text" [(ngModel)]="item.company_id[1]"></ion-input>                
             </ion-col>       
         </ion-row>
-        <ion-row>  
+        <ion-row align-items-center>  
             <ion-col col-3>
                 <b>Fecha Inicio</b>
             </ion-col>
             <ion-col col-3>
-                {{item.date_begin}}
+                <ion-input name="date_begin" type="text" [(ngModel)]="item.date_begin"></ion-input>
             </ion-col>       
-            <ion-col col-2>
+            <ion-col col-3>
                 <b>Fecha Fin</b>
             </ion-col>
             <ion-col col-3>
-                {{item.date_end}}
+                <ion-input name="date_end" type="text" [(ngModel)]="item.date_end"></ion-input>                
             </ion-col> 
         </ion-row>
-        <ion-row>  
-            <ion-col col-2>
-                <b>Es Extra</b>
+        <ion-row align-items-center>  
+            <ion-col col-3>
+                <b>Es Extra?</b>
             </ion-col>
-            <ion-col col-2>
-                {{item.is_extra}}
+            <ion-col col-1>
+                <ion-checkbox [(ngModel)]="item.is_extra"></ion-checkbox>
             </ion-col>       
-            <ion-col col-2>
-                <b>Es Gratis</b>
+            <ion-col col-3>
+                <b>Es Gratis?</b>
             </ion-col>
-            <ion-col col-2>
-                {{item.is_free}}
+            <ion-col col-1>
+                <ion-checkbox [(ngModel)]="item.is_free"></ion-checkbox>
             </ion-col>    
-            <ion-col col-2>
-                <b>Es Privada</b>
+            <ion-col col-3>
+                <b>Es Privada?</b>
             </ion-col>
-            <ion-col col-2>
-                {{item.is_private}}
+            <ion-col col-1>
+                <ion-checkbox [(ngModel)]="item.is_private"></ion-checkbox>        
             </ion-col>    
         </ion-row>
-        <ion-row>  
+
+        <ion-row align-items-center>  
             <ion-col col-3>
                 <b>Salario Min</b>
             </ion-col>      
             <ion-col col-3>
                 <b>Salario Max</b>
             </ion-col>
-            <ion-col col-3>
+            <ion-col col-4>
                 <b>Salario Extra</b>
             </ion-col>   
         </ion-row>
-        <ion-row>  
+        <ion-row align-items-center>  
             <ion-col col-3>
-                {{item.salario_maximo}}
+                <ion-input name="salario_maximo" type="number" [(ngModel)]="item.salario_maximo"></ion-input>                
             </ion-col>      
             <ion-col col-3>
-                {{item.salario_maximo}}
+                <ion-input name="salario_maximo" type="number" [(ngModel)]="item.salario_maximo"></ion-input>                
             </ion-col>
             <ion-col col-3>
-                {{item.salario_maximo}}
+                <ion-input name="salario_maximo" type="number" [(ngModel)]="item.salario_maximo"></ion-input>                
             </ion-col>   
         </ion-row>
-        <ion-row>  
+        <ion-row align-items-center>  
+            <ion-col col-4>
+                <b>Costo por PAX</b>
+            </ion-col>             
+        </ion-row>
+        <ion-row align-items-center>  
             <ion-col col-2>
                 <b>1 PAX</b>
             </ion-col>             
@@ -116,28 +132,33 @@
                 <b>6 PAX</b>
             </ion-col>   
         </ion-row>
-        <ion-row>  
+        <ion-row align-items-center>  
             <ion-col col-2>
-                {{item.cost_one}}
+                <ion-input name="cost_one" type="number" [(ngModel)]="item.cost_one"></ion-input>                
             </ion-col>             
             <ion-col col-2>
-                {{item.cost_two}}
+                <ion-input name="cost_two" type="number" [(ngModel)]="item.cost_two"></ion-input>
+
             </ion-col>   
             <ion-col col-2>
-                {{item.cost_three}}
+                <ion-input name="cost_three" type="number" [(ngModel)]="item.cost_three"></ion-input>
+
             </ion-col>   
             <ion-col col-2>
-                {{item.cost_four}}
+                <ion-input  name="cost_four" type="number" [(ngModel)]="item.cost_four"></ion-input>
+
             </ion-col>   
             <ion-col col-2>
-                {{item.cost_five}}
+                <ion-input  name="cost_five" type="number" [(ngModel)]="item.cost_five"></ion-input>
+
             </ion-col>   
             <ion-col col-2>
-                {{item.cost_six}}
+                <ion-input  name="cost_six" type="number" [(ngModel)]="item.cost_six"></ion-input>
+
             </ion-col>   
         </ion-row>
-        
-        <ion-row>  
+
+        <ion-row align-items-center>  
             <ion-col col-2>
                 <b>7 PAX</b>
             </ion-col>             
@@ -154,31 +175,36 @@
                 <b>Mas de 10 PAX</b>
             </ion-col>   
         </ion-row>
-        
-        <ion-row>  
+
+        <ion-row align-items-center>  
             <ion-col col-2>
-                {{item.cost_seven}}
+                <ion-input  name="cost_seven" type="number" [(ngModel)]="item.cost_seven"></ion-input>
+
             </ion-col>             
             <ion-col col-2>
-                {{item.cost_eigh}}
+                <ion-input  name="cost_eigh" type="number" [(ngModel)]="item.cost_eigh"></ion-input>
+
             </ion-col>   
             <ion-col col-2>
-                {{item.cost_nine}}
+                <ion-input  name="cost_nine" type="number" [(ngModel)]="item.cost_nine"></ion-input>
+
             </ion-col>   
             <ion-col col-2>
-                {{item.cost_ten}}
+                <ion-input  name="cost_ten" type="number" [(ngModel)]="item.cost_ten"></ion-input>
+
             </ion-col>   
             <ion-col col-4>
-                {{item.cost_more_ten}}
+                <ion-input  name="cost_more_ten" type="number" [(ngModel)]="item.cost_more_ten"></ion-input>
+
             </ion-col>     
         </ion-row>
-        
-        <ion-row>  
+
+        <ion-row align-items-center>  
             <ion-col col-4>
                 <b>Precio por PAX</b>
             </ion-col>             
         </ion-row>
-       <ion-row>  
+        <ion-row align-items-center>  
             <ion-col col-2>
                 <b>1 PAX</b>
             </ion-col>             
@@ -198,28 +224,34 @@
                 <b>6 PAX</b>
             </ion-col>   
         </ion-row>
-        
-        <ion-row>  
+
+        <ion-row align-items-center>  
             <ion-col col-2>
-                {{item.gasto_one}}
+                <ion-input  name="gasto_one" type="number" [(ngModel)]="item.gasto_one"></ion-input>
+
             </ion-col>             
             <ion-col col-2>
-                {{item.gasto_two}}
+                <ion-input  name="gasto_two" type="number" [(ngModel)]="item.gasto_two"></ion-input>
+
             </ion-col>   
             <ion-col col-2>
-                {{item.gasto_three}}
+                <ion-input  name="gasto_three" type="number" [(ngModel)]="item.gasto_three"></ion-input>
+
             </ion-col>   
             <ion-col col-2>
-                {{item.gasto_four}}
+                <ion-input  name="gasto_four" type="number" [(ngModel)]="item.gasto_four"></ion-input>
+
             </ion-col>   
             <ion-col col-2>
-                {{item.gasto_five}}
+                <ion-input  name="gasto_five" type="number" [(ngModel)]="item.gasto_five"></ion-input>
+
             </ion-col>   
             <ion-col col-2>
-                {{item.gasto_six}}
+                <ion-input  name="" type="number" [(ngModel)]="item.gasto_six"></ion-input>
+
             </ion-col>   
         </ion-row>
-        <ion-row>  
+        <ion-row align-items-center>  
             <ion-col col-2>
                 <b>7 PAX</b>
             </ion-col>             
@@ -236,32 +268,37 @@
                 <b>Mas de 10 PAX</b>
             </ion-col>   
         </ion-row>
-        
-        <ion-row>  
+
+        <ion-row align-items-center>  
             <ion-col col-2>
-                {{item.gasto_seven}}
+                <ion-input  name="gasto_seven" type="number" [(ngModel)]="item.gasto_seven"></ion-input>
+
             </ion-col>             
             <ion-col col-2>
-                {{item.gasto_eigh}}
+                <ion-input  name="gasto_eigh" type="number" [(ngModel)]="item.gasto_eigh"></ion-input>
+
             </ion-col>   
             <ion-col col-2>
-                {{item.gasto_nine}}
+                <ion-input  name="gasto_nine" type="number" [(ngModel)]="item.gasto_nine"></ion-input>
+
             </ion-col>   
             <ion-col col-2>
-                {{item.gasto_ten}}
+                <ion-input  name="gasto_ten" type="number" [(ngModel)]="item.gasto_ten"></ion-input>
+
             </ion-col>   
             <ion-col col-4>
-                {{item.gasto_more_ten}}
+                <ion-input  name="gasto_more_ten" type="number" [(ngModel)]="item.gasto_more_ten"></ion-input>
+
             </ion-col>     
         </ion-row>
-        <ion-row>  
+        <ion-row align-items-center>  
             <ion-col col-4>
                 <b>Descripción</b>
             </ion-col>             
         </ion-row>
-         <ion-row>  
-            <ion-col col-auto>
-                {{item.description}}
+        <ion-row align-items-center>  
+            <ion-col col-12>
+                <ion-textarea rows="6" [(ngModel)]="item.description"></ion-textarea>
             </ion-col>             
         </ion-row>
     </ion-grid>

@@ -18,6 +18,7 @@ import {CityDetailPage} from '../pages/city-detail/city-detail';
 import {TourDetailPage} from '../pages/tour-detail/tour-detail';
 import {SalarioDetailPage} from '../pages/salario-detail/salario-detail';
 import {PagoDetailPage} from '../pages/pago-detail/pago-detail';
+import {ClienteDetailPage} from '../pages/cliente-detail/cliente-detail';
 
 import {IonicStorageModule} from '@ionic/storage';
 import {Network} from '@ionic-native/network';
@@ -41,7 +42,8 @@ import {SplashScreen} from '@ionic-native/splash-screen';
         CityDetailPage,
         TourDetailPage,
         SalarioDetailPage,
-        PagoDetailPage
+        PagoDetailPage,
+        ClienteDetailPage
     ],
     imports: [
         BrowserModule,
@@ -65,7 +67,8 @@ import {SplashScreen} from '@ionic-native/splash-screen';
         CityDetailPage,
         TourDetailPage,
         SalarioDetailPage,
-        PagoDetailPage
+        PagoDetailPage,
+        ClienteDetailPage
     ],
     providers: [
         Network,
