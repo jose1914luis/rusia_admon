@@ -12,6 +12,7 @@ declare var OdooApi: any;
 export class NomPage {
 
     items;
+    cargar = true;
     constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController) {
 
         var self = this;
@@ -23,7 +24,8 @@ export class NomPage {
                         'total_eur', 'total_usd', 'total_res', 'total_metro', 'state']).then(
                     function (value2) {
                         console.log(value2);
-                        self.items = value2
+                        self.items = value2;
+                        self.cargar = false;
                     },
                     function () {
                         self.presentAlert('Falla', 'Imposible Conectar');

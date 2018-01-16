@@ -1,60 +1,8 @@
 <ion-header>
 
     <ion-navbar>
-        <ion-title>Detalles pago</ion-title>
+        <ion-title>Detalles del Pago</ion-title>
     </ion-navbar>
-
-</ion-header>
-
-
-<ion-content padding>
-
-    <form (ngSubmit)="this.conectarApp(true)">
-
-        <ion-list >
-            <ion-item>
-                <ion-label color="primary" stacked>Día</ion-label>
-                <ion-input type="text"  [(ngModel)]="item.name" [readonly]="!editable" name='name' ></ion-input>
-            </ion-item>
-
-            <ion-item>
-                <ion-label color="primary" stacked>Semana</ion-label>
-                <ion-input type="text"  [(ngModel)]="item.semana" [readonly]="!editable" name='semana' ></ion-input>
-            </ion-item>
-
-            <ion-item>
-                <ion-label color="primary" stacked>Tour</ion-label>
-                <ion-input type="text"  [(ngModel)]="item.tours_id[1]" [readonly]="!editable" name='tours_id' ></ion-input>
-            </ion-item>
-
-            <ion-item>
-                <ion-label color="primary" stacked>EUR</ion-label>
-                <ion-input type="text"  [(ngModel)]="item.total_eur" [readonly]="!editable" name='total_eur' ></ion-input>
-            </ion-item>
-            
-             <ion-item>
-                <ion-label color="primary" stacked>USD</ion-label>
-                <ion-input type="text"  [(ngModel)]="item.total_usd" [readonly]="!editable" name='total_usd' ></ion-input>
-            </ion-item>
-                        
-             <ion-item>
-                <ion-label color="primary" stacked>RUB</ion-label>
-                <ion-input type="text"  [(ngModel)]="item.total_rub" [readonly]="!editable" name='total_rub' ></ion-input>
-            </ion-item>
-            
-             <ion-item>
-                <ion-label color="primary" stacked>Reserva</ion-label>
-                <ion-input type="text"  [(ngModel)]="item.total_res" [readonly]="!editable" name='total_res' ></ion-input>
-            </ion-item>
-            
-             <ion-item>
-                <ion-label color="primary" stacked>Metro</ion-label>
-                <ion-input type="text"  [(ngModel)]="item.total_metro" [readonly]="!editable" name='total_metro' ></ion-input>
-            </ion-item>
-
-        </ion-list>
-    </form>
-
     <ion-segment color="primary">
         <ion-segment-button value="friends" (ionSelect)="editar()">
             Editar
@@ -64,4 +12,83 @@
         </ion-segment-button>
     </ion-segment>
 
+
+</ion-header>
+
+
+<ion-content >
+
+    <form (ngSubmit)="this.conectarApp(true)">
+
+        <ion-grid >
+            <ion-row align-items-center>
+                <ion-col col-2>
+                    <b>Día</b>
+                </ion-col> 
+                <ion-col col-4>
+                    <ion-input type="text"  [(ngModel)]="item.name" [readonly]="!editable" name='name' ></ion-input>
+                </ion-col>
+                <ion-col col-3>
+                    <b>Semana</b>
+                </ion-col> 
+                <ion-col col-2>
+                    <ion-input type="text"  [(ngModel)]="item.semana" [readonly]="!editable" name='semana' ></ion-input>
+                </ion-col> 
+
+            </ion-row>
+
+            <ion-row align-items-center>
+                <ion-col col-2>
+                    <b>Tour</b>
+                </ion-col> 
+                <ion-col col-8>
+                    <ion-input type="text"  [(ngModel)]="item.tours_id[1]" [readonly]="!editable" name='tours_id' ></ion-input>
+                </ion-col>                 
+            </ion-row>
+
+            <ion-row align-items-center>
+                <ion-col col-3>
+                    <b>EUR</b>
+                </ion-col> 
+                <ion-col col-3>
+                    <b>USD</b>
+                </ion-col> 
+                <ion-col col-3>
+                    <b>RUB</b>
+                </ion-col> 
+            </ion-row>
+
+            <ion-row align-items-center>
+                <ion-col col-3>
+                    <ion-input type="text"  [(ngModel)]="item.total_eur" [readonly]="!editable" name='total_eur' ></ion-input>
+                </ion-col> 
+                <ion-col col-3>
+                    <ion-input type="text"  [(ngModel)]="item.total_usd" [readonly]="!editable" name='total_usd' ></ion-input>
+                </ion-col> 
+                <ion-col col-3>
+                    <ion-input type="text"  [(ngModel)]="item.total_rub" [readonly]="!editable" name='total_rub' ></ion-input>
+                </ion-col> 
+            </ion-row>
+
+            <ion-row align-items-center>
+                <ion-col col-3>
+                    <b>Reserva</b>
+                </ion-col> 
+                <ion-col col-3>
+                    <b>Metro</b>
+                </ion-col> 
+            </ion-row>
+
+
+            <ion-row align-items-center>
+                <ion-col col-3>
+                    <ion-input type="text"  [(ngModel)]="item.total_res" [readonly]="!editable" name='total_res' ></ion-input>
+                </ion-col> 
+                <ion-col col-3>
+                    <ion-input type="text"  [(ngModel)]="item.total_metro" [readonly]="!editable" name='total_metro' ></ion-input>
+                </ion-col> 
+            </ion-row>            
+
+        </ion-grid>
+    </form>    
 </ion-content>

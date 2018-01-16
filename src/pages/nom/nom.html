@@ -10,6 +10,11 @@
 
 <ion-content>
 
+     <div *ngIf="cargar" style="text-align: center">    
+        <ion-spinner name="circles"></ion-spinner><br>
+        <b>Cargando...</b>
+    </div>
+    
     <ion-grid *ngFor="let item of items; let i = index" (click)="ejecute(item)">      
 
         <ion-row>     

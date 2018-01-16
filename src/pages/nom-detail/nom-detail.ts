@@ -26,8 +26,8 @@ export class NomDetailPage {
                         console.log(value2);
                         self.item.name = value2[0].name;
                         self.item.semana = value2[0].semana;
-                        self.item.tours_id = value2[0].tours_id;
-                        self.item.guia_user_id = value2[0].guia_user_id;
+                        self.item.tours_id = value2[0].tours_id[1];
+                        self.item.guia_user_id = value2[0].guia_user_id[1];
                         self.item.city_id = value2[0].city_id;
                         self.item.pax_pago = value2[0].pax_pago;
                         self.item.total_rub = value2[0].total_rub;
@@ -37,7 +37,7 @@ export class NomDetailPage {
                         self.item.total_metro = value2[0].total_metro;
                         self.item.state = value2[0].state;
                         self.item.concepto = value2[0].concepto;
-
+                        self.cargar = false;
                     },
                     function () {
                         self.presentAlert('Falla', 'Imposible Conectar');

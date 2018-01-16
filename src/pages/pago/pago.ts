@@ -24,7 +24,7 @@ export class PagoPage {
                 //                        console.log(value);
                 odoo.search_read('tours.pago.guia', [['id', '!=', '0']],
                     ['name', 'semana', 'tours_id', 'guia_user_id', 'city_id',
-                        'total_eur', 'total_usd', 'total_res', 'total_metro', 'pax_pago', 'state', 'concepto']).then(
+                        'total_eur', 'total_usd', 'total_res', 'total_rub', 'total_metro', 'pax_pago', 'state', 'concepto']).then(
                     function (value2) {
                         console.log(value2);
                         self.items = value2

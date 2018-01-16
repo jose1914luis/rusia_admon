@@ -7,13 +7,24 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>nomDetail</ion-title>
+    <ion-title>Detalles de Nomina</ion-title>
   </ion-navbar>
+    <!-- Segment buttons with icons -->
+    <ion-segment [(ngModel)]="icons">
+        <ion-segment-button value="camera" icon-start (click)="editar()">
+            <ion-icon ios="ios-create" md="md-create"></ion-icon>
+            Editar
+        </ion-segment-button>
+        <ion-segment-button value="bookmark" icon-start>
+            <ion-icon ios="ios-cloud-upload" md="md-cloud-upload"></ion-icon>
+            Guardar
+        </ion-segment-button>
+    </ion-segment>
 
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
 
     
     <div *ngIf="cargar" style="text-align: center">    
@@ -21,7 +32,7 @@
         <b>Cargando...</b>
     </div>
     
-    <ion-grid>      
+    <ion-grid *ngIf="!cargar">      
 
         <ion-row align-items-center>     
             <ion-col col-3>
@@ -38,7 +49,7 @@
                 <b>Guía</b>                
             </ion-col>     
             <ion-col col-8 >
-                <ion-input name="guia_user_id"  [readonly]="!editable" type="text" [(ngModel)]="item.guia_user_id[1]"></ion-input>                
+                <ion-input name="guia_user_id"  [readonly]="!editable" type="text" [(ngModel)]="item.guia_user_id"></ion-input>                
             </ion-col> 
         </ion-row>
 
@@ -47,7 +58,7 @@
                 <b>Tour</b>                
             </ion-col>       
             <ion-col col-8 >
-                <ion-input name="tour_id"  [readonly]="!editable" type="text" [(ngModel)]="item.tour_id[1]"></ion-input>                
+                <ion-input name="tours_id"  [readonly]="!editable" type="text" [(ngModel)]="item.tours_id"></ion-input>                
             </ion-col>             
         </ion-row>    
         
@@ -56,14 +67,14 @@
             <ion-col col-3>
                 <b>Semana</b>
             </ion-col>
-            <ion-col col-1>
-                <ion-input name="semana"  [readonly]="!editable" type="text" [(ngModel)]="item.semana"></ion-input>
+            <ion-col col-2>
+                <ion-input name="semana"  [readonly]="!editable" type="number" [(ngModel)]="item.semana"></ion-input>
             </ion-col>       
             <ion-col col-3>
                 <b>PAX pago</b>
             </ion-col>
-            <ion-col col-1>
-                <ion-input name="pax_pago"  [readonly]="!editable" type="text" [(ngModel)]="item.pax_pago"></ion-input>
+            <ion-col col-2>
+                <ion-input name="pax_pago"  [readonly]="!editable" type="number" [(ngModel)]="item.pax_pago"></ion-input>
             </ion-col>    
             <ion-col col-3>
                 <b>Pagado</b>
@@ -98,7 +109,7 @@
         </ion-row>
         
         <ion-row align-items-center>  
-            <ion-col col-2>
+            <ion-col col-3>
                 <b>Reserva</b>
             </ion-col>      
             <ion-col col-2>
@@ -107,7 +118,7 @@
         </ion-row>
         
        <ion-row align-items-center>  
-            <ion-col col-2>
+            <ion-col col-3>
                 <ion-input name="total_res"  [readonly]="!editable" type="number" [(ngModel)]="item.total_res"></ion-input>
             </ion-col>      
             <ion-col col-2>
