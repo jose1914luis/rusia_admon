@@ -5,6 +5,17 @@
         </button>
         <ion-title>Clientes</ion-title>
     </ion-navbar>
+
+    <ion-segment [(ngModel)]="icons">
+        <ion-segment-button value="camera" icon-start (click)="buscar()">
+                            <ion-icon ios="ios-search" md="md-search"></ion-icon>
+            Buscar
+        </ion-segment-button>
+        <ion-segment-button value="bookmark" icon-start (click)="nuevo()">
+            <ion-icon ios="ios-add" md="md-add"></ion-icon>
+            Nuevo
+        </ion-segment-button>
+    </ion-segment>
 </ion-header>
 
 
@@ -15,44 +26,48 @@
         <b>Cargando...</b>
     </div>
 
-    <ion-grid *ngFor="let item of items; let i = index" (click)="ejecute(item)">      
+    <div  *ngFor="let item of items; let i = index">
 
-        <ion-row>     
-            <ion-col col-2>
-                <b>Nombre</b>                
-            </ion-col>                   
-            <ion-col col-8>
-                {{item.name}}
-            </ion-col>   
-        </ion-row>
+        <ion-grid *ngIf="item.visible" (click)="ejecute(item)">      
 
-        <ion-row>     
-            <ion-col col-2>
-                <b>Email</b>                
-            </ion-col>     
-            <ion-col col-8>
-                {{item.email[1]}}
-            </ion-col> 
-        </ion-row>
+            <ion-row >     
+                <ion-col col-3>
+                    <b>Nombre</b>                
+                </ion-col>                   
+                <ion-col col-8 align-self-end>
+                    {{item.name}}
+                </ion-col>   
+            </ion-row>
 
-        <ion-row >     
-            <ion-col col-3>
-                <b>Teléfono</b>                
-            </ion-col>       
-            <ion-col col-8>
-                {{item.telefono}}
-            </ion-col>             
-        </ion-row>
+            <ion-row > 
+                <ion-col col-3>
+                    <b>Email</b>                
+                </ion-col>     
+                <ion-col col-8 align-self-end>
+                    {{item.email[1]}}
+                </ion-col> 
+            </ion-row>
 
-        <ion-row  class="borde">     
-            <ion-col col-2>
-                <b>Hotel</b>                
-            </ion-col>       
-            <ion-col col-8>
-                {{item.nombre_hotel}}
-            </ion-col>             
-        </ion-row>
+            <ion-row>     
+                <ion-col col-3>
+                    <b>Teléfono</b>                
+                </ion-col>       
+                <ion-col col-8 align-self-end>
+                    {{!!item.telefono?item.telefono:''}}
+                </ion-col>             
+            </ion-row>
 
-    </ion-grid>
+            <ion-row  class="borde">     
+                <ion-col col-3>
+                    <b>Hotel</b>                
+                </ion-col>       
+                <ion-col col-8 align-self-end>
+                    {{!!item.nombre_hotel?item.nombre_hotel:''}}
+                </ion-col>             
+            </ion-row>
+
+        </ion-grid>
+    </div>
+
 
 </ion-content>

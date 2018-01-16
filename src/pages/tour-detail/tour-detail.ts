@@ -9,7 +9,6 @@ import {NavController, NavParams} from 'ionic-angular';
 export class TourDetailPage {
 
     item;
-    prx = true;
     editable = false;
     constructor(public navCtrl: NavController, public navParams: NavParams) {
         this.item = this.navParams.get('item');

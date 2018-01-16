@@ -14,6 +14,17 @@ import { NavController, NavParams } from 'ionic-angular';
 })
 export class SincPage {
 
+  item = {
+      name:'',
+      email:'',
+      telefono:'',
+      hotel:'',
+      is_padrino:'',
+      es_tarjeta:'',
+      es_pay_pal:'',
+      gracias:'',
+      observaciones:''
+  };
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
