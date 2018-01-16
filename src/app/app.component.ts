@@ -37,7 +37,7 @@ export class MyApp {
             {title: 'Pago Diario', component: PagoPage},
             {title: 'Salario Guías', component: SalarioPage},
             {title: 'Gastos Extras', component: HomePage},
-            {title: 'Sincrinizar', component: ListPage}
+            {title: 'Salir', component: ListPage}
         ];
 
     }

@@ -28,7 +28,9 @@
         [currentDate]="calendar.currentDate"   
         [formatDayHeader]="calendar.formatDayHeader"            
         [formatMonthTitle]="calendar.formatMonthTitle"
-        [noEventsLabel]="calendar.noEventsLabel"          
+        [noEventsLabel]="calendar.noEventsLabel"  
+        (onTitleChanged)="onViewTitleChanged($event)"        
+        (onEventSelected)="onEventSelected($event)"
         step="30">
     </calendar>
 

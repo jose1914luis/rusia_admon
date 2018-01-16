@@ -2,7 +2,7 @@ import {NavController, NavParams, AlertController} from 'ionic-angular';
 import {Component} from '@angular/core';
 import {Storage} from '@ionic/storage';
 import {HomePage} from '../../pages/home/home';
-import {CiudadPage} from '../../pages/ciudad/ciudad';
+import {AsignarPage} from '../../pages/asignar/asignar';
 import {global} from '../../components/credenciales/credenciales';
 
 declare var OdooApi: any;
@@ -56,7 +56,7 @@ export class ListPage {
             function (uid) {
 
                 console.log(uid);
-                self.navCtrl.setRoot(CiudadPage);
+                self.navCtrl.setRoot(AsignarPage);
 
             },
             function () {
