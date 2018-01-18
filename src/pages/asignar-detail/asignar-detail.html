@@ -1,26 +1,170 @@
 <!--
-  Generated template for the AsignarDetailPage page.
+  Generated template for the TourDetailPage page.
 
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
 <ion-header>
 
-    <ion-navbar>
-        <ion-title>asignarDetail</ion-title>
-    </ion-navbar>
-
+    <ion-segment [(ngModel)]="icons">
+        <ion-segment-button value="camera" icon-start (click)="editar()">
+                            <ion-icon ios="ios-create" md="md-create"></ion-icon>
+            Editar
+        </ion-segment-button>
+        <ion-segment-button value="bookmark" icon-start>
+            <ion-icon ios="ios-cloud-upload" md="md-cloud-upload"></ion-icon>
+            Guardar
+        </ion-segment-button>
+    </ion-segment>
 </ion-header>
 
 
-<ion-content padding>
-    <!--<ion-tabs>
-        <ion-tab [root]="tab1Root"></ion-tab>
-        <ion-tab [root]="tab2Root"></ion-tab>
-        <ion-tab [root]="tab3Root"></ion-tab>
-    </ion-tabs>-->
+<ion-content>
+
+    <ion-grid>                 
+        <ion-row align-items-center>  
+            <ion-col col-3>
+                <b>Tour</b>
+            </ion-col>
+            <ion-col col-8>
+                <ion-input name="tour_id"  [readonly]="!editable" type="text" [(ngModel)]="item.tour_id"></ion-input>                
+            </ion-col>       
+        </ion-row>        
+        <ion-row align-items-center>  
+            <ion-col col-3>
+                <b>Guía</b>
+            </ion-col>
+            <ion-col col-8>
+                <ion-input name="guia_id"  [readonly]="!editable" type="text" [(ngModel)]="item.guia_id"></ion-input>  
+            </ion-col>       
+        </ion-row>
+        <ion-row align-items-center>  
+
+            <ion-col col-3>
+                <b>Fecha Fin</b>
+            </ion-col>
+            <ion-col col-4>
+                <ion-input name="date_end"  [readonly]="!editable" type="text" [(ngModel)]="item.date_end"></ion-input>                
+            </ion-col> 
+        </ion-row>
+
+        <ion-row align-items-center>  
+            <ion-col col-3>
+                <b>Fecha Inicio</b>
+            </ion-col>
+            <ion-col col-4>
+                <ion-input name="date_begin"  [readonly]="!editable" type="text" [(ngModel)]="item.date_begin"></ion-input>
+            </ion-col> 
+        </ion-row>
+        <ion-row align-items-center>  
+            <ion-col col-3>
+                <b>Entregado</b>
+            </ion-col>
+            <ion-col col-1>
+                <ion-checkbox  [disabled] = "!editable" [(ngModel)]="item.entregado"></ion-checkbox>
+            </ion-col>       
+        </ion-row>
+
+        <ion-row align-items-center>  
+            <ion-col col-4>
+                <b>PAX</b>
+            </ion-col>             
+        </ion-row>
+        <ion-row align-items-center>  
+            <ion-col col-2>
+                <b>Pago</b>
+            </ion-col>             
+            <ion-col col-3>
+                <b>Terceros</b>
+            </ion-col>   
+            <ion-col col-3>
+                <b>Todo Inc</b>
+            </ion-col>   
+            <ion-col col-2>
+                <b>Total</b>
+            </ion-col>   
+        </ion-row>
+        <ion-row align-items-center>  
+            <ion-col col-2>
+                <ion-input name="cost_one"  [readonly]="!editable" type="number" [(ngModel)]="item.total_personas"></ion-input>                
+            </ion-col>             
+            <ion-col col-3>
+                <ion-input name="cost_two"  [readonly]="!editable" type="number" [(ngModel)]="item.personas_terceros"></ion-input>
+
+            </ion-col>   
+            <ion-col col-3>
+                <ion-input name="cost_three"  [readonly]="!editable" type="number" [(ngModel)]="item.personas_all_in"></ion-input>
+
+            </ion-col>   
+            <ion-col col-2>
+                <ion-input  name="cost_four"  [readonly]="!editable" type="number" [(ngModel)]="item.total_personas"></ion-input>
+
+            </ion-col>   
+        </ion-row>
+
+
+        <ion-row align-items-center>  
+            <ion-col col-4>
+                <b>TOTAL</b>
+            </ion-col>             
+        </ion-row>
+        <ion-row align-items-center>  
+            <ion-col col-2>
+                <b>EUR</b>
+            </ion-col>             
+            <ion-col col-2>
+                <b>USD</b>
+            </ion-col>   
+            <ion-col col-2>
+                <b>RUB</b>
+            </ion-col>   
+            <ion-col col-2>
+                <b>PP</b>
+            </ion-col>   
+            <ion-col col-2>
+                <b>Tarj</b>
+            </ion-col>    
+        </ion-row>
+
+        <ion-row align-items-center>  
+            <ion-col col-2>
+                <ion-input  name="gasto_one"  [readonly]="!editable" type="number" [(ngModel)]="item.total_euro_res"></ion-input>
+
+            </ion-col>             
+            <ion-col col-2>
+                <ion-input  name="gasto_two"  [readonly]="!editable" type="number" [(ngModel)]="item.total_dolar_res"></ion-input>
+
+            </ion-col>   
+            <ion-col col-2>
+                <ion-input  name="gasto_three"  [readonly]="!editable" type="number" [(ngModel)]="item.total_rublo_res"></ion-input>
+
+            </ion-col>   
+            <ion-col col-2>
+                <ion-input  name="gasto_four"  [readonly]="!editable" type="number" [(ngModel)]="item.pay_pal"></ion-input>
+
+            </ion-col>   
+            <ion-col col-2>
+                <ion-input  name="gasto_five"  [readonly]="!editable" type="number" [(ngModel)]="item.tarjeta"></ion-input>
+
+            </ion-col>   
+        </ion-row>
+
+        <ion-row align-items-center>  
+            <ion-col col-4>
+                <b>Observaciones</b>
+            </ion-col>             
+        </ion-row>
+        <ion-row align-items-center>  
+            <ion-col col-12>
+                <ion-textarea rows="3"  [readonly]="!editable" [(ngModel)]="item.observaciones"></ion-textarea>
+            </ion-col>             
+        </ion-row>
+    </ion-grid>
+
     
-    
+
+   
+
 
 
 </ion-content>

@@ -1,0 +1,22 @@
+<!--
+  Generated template for the TabsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+    <ion-navbar>
+        <ion-title>Consultar Tour </ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+
+<ion-content >
+    <ion-tabs selectedIndex="0">
+        <ion-tab tabTitle="Tour" [root]="tab1Root"  [rootParams]="item"></ion-tab>
+        <ion-tab tabTitle="Reservas" [root]="tab2Root" [rootParams]="item"></ion-tab>
+        <ion-tab tabTitle="Futuras" [root]="tab3Root" [rootParams]="item"></ion-tab>
+    </ion-tabs>
+</ion-content>

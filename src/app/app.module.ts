@@ -13,6 +13,10 @@ import {PagoPage} from '../pages/pago/pago';
 import {SalarioPage} from '../pages/salario/salario';
 import {SolPage} from '../pages/sol/sol';
 import {SincPage} from '../pages/sinc/sinc';
+import {ReservasPage} from '../pages/reservas/reservas';
+import {FuturasPage} from '../pages/futuras/futuras';
+
+import {TabsPage} from '../pages/tabs/tabs';
 
 import {CityDetailPage} from '../pages/city-detail/city-detail';
 import {TourDetailPage} from '../pages/tour-detail/tour-detail';
@@ -40,7 +44,7 @@ import {SplashScreen} from '@ionic-native/splash-screen';
         NomPage,
         PagoPage,
         SalarioPage,
-        SolPage, 
+        SolPage,
         SincPage,
         CityDetailPage,
         TourDetailPage,
@@ -48,7 +52,10 @@ import {SplashScreen} from '@ionic-native/splash-screen';
         PagoDetailPage,
         ClienteDetailPage,
         NomDetailPage,
-        AsignarDetailPage
+        AsignarDetailPage,
+        ReservasPage,
+        FuturasPage,
+        TabsPage
     ],
     imports: [
         BrowserModule,
@@ -75,7 +82,10 @@ import {SplashScreen} from '@ionic-native/splash-screen';
         PagoDetailPage,
         ClienteDetailPage,
         NomDetailPage,
-        AsignarDetailPage
+        AsignarDetailPage,
+        ReservasPage,
+        FuturasPage,
+        TabsPage
     ],
     providers: [
         Network,
