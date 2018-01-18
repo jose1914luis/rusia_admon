@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {NavController, NavParams} from 'ionic-angular';
 import {global} from '../../components/credenciales/credenciales';
+import {AsignarDetailPage} from '../../pages/asignar-detail/asignar-detail';
 
 declare var OdooApi: any;
 @Component({
@@ -49,8 +50,8 @@ export class AsignarPage {
                         //self.tours = value2;
                         //hacerla desde el principio y guardarla en un store
                         odoo.search_read('tours.guia', [['id', '<>', '0']], ['id', 'guia_id', 'tour_id', 'date_begin',
-                         'date_end', 'personas_terceros', 'personas_all_in', 'total_personas', 'total_rublo', 'total_dolar', 'total_rublo_res'
-                         , 'total_euro_res', 'total_dolar_res', 'pay_pal', 'tarjeta', 'is_free', 'is_private', 'entregado', 'state', 'observaciones']).then(
+                            'date_end', 'personas_terceros', 'personas_all_in', 'total_personas', 'total_rublo', 'total_dolar', 'total_rublo_res'
+                            , 'total_euro_res', 'total_dolar_res', 'pay_pal', 'tarjeta', 'is_free', 'is_private', 'entregado', 'state', 'observaciones']).then(
                             function (value) {
                                 console.log(value);
                                 for (var key in value) {
@@ -70,6 +71,17 @@ export class AsignarPage {
                                                 guia: (value[key]).guia_id[1],
                                                 ubicacion: (value2[key2]).company_id[1],
                                                 tour_id: value[key].id,
+                                                entregado: value[key].entregado,
+                                                personas_terceros: value[key].personas_terceros,
+                                                personas_all_in: value[key].personas_all_in,
+                                                total_personas: value[key].total_personas,
+                                                total_rublo: value[key].total_rublo,
+                                                total_dolar: value[key].total_dolar,
+                                                total_rublo_res: value[key].total_rublo_res,
+                                                total_euro_res: value[key].total_euro_res,
+                                                pay_pal: value[key].pay_pal,
+                                                tarjeta: value[key].tarjeta,
+                                                observaciones: value[key].observaciones,
                                                 home: false
                                             }
                                             self.events.push(evento);
@@ -84,7 +96,7 @@ export class AsignarPage {
                             function () {
 
                             }
-                        )
+                            )
 
 
                     },
@@ -104,10 +116,6 @@ export class AsignarPage {
         console.log('ionViewDidLoad CityDetailPage');
     }
 
-    ejecute(item) {
-        //        this.navCtrl.push(TourDetailPage, {item:item});
-    }
-
     onViewTitleChanged(title) {
         this.viewTitle = title;
     }
@@ -121,7 +129,7 @@ export class AsignarPage {
     }
     onEventSelected(evt) {
 
-       console.log(evt);
+        this.navCtrl.push(AsignarDetailPage, {item: evt});
     }
 
 }

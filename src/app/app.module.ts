@@ -20,12 +20,14 @@ import {SalarioDetailPage} from '../pages/salario-detail/salario-detail';
 import {PagoDetailPage} from '../pages/pago-detail/pago-detail';
 import {ClienteDetailPage} from '../pages/cliente-detail/cliente-detail';
 import {NomDetailPage} from '../pages/nom-detail/nom-detail';
+import {AsignarDetailPage} from '../pages/asignar-detail/asignar-detail';
 
 import {IonicStorageModule} from '@ionic/storage';
 import {Network} from '@ionic-native/network';
 import {NgCalendarModule} from 'ionic2-calendar';
 import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
+
 
 @NgModule({
     declarations: [
@@ -45,7 +47,8 @@ import {SplashScreen} from '@ionic-native/splash-screen';
         SalarioDetailPage,
         PagoDetailPage,
         ClienteDetailPage,
-        NomDetailPage
+        NomDetailPage,
+        AsignarDetailPage
     ],
     imports: [
         BrowserModule,
@@ -71,7 +74,8 @@ import {SplashScreen} from '@ionic-native/splash-screen';
         SalarioDetailPage,
         PagoDetailPage,
         ClienteDetailPage,
-        NomDetailPage
+        NomDetailPage,
+        AsignarDetailPage
     ],
     providers: [
         Network,
