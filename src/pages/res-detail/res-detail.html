@@ -5,20 +5,26 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
-
+    <ion-segment color="primary">
+        <ion-segment-button value="friends" (ionSelect)="editar()">
+            Editar
+        </ion-segment-button>
+        <ion-segment-button value="guardar" (ionSelect)="guardar()">
+            Guardar
+        </ion-segment-button>
+    </ion-segment>
 </ion-header>
 
 
 <ion-content>
 
-    <ion-grid *ngFor="let item of reservas; let i = index" (click)="ejecute(item)">                 
+    <ion-grid >                 
         <ion-row align-items-center>  
             <ion-col col-3>
                 <b>Asistió?</b>
             </ion-col>
             <ion-col col-1>
-                {{item.asistencia}}         
+                <ion-checkbox  [disabled] = "!editable" [(ngModel)]="item.asistencia"></ion-checkbox>              
             </ion-col>       
         </ion-row>        
         <ion-row align-items-center>  
@@ -26,7 +32,7 @@
                 <b>Nombre</b>
             </ion-col>
             <ion-col col-8>
-                {{item.name[1]}}  
+                <ion-input name="name"  [readonly]="!editable" type="text" [(ngModel)]="item.name[1]"></ion-input>  
             </ion-col>       
         </ion-row>
         <ion-row align-items-center>  
@@ -34,8 +40,8 @@
             <ion-col col-3>
                 <b>email</b>
             </ion-col>
-            <ion-col col-8>
-                {{item.email[1]}}                
+            <ion-col col-4>
+                <ion-input name="email"  [readonly]="!editable" type="text" [(ngModel)]="item.email[1]"></ion-input>                
             </ion-col> 
         </ion-row>
 
@@ -60,18 +66,18 @@
         </ion-row>
         <ion-row align-items-center>  
             <ion-col col-2>
-                {{item.total_personas}}                
+                <ion-input name="cost_one"  [readonly]="!editable" type="number" [(ngModel)]="item.total_personas"></ion-input>                
             </ion-col>             
             <ion-col col-3>
-                {{item.personas_terceros}}
+                <ion-input name="cost_two"  [readonly]="!editable" type="number" [(ngModel)]="item.personas_terceros"></ion-input>
 
             </ion-col>   
             <ion-col col-3>
-                {{item.personas_all_in}}
+                <ion-input name="cost_three"  [readonly]="!editable" type="number" [(ngModel)]="item.personas_all_in"></ion-input>
 
             </ion-col>   
             <ion-col col-2>
-                {{item.total_personas}}
+                <ion-input  name="cost_four"  [readonly]="!editable" type="number" [(ngModel)]="item.total_personas"></ion-input>
 
             </ion-col>   
         </ion-row>
@@ -97,23 +103,23 @@
 
         <ion-row align-items-center>  
             <ion-col col-2>
-                {{item.abono_euros}}
+                <ion-input  name="gasto_one"  [readonly]="!editable" type="number" [(ngModel)]="item.abono_euros"></ion-input>
 
             </ion-col>             
             <ion-col col-2>
-                {{item.abono_dolar}}
+                <ion-input  name="gasto_two"  [readonly]="!editable" type="number" [(ngModel)]="item.abono_dolar"></ion-input>
 
             </ion-col>   
             <ion-col col-2>
-                {{item.abono_rublos}}
+                <ion-input  name="gasto_three"  [readonly]="!editable" type="number" [(ngModel)]="item.abono_rublos"></ion-input>
 
             </ion-col>   
             <ion-col col-2>
-                {{item.pay_pal}}
+                <ion-input  name="gasto_four"  [readonly]="!editable" type="number" [(ngModel)]="item.pay_pal"></ion-input>
 
             </ion-col>   
             <ion-col col-2>
-                {{item.tarjeta}}
+                <ion-input  name="gasto_five"  [readonly]="!editable" type="number" [(ngModel)]="item.tarjeta"></ion-input>
 
             </ion-col>   
         </ion-row>
@@ -137,15 +143,15 @@
 
         <ion-row align-items-center>  
             <ion-col col-2>
-                {{item.euro_exportado}}
+                <ion-input  name="gasto_one"  [readonly]="!editable" type="number" [(ngModel)]="item.euro_exportado"></ion-input>
 
             </ion-col>             
             <ion-col col-2>
-                {{item.dolar_exportado}}
+                <ion-input  name="gasto_two"  [readonly]="!editable" type="number" [(ngModel)]="item.dolar_exportado"></ion-input>
 
             </ion-col>   
             <ion-col col-2>
-                {{item.rublo_exportado}}
+                <ion-input  name="gasto_three"  [readonly]="!editable" type="number" [(ngModel)]="item.rublo_exportado"></ion-input>
 
             </ion-col> 
         </ion-row>
@@ -155,9 +161,9 @@
                 <b>Observaciones</b>
             </ion-col>             
         </ion-row>
-        <ion-row align-items-center  class="borde">  
+        <ion-row align-items-center>  
             <ion-col col-12>
-                {{item.observaciones}}
+                <ion-textarea rows="3"  [readonly]="!editable" [(ngModel)]="item.observaciones"></ion-textarea>
             </ion-col>             
         </ion-row>
     </ion-grid>

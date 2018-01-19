@@ -1,24 +1,25 @@
-import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
-
-/**
- * Generated class for the ReservasPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import {Component} from '@angular/core';
+import {NavController, NavParams} from 'ionic-angular';
+import {ResDetailPage} from '../../pages/res-detail/res-detail';
 
 @Component({
-  selector: 'page-reservas',
-  templateUrl: 'reservas.html',
+    selector: 'page-reservas',
+    templateUrl: 'reservas.html',
 })
 export class ReservasPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
+    reservas;
+    editable = false;
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ReservasPage');
-  }
+    constructor(public navCtrl: NavController, public navParams: NavParams) {
+        this.reservas = this.navParams.data.reservas;
+    }
 
+    ionViewDidLoad() {
+        console.log('ionViewDidLoad ReservasPage');
+    }
+    ejecute(item){
+        console.log(item);
+        this.navCtrl.push(ResDetailPage, {item:item})
+    }
 }

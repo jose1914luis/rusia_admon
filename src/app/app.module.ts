@@ -15,6 +15,7 @@ import {SolPage} from '../pages/sol/sol';
 import {SincPage} from '../pages/sinc/sinc';
 import {ReservasPage} from '../pages/reservas/reservas';
 import {FuturasPage} from '../pages/futuras/futuras';
+import {NuevoPage} from '../pages/nuevo/nuevo';
 
 import {TabsPage} from '../pages/tabs/tabs';
 
@@ -25,6 +26,7 @@ import {PagoDetailPage} from '../pages/pago-detail/pago-detail';
 import {ClienteDetailPage} from '../pages/cliente-detail/cliente-detail';
 import {NomDetailPage} from '../pages/nom-detail/nom-detail';
 import {AsignarDetailPage} from '../pages/asignar-detail/asignar-detail';
+import {ResDetailPage} from '../pages/res-detail/res-detail';
 
 import {IonicStorageModule} from '@ionic/storage';
 import {Network} from '@ionic-native/network';
@@ -55,7 +57,9 @@ import {SplashScreen} from '@ionic-native/splash-screen';
         AsignarDetailPage,
         ReservasPage,
         FuturasPage,
-        TabsPage
+        TabsPage,
+        ResDetailPage,
+        NuevoPage
     ],
     imports: [
         BrowserModule,
@@ -85,7 +89,9 @@ import {SplashScreen} from '@ionic-native/splash-screen';
         AsignarDetailPage,
         ReservasPage,
         FuturasPage,
-        TabsPage
+        TabsPage,
+        ResDetailPage,
+        NuevoPage
     ],
     providers: [
         Network,
