@@ -15,7 +15,6 @@ import {NavController, NavParams} from 'ionic-angular';
 export class SalarioDetailPage {
 
     item;
-    editable = false;
     constructor(public navCtrl: NavController, public navParams: NavParams) {
         this.item = this.navParams.get('item');
     }
@@ -25,10 +24,10 @@ export class SalarioDetailPage {
     }
     editar() {
 
-        if (!this.editable) {
-            this.editable = true;
+        if (!this.item.editable) {
+            this.item.editable = true;
         } else {
-            this.editable = false;
+            this.item.editable = false;
         }
     }
 

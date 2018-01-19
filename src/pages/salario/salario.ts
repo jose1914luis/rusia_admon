@@ -12,21 +12,24 @@ declare var OdooApi: any;
 export class SalarioPage {
 
     items;
-    cargar = true;
+    cargar;
     mensaje = '';
     constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController) {
 
+    }
+
+    ionViewDidLoad() {
+
+        this.cargar = true
         var self = this;
         var odoo = new OdooApi(global.url, global.db);
+        this.items = null;
         odoo.login(global.username, global.password).then(
             function (uid) {
-                //                odoo.search_read('tours.clientes.email', [['id', '!=', '0']], ['name', 'ilike']).then(
-                //                    function (value) {
-                //                        console.log(value);
                 odoo.search_read('tours.gastos.generales', [['id', '!=', '0']],
                     ['name', 'sala_guia', 'city_id', 'total_metro']).then(
                     function (value2) {
-                        console.log(value2);
+//                        console.log(value2);
                         self.items = value2
                         self.cargar = false;
                     },
@@ -34,22 +37,12 @@ export class SalarioPage {
                         self.presentAlert('Falla', 'Imposible Conectar');
                     }
                     );
-                //self.items = valuetours.clientes
-                //                    },
-                //                    function () {
-                //                        self.presentAlert('Falla', 'Imposible Conectar');
-                //                    }
-                //                );
 
             },
             function () {
 
             }
         );
-    }
-
-    ionViewDidLoad() {
-        console.log('ionViewDidLoad CiudadPage');
     }
 
     presentAlert(titulo, texto) {
@@ -62,8 +55,19 @@ export class SalarioPage {
     }
 
     ejecute(item) {
-
+        item.nuevo = true;
+        item.editable = false;
         this.navCtrl.push(SalarioDetailPage, {item: item});
+    }
+
+    nuevo() {
+        this.navCtrl.push(SalarioDetailPage, 
+        {item: {name: '', city_id: ['', ''], sala_guia: '', total_metro: '',
+        nuevo:false, editable:true}})
+    }
+
+    refresh() {
+        this.ionViewDidLoad();
     }
 }
 
