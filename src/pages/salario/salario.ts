@@ -22,14 +22,15 @@ export class SalarioPage {
 
         this.cargar = true
         var self = this;
-        var odoo = new OdooApi(global.url, global.db);
         this.items = null;
+        var odoo = new OdooApi(global.url, global.db);
+        
         odoo.login(global.username, global.password).then(
             function (uid) {
                 odoo.search_read('tours.gastos.generales', [['id', '!=', '0']],
                     ['name', 'sala_guia', 'city_id', 'total_metro']).then(
                     function (value2) {
-//                        console.log(value2);
+                        console.log(value2);
                         self.items = value2
                         self.cargar = false;
                     },
