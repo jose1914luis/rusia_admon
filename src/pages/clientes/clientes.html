@@ -1,21 +1,21 @@
 <ion-header>
-    <ion-navbar>
+    <ion-navbar color="primary">
         <button ion-button menuToggle>
             <ion-icon name="menu"></ion-icon>
         </button>
         <ion-title>Clientes</ion-title>
     </ion-navbar>
-
-    <ion-segment [(ngModel)]="icons">
-        <ion-segment-button value="camera" icon-start (click)="buscar()">
-                            <ion-icon ios="ios-search" md="md-search"></ion-icon>
-            Buscar
-        </ion-segment-button>
-        <ion-segment-button value="bookmark" icon-start (click)="nuevo()">
-            <ion-icon ios="ios-add" md="md-add"></ion-icon>
-            Nuevo
-        </ion-segment-button>
-    </ion-segment>
+    <ion-buttons end>
+        <button ion-button icon-only (click)="refresh()">
+                <ion-icon ios="ios-refresh" md="md-refresh"></ion-icon>
+        </button>
+        <button ion-button icon-only (click)="buscar()">
+                <ion-icon ios="ios-search" md="md-search"></ion-icon>
+        </button>
+        <button ion-button icon-only (click)="nuevo()">
+                <ion-icon name="add"></ion-icon>
+        </button>
+    </ion-buttons>
 </ion-header>
 
 

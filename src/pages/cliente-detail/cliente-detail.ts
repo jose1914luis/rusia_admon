@@ -51,7 +51,8 @@ export class ClienteDetailPage {
                             self.item.es_tarjeta = false;
                         }
                         self.item.asistencia = value2[0].asistencia;
-                        self.item.observaciones = value2[0].observaciones;
+                        self.item.observaciones = value2[0].observaciones?value2[0].observaciones:'';
+                        self.item.nombre_hotel = self.item.nombre_hotel?self.item.nombre_hotel:'';
                         self.item.fecha = value2[0].fecha;                                                
                         console.log(self.item);
                         self.cargar = false;
@@ -88,6 +89,45 @@ export class ClienteDetailPage {
         } else {
             this.editable = false;
         }
+    }
+    
+    guardar() {
+
+        this.cargar = true;
+        var self = this;
+        
+        var odoo = new OdooApi(global.url, global.db);
+        odoo.login(global.username, global.password).then(
+            function (uid) {
+
+                odoo.write('tours.pago.guia', self.item.id, {
+                    name:self.item.name,
+                    semana:self.item.semana,                     
+                    total_eur:self.item.total_eur,
+                    total_usd:self.item.total_usd,
+                    total_res:self.item.total_res,
+                    total_rub:self.item.total_rub, 
+                    total_metro:self.item.total_metro,
+                    pax_pago:self.item.pax_pago
+                }).then(
+                    function (value2) {
+                        console.log(value2);
+                        if (!value2) {
+                            self.presentAlert('Falla', 'Error al Guardar, intente nuevamente');
+                        }
+                        self.cargar = false;
+                    },
+                    function () {
+                        self.presentAlert('Falla', 'Error al Guardar, intente nuevamente');
+                    }
+                    );
+
+            },
+            function () {
+
+            }
+        );
+
     }
 
 }

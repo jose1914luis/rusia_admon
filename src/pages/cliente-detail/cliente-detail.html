@@ -14,7 +14,7 @@
             <ion-icon ios="ios-create" md="md-create"></ion-icon>
             Editar
         </ion-segment-button>
-        <ion-segment-button value="bookmark" icon-start>
+        <ion-segment-button value="bookmark" icon-start (click)="guardar()">
             <ion-icon ios="ios-cloud-upload" md="md-cloud-upload"></ion-icon>
             Guardar
         </ion-segment-button>
@@ -101,7 +101,7 @@
                 <ion-textarea rows="3"  [readonly]="!editable" [(ngModel)]="item.observaciones"></ion-textarea>
             </ion-col>             
         </ion-row>
-        <ion-row align-items-center>     
+        <ion-row align-items-center *ngIf="!editable">     
             <ion-col col-3>
                 <b>Tour</b>                
             </ion-col>                   
@@ -110,7 +110,7 @@
                 
             </ion-col>   
         </ion-row>
-        <ion-row align-items-center>     
+        <ion-row align-items-center *ngIf="!editable">     
             <ion-col col-3>
                 <b>Fecha</b>                
             </ion-col>                   
@@ -119,7 +119,7 @@
                 
             </ion-col>   
         </ion-row>
-         <ion-row align-items-center>     
+         <ion-row align-items-center *ngIf="!editable">     
             <ion-col col-3>
                 <b>Asistio</b>                
             </ion-col>                   
@@ -129,12 +129,12 @@
         </ion-row>
         
         
-        <ion-row align-items-center>  
+        <ion-row align-items-center *ngIf="!editable">  
             <ion-col col-4>
                 <b>PAX</b>
             </ion-col>             
         </ion-row>
-        <ion-row align-items-center>  
+        <ion-row align-items-center *ngIf="!editable">  
             <ion-col col-2>
                 <b>Pago</b>
             </ion-col>             
@@ -149,7 +149,7 @@
             </ion-col>   
         </ion-row>
 
-        <ion-row align-items-center>  
+        <ion-row align-items-center *ngIf="!editable">  
             <ion-col col-2>
                 <ion-input  name="personas_pago"  [readonly]="!editable" type="number" [(ngModel)]="item.personas_pago"></ion-input>
 
@@ -168,7 +168,7 @@
             </ion-col> 
         </ion-row>
         
-        <ion-row align-items-center>  
+        <ion-row align-items-center *ngIf="!editable">  
             <ion-col col-2>
                 <b>EUR</b>
             </ion-col>             
@@ -186,7 +186,7 @@
             </ion-col> 
         </ion-row>
 
-        <ion-row align-items-center>         
+        <ion-row align-items-center *ngIf="!editable">         
             <ion-col col-2>
                 <ion-input  name="abono_euros"  [readonly]="!editable" type="number" [(ngModel)]="item.abono_euros"></ion-input>
             </ion-col>   
@@ -205,12 +205,12 @@
         </ion-row>
         
         
-        <ion-row align-items-center>  
+        <ion-row align-items-center *ngIf="!editable">  
             <ion-col col-4>
                 <b>EXP</b>
             </ion-col>             
         </ion-row>
-        <ion-row align-items-center>  
+        <ion-row align-items-center *ngIf="!editable">  
             <ion-col col-2>
                 <b>EUR</b>
             </ion-col>             
@@ -222,7 +222,7 @@
             </ion-col>  
         </ion-row>
 
-        <ion-row align-items-center>         
+        <ion-row align-items-center *ngIf="!editable">         
             <ion-col col-2>
                 <ion-input  name="euros_exportado"  [readonly]="!editable" type="number" [(ngModel)]="item.euros_exportado"></ion-input>
             </ion-col>   
