@@ -12,6 +12,7 @@ export class CityDetailPage {
 
     item;
     tours;
+    cargar = true;
     constructor(public navCtrl: NavController, public navParams: NavParams) {
 
         this.item = this.navParams.get('item');
@@ -26,7 +27,7 @@ export class CityDetailPage {
                     'gastos_minimos', 'gastos_extra', 'gastos_tour', 'cost_one', 'cost_two', 'cost_three',
                     'cost_four', 'cost_five', 'cost_six', 'cost_seven', 'cost_eight', 'cost_nine', 'cost_ten',
                     'cost_more_ten', 'gasto_one', 'gasto_two', 'gasto_three', 'gasto_four', 'gasto_five', 'gasto_six',
-                    'gasto_seven', 'gasto_eigh', 'gasto_nine', 'gasto_ten', 'gasto_more_ten', 'is_museo',
+                    'gasto_seven', 'gasto_eight', 'gasto_nine', 'gasto_ten', 'gasto_more_ten', 'is_museo',
                     'porcentaje_museo', 'is_extra', 'is_private', 'is_free', 'description']).then(
                     function (value) {
                         console.log(value);
@@ -47,6 +48,7 @@ export class CityDetailPage {
                                         }
                                     }
                                 }
+                                self.cargar = false;
                             },
                             function () {
 

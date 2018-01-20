@@ -52,16 +52,16 @@
         </ion-row>
         <ion-row align-items-center>  
             <ion-col col-3>
-                <b>Fecha Inicio</b>
+                <b>Hora Inicio</b>
             </ion-col>
             <ion-col col-3>
-                <ion-input name="date_begin"  [readonly]="!editable" type="text" [(ngModel)]="item.date_begin"></ion-input>
+                <ion-input name="init_hours"  [readonly]="!editable" type="text" [(ngModel)]="item.init_hours"></ion-input>
             </ion-col>       
             <ion-col col-3>
-                <b>Fecha Fin</b>
+                <b>Hora Fin</b>
             </ion-col>
             <ion-col col-3>
-                <ion-input name="date_end"  [readonly]="!editable" type="text" [(ngModel)]="item.date_end"></ion-input>                
+                <ion-input name="end_hours"  [readonly]="!editable" type="text" [(ngModel)]="item.end_hours"></ion-input>                
             </ion-col> 
         </ion-row>
         <ion-row align-items-center>  
@@ -182,7 +182,7 @@
 
             </ion-col>             
             <ion-col col-2>
-                <ion-input  name="cost_eigh"  [readonly]="!editable" type="number" [(ngModel)]="item.cost_eigh"></ion-input>
+                <ion-input  name="cost_eigh"  [readonly]="!editable" type="number" [(ngModel)]="item.cost_eight"></ion-input>
 
             </ion-col>   
             <ion-col col-2>
@@ -275,7 +275,7 @@
 
             </ion-col>             
             <ion-col col-2>
-                <ion-input  name="gasto_eigh"  [readonly]="!editable" type="number" [(ngModel)]="item.gasto_eigh"></ion-input>
+                <ion-input  name="gasto_eigh"  [readonly]="!editable" type="number" [(ngModel)]="item.gasto_eight"></ion-input>
 
             </ion-col>   
             <ion-col col-2>

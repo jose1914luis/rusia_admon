@@ -1,18 +1,28 @@
 <ion-header>
-    <ion-navbar>
+    <ion-navbar color="primary">
         <button ion-button menuToggle>
             <ion-icon name="menu"></ion-icon>
         </button>
         <ion-title>Ciudades</ion-title>
+        <ion-buttons end>
+            <button ion-button icon-only (click)="refresh()">
+                    <ion-icon ios="ios-refresh" md="md-refresh"></ion-icon>
+            </button>
+        </ion-buttons>
     </ion-navbar>
 </ion-header>
 
 
 <ion-content >
 
+    <div *ngIf="cargar" style="text-align: center">    
+        <ion-spinner name="circles"></ion-spinner><br>
+        <b>Cargando...</b>
+    </div>
+
     <ion-grid>      
 
-        <ion-row *ngFor="let item of items; let i = index" (click)="ejecute(item)">     
+        <ion-row class="borde" *ngFor="let item of items; let i = index" (click)="ejecute(item)">     
             <ion-col col-12>
                 <h3>{{item.name[1]}}</h3>
                 <p>{{item.administrador[1]}}</p>
