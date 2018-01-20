@@ -1,9 +1,3 @@
-<!--
-  Generated template for the TourDetailPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
 
     <ion-navbar>
@@ -12,11 +6,11 @@
     <!-- Segment buttons with icons -->
     <ion-segment [(ngModel)]="icons">
         <ion-segment-button value="camera" icon-start (click)="editar()">
-            <ion-icon ios="ios-create" md="md-create"></ion-icon>
+                            <ion-icon ios="ios-create" md="md-create"></ion-icon>
             Editar
         </ion-segment-button>
-        <ion-segment-button value="bookmark" icon-start>
-            <ion-icon ios="ios-cloud-upload" md="md-cloud-upload"></ion-icon>
+        <ion-segment-button value="bookmark" icon-start (ionSelect)="guardar()">
+                            <ion-icon ios="ios-cloud-upload" md="md-cloud-upload"></ion-icon>
             Guardar
         </ion-segment-button>
     </ion-segment>
@@ -25,10 +19,14 @@
 
 <ion-content>
 
+    <div *ngIf="cargar" style="text-align: center">    
+        <ion-spinner name="circles"></ion-spinner><br>
+        <b>Guardando...</b>
+    </div>
     <ion-grid>                 
         <ion-row align-items-center>  
             <ion-col col-3>
-                <b>Código:</b>
+                <b>Código</b>
             </ion-col>
             <ion-col col-8>
                 <ion-input name="codigo"  [readonly]="!editable" type="text" [(ngModel)]="item.codigo"></ion-input>                
@@ -36,7 +34,7 @@
         </ion-row>
         <ion-row align-items-center>  
             <ion-col col-3>
-                <b>Nombre:</b>
+                <b>Nombre</b>
             </ion-col>
             <ion-col col-8>
                 <ion-textarea rows="3" [readonly]="!editable" [(ngModel)]="item.name"></ion-textarea>      
@@ -44,7 +42,7 @@
         </ion-row>
         <ion-row align-items-center>  
             <ion-col col-3>
-                <b>Ciudad:</b>
+                <b>Ciudad</b>
             </ion-col>
             <ion-col col-8>
                 <ion-input name="company_id"  [readonly]="!editable" type="text" [(ngModel)]="item.company_id[1]"></ion-input>                
@@ -171,8 +169,8 @@
             <ion-col col-2>
                 <b>10 PAX</b>
             </ion-col>   
-            <ion-col col-4>
-                <b>Mas de 10 PAX</b>
+            <ion-col col-3>
+                <b>+10 PAX</b>
             </ion-col>   
         </ion-row>
 
@@ -193,7 +191,7 @@
                 <ion-input  name="cost_ten"  [readonly]="!editable" type="number" [(ngModel)]="item.cost_ten"></ion-input>
 
             </ion-col>   
-            <ion-col col-4>
+            <ion-col col-3>
                 <ion-input  name="cost_more_ten"  [readonly]="!editable" type="number" [(ngModel)]="item.cost_more_ten"></ion-input>
 
             </ion-col>     
