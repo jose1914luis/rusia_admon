@@ -4,18 +4,19 @@
             <ion-icon name="menu"></ion-icon>
         </button>
         <ion-title>Clientes</ion-title>
+        <ion-buttons end>
+            <button ion-button icon-only (click)="refresh()">
+                    <ion-icon ios="ios-refresh" md="md-refresh"></ion-icon>
+            </button>
+            <button ion-button icon-only (click)="buscar()">
+                    <ion-icon ios="ios-search" md="md-search"></ion-icon>
+            </button>
+            <button ion-button icon-only (click)="nuevo()">
+                    <ion-icon name="add"></ion-icon>
+            </button>
+        </ion-buttons>
     </ion-navbar>
-    <ion-buttons end>
-        <button ion-button icon-only (click)="refresh()">
-                <ion-icon ios="ios-refresh" md="md-refresh"></ion-icon>
-        </button>
-        <button ion-button icon-only (click)="buscar()">
-                <ion-icon ios="ios-search" md="md-search"></ion-icon>
-        </button>
-        <button ion-button icon-only (click)="nuevo()">
-                <ion-icon name="add"></ion-icon>
-        </button>
-    </ion-buttons>
+
 </ion-header>
 
 

@@ -51,7 +51,7 @@ export class ClienteDetailPage {
                             self.item.es_tarjeta = false;
                         }
                         self.item.asistencia = value2[0].asistencia;
-                        self.item.observaciones = value2[0].observaciones?value2[0].observaciones:'';
+                        self.item.observaciones = self.item.observaciones?self.item.observaciones:'';
                         self.item.nombre_hotel = self.item.nombre_hotel?self.item.nombre_hotel:'';
                         self.item.fecha = value2[0].fecha;                                                
                         console.log(self.item);
@@ -100,15 +100,13 @@ export class ClienteDetailPage {
         odoo.login(global.username, global.password).then(
             function (uid) {
 
-                odoo.write('tours.pago.guia', self.item.id, {
+                odoo.write('tours.clientes', self.item.id, {
+                    nombre_hotel:self.item.nombre_hotel,
+                    is_padrino:self.item.is_padrino,                     
                     name:self.item.name,
-                    semana:self.item.semana,                     
-                    total_eur:self.item.total_eur,
-                    total_usd:self.item.total_usd,
-                    total_res:self.item.total_res,
-                    total_rub:self.item.total_rub, 
-                    total_metro:self.item.total_metro,
-                    pax_pago:self.item.pax_pago
+                    observaciones:self.item.observaciones,
+                    active_email:self.item.active_email,
+                    telefono:self.item.telefono
                 }).then(
                     function (value2) {
                         console.log(value2);

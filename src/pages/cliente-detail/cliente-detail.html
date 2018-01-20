@@ -90,6 +90,15 @@
                 <ion-checkbox  [disabled] = "!editable" [(ngModel)]="item.es_pay_pal"></ion-checkbox>        
             </ion-col>    
         </ion-row>
+        <ion-row align-items-center>  
+            <ion-col col-8>
+                <b>Recibir Correo de Gracias?</b>
+            </ion-col>
+            <ion-col col-1>
+                <ion-checkbox  [disabled] = "!editable" [(ngModel)]="item.active_email"></ion-checkbox>
+            </ion-col>  
+        </ion-row>
+        
         
         <ion-row align-items-center>  
             <ion-col col-4>

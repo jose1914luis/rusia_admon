@@ -14,10 +14,22 @@ export class ClientesPage {
 
     items;
     cargar = true;
-    
+
     constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController) {
 
+    }
+
+    refresh() {
+        this.ionViewDidLoad();
+    }
+
+    nuevo() {
+        this.navCtrl.push(SincPage);
+    }
+
+    ionViewDidLoad() {
         var self = this;
+        this.cargar = true;
         var odoo = new OdooApi(global.url, global.db);
         odoo.login(global.username, global.password).then(
             function (uid) {
@@ -43,14 +55,6 @@ export class ClientesPage {
 
             }
         );
-    }
-
-    nuevo(){
-        this.navCtrl.push(SincPage);
-    }
-    
-    ionViewDidLoad() {
-        console.log('ionViewDidLoad CiudadPage');
     }
 
     presentAlert(titulo, texto) {
@@ -88,22 +92,22 @@ export class ClientesPage {
                 {
                     text: 'Buscar',
                     handler: data => {
-//                        console.log(data.nombre);
-//                        console.log(data.correo);
+                        //                        console.log(data.nombre);
+                        //                        console.log(data.correo);
                         if (data.nombre.length > 2 || data.correo.length > 5) {
                             for (let key in self.items) {
 
                                 self.items[key].visible = false;
-//                                console.log((self.items[key].name + "").includes(data.nombre + "") + '  ' + (self.items[key].email[1] + "").includes(data.correo + ""));
+                                //                                console.log((self.items[key].name + "").includes(data.nombre + "") + '  ' + (self.items[key].email[1] + "").includes(data.correo + ""));
                                 if ((self.items[key].name + "").includes(data.nombre + "") && (self.items[key].email[1] + "").includes(data.correo + "")) {
-//                                    console.log(self.items[key]);
-                                    self.items[key].visible = true; 
+                                    //                                    console.log(self.items[key]);
+                                    self.items[key].visible = true;
                                 }
                             }
-                        }else{
+                        } else {
                             for (let key in self.items) {
 
-                                self.items[key].visible = true;                             
+                                self.items[key].visible = true;
                             }
                         }
 
@@ -113,9 +117,9 @@ export class ClientesPage {
         });
         alert.present();
     }
-    
-    ejecute(item){
-//        console.log(item);
-        this.navCtrl.push(ClienteDetailPage,  {item:item});
+
+    ejecute(item) {
+        //        console.log(item);
+        this.navCtrl.push(ClienteDetailPage, {item: item});
     }
 }
