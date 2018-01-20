@@ -27,6 +27,8 @@ import {ClienteDetailPage} from '../pages/cliente-detail/cliente-detail';
 import {NomDetailPage} from '../pages/nom-detail/nom-detail';
 import {AsignarDetailPage} from '../pages/asignar-detail/asignar-detail';
 import {ResDetailPage} from '../pages/res-detail/res-detail';
+import {NomFilterPage} from '../pages/nom-filter/nom-filter';
+
 
 import {IonicStorageModule} from '@ionic/storage';
 import {Network} from '@ionic-native/network';
@@ -59,7 +61,8 @@ import {SplashScreen} from '@ionic-native/splash-screen';
         FuturasPage,
         TabsPage,
         ResDetailPage,
-        NuevoPage
+        NuevoPage,
+        NomFilterPage
     ],
     imports: [
         BrowserModule,
@@ -91,7 +94,8 @@ import {SplashScreen} from '@ionic-native/splash-screen';
         FuturasPage,
         TabsPage,
         ResDetailPage,
-        NuevoPage
+        NuevoPage,
+        NomFilterPage
     ],
     providers: [
         Network,
