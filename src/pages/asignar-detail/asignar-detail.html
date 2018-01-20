@@ -6,13 +6,11 @@
 -->
 <ion-header>
 
-    <ion-segment [(ngModel)]="icons">
-        <ion-segment-button value="camera" icon-start (click)="editar()">
-                            <ion-icon ios="ios-create" md="md-create"></ion-icon>
+    <ion-segment color="primary">
+        <ion-segment-button value="friends" (ionSelect)="editar()">
             Editar
         </ion-segment-button>
-        <ion-segment-button value="bookmark" icon-start>
-            <ion-icon ios="ios-cloud-upload" md="md-cloud-upload"></ion-icon>
+        <ion-segment-button value="guardar" (ionSelect)="guardar()">
             Guardar
         </ion-segment-button>
     </ion-segment>
@@ -27,7 +25,7 @@
                 <b>Tour</b>
             </ion-col>
             <ion-col col-8>
-                <ion-input name="tour_id"  [readonly]="!editable" type="text" [(ngModel)]="item.tour_id"></ion-input>                
+                <ion-input name="tour_id"  [readonly]="!editable" type="text" [(ngModel)]="item.tour_id[1]"></ion-input>                
             </ion-col>       
         </ion-row>        
         <ion-row align-items-center>  
@@ -161,9 +159,9 @@
         </ion-row>
     </ion-grid>
 
-    
 
-   
+
+
 
 
 

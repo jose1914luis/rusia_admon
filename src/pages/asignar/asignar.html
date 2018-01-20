@@ -4,10 +4,9 @@
             <ion-icon name="menu"></ion-icon>
         </button>
         <ion-title>Calendario</ion-title>
-        <ion-buttons end>
-            <button ion-button icon-only (click)="addEvent()">
-                    Nuevo
-                    <ion-icon name="add"></ion-icon>
+         <ion-buttons end>
+            <button ion-button icon-only (click)="refresh()">
+                    <ion-icon ios="ios-refresh" md="md-refresh"></ion-icon>
             </button>
         </ion-buttons>
     </ion-navbar>
@@ -19,7 +18,7 @@
         <ion-spinner name="circles"></ion-spinner><br>
         <b>Cargando...</b>
     </div>
-    <h3>{{viewTitle}}</h3>
+    <h3 *ngIf="!cargar">{{viewTitle}}</h3>
     <calendar *ngIf="!cargar"
         [formatWeekTitle]="calendar.formatWeekTitle"
         [allDayLabel]="calendar.allDayLabel"

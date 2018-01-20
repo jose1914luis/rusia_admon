@@ -29,12 +29,16 @@ export class AsignarPage {
     events = [];
     constructor(public navCtrl: NavController, public navParams: NavParams) {
 
+    }
+
+    ionViewDidLoad() {
         this.item = this.navParams.get('item');
         console.log(this.item);
         var self = this;
         var odoo = new OdooApi(global.url, global.db);
-
-
+        self.cargar = true;
+        self.calendar.eventSource = [];
+        self.events = [];
         odoo.login(global.username, global.password).then(
             function (uid) {
                 odoo.search_read('tours.guia', [['id', '<>', '0']], ['id', 'guia_id', 'tour_id', 'date_begin',
@@ -52,6 +56,8 @@ export class AsignarPage {
                             value[key].title = (value[key]).tour_id[1];
                             value[key].allDay = false;
                             value[key].reservas = [];
+                            value[key].guia_id = value[key].guia_id ? value[key].guia_id : '';
+                            value[key].observaciones = value[key].observaciones ? value[key].observaciones : '';
 
                         }
 
@@ -98,8 +104,8 @@ export class AsignarPage {
         );
     }
 
-    ionViewDidLoad() {
-        console.log('ionViewDidLoad CityDetailPage');
+    refresh() {
+        this.ionViewDidLoad();
     }
 
     onViewTitleChanged(title) {
