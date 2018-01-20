@@ -32,6 +32,10 @@ export class NomPage {
                     function (value2) {
                         console.log(value2);
                         self.items = value2;
+                        for (let key in self.items) {
+
+                            self.items[key].visible = true;
+                        }
                         self.cargar = false;
                     },
                     function () {
@@ -65,10 +69,34 @@ export class NomPage {
     }
 
     buscar() {
+        var self = this;
         let profileModal = this.modalCtrl.create(NomFilterPage, {userId: 8675309});
         profileModal.onDidDismiss(data => {
-            if(data != null){
+            if (data != null) {
                 
+                if (data.semanaIni > 0 || data.semanaFin > 0) {
+                    for (let key in self.items) {
+
+                        self.items[key].visible = false;
+
+                        if (self.items[key].semana >= data.semanaIni && self.items[key].semana <= data.semanaFin) {
+                            
+                            if(data.estado = 'todos'){
+                                self.items[key].visible = true;
+                            }else if(data.estado = 'pagados' && self.items[key].state == 'pagado'){
+                                self.items[key].visible = true;
+                            }else if(data.estado = 'pedientes' && self.items[key].state == 'pedientes'){
+                                self.items[key].visible = true;
+                            }
+                            
+                        }
+                    }
+                } else {
+                    for (let key in self.items) {
+
+                        self.items[key].visible = true;
+                    }
+                }
             }
         });
         profileModal.present();

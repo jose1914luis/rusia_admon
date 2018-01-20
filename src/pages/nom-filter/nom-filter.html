@@ -24,11 +24,11 @@
         <ion-list>
             <ion-item>
                 <ion-label>Semana Inicial</ion-label>                  
-                <ion-input type="text"  [(ngModel)]="item.semanaIni" name='semanaIni' ></ion-input>
+                <ion-input type="number"  [(ngModel)]="item.semanaIni" name='semanaIni' ></ion-input>
             </ion-item>
             <ion-item>
                 <ion-label>Semana Final</ion-label>
-                <ion-input type="text"  [(ngModel)]="item.semanaFin" name='semanaFin' ></ion-input>
+                <ion-input type="number"  [(ngModel)]="item.semanaFin" name='semanaFin' ></ion-input>
             </ion-item>
         </ion-list>
         <ion-list radio-group [(ngModel)]="item.estado" name='estado'>
@@ -45,7 +45,7 @@
                 <ion-radio value="pedientes"></ion-radio>
             </ion-item>
             <ion-item>
-                <button ion-button block type="button" (click)="closeModal()">Buscar</button>
+                <button ion-button block type="button" (click)="closeModal('')">Buscar</button>
             </ion-item>
         </ion-list>
 
