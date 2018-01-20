@@ -1,9 +1,17 @@
 <ion-header>
-    <ion-navbar>
+    <ion-navbar color="primary">
         <button ion-button menuToggle>
             <ion-icon name="menu"></ion-icon>
         </button>
         <ion-title>Pago Diario</ion-title>
+        <ion-buttons end>
+            <button ion-button icon-only (click)="refresh()">
+                    <ion-icon ios="ios-refresh" md="md-refresh"></ion-icon>
+            </button>
+            <button ion-button icon-only  (click)="buscar()">
+                    <ion-icon ios="ios-search" md="md-search"></ion-icon>                
+            </button>
+        </ion-buttons>
     </ion-navbar>
 </ion-header>
 
@@ -14,105 +22,108 @@
         <ion-spinner name="circles"></ion-spinner><br>
         <b>Cargando...</b>
     </div>
-    
-    <ion-grid *ngFor="let item of items; let i = index" (click)="ejecute(item)">      
+    <div  *ngFor="let item of items; let i = index">
 
-        <ion-row>     
-            <ion-col col-2>
-                <b>Día</b>                
-            </ion-col>                   
-            <ion-col col-8>
-                {{item.name}}
-            </ion-col>   
-        </ion-row>
-        
-        <ion-row>     
-            <ion-col col-2>
-                <b>Guía</b>                
-            </ion-col>                   
-            <ion-col col-8>
-                {{item.guia_user_id[1]}}
-            </ion-col>   
-        </ion-row>
-        
-        <ion-row>     
-            <ion-col col-2>
-                <b>Tour</b>                
-            </ion-col>                   
-            <ion-col col-8>
-                {{item.tours_id[1]}}
-            </ion-col>   
-        </ion-row>
+        <ion-grid *ngIf="item.visible" (click)="ejecute(item)">      
 
-        <ion-row>     
-            <ion-col col-3>
-                <b>Semana</b>                
-            </ion-col>     
-            <ion-col col-8>
-                {{item.semana}}
-            </ion-col> 
-        </ion-row>
+            <ion-row>     
+                <ion-col col-2>
+                    <b>Día</b>                
+                </ion-col>                   
+                <ion-col col-8>
+                    {{item.name}}
+                </ion-col>   
+            </ion-row>
 
-        <ion-row >     
-            <ion-col col-3>
-                <b>PAX pago</b>                
-            </ion-col>       
-            <ion-col col-2>
-                {{item.pax_pago}}
-            </ion-col>             
-            <ion-col col-2>
-                <b>Pagado</b>                
-            </ion-col>       
-            <ion-col col-2>
-                {{item.state}}
-            </ion-col>  
-        </ion-row>
-        
-         <ion-row >     
-            <ion-col col-2>
-                <b>EUR</b>                
-            </ion-col>       
-            <ion-col col-2>
-                {{item.total_eur}}
-            </ion-col>             
-            <ion-col col-2>
-                <b>USD</b>                
-            </ion-col>       
-            <ion-col col-2>
-                {{item.total_usd}}
-            </ion-col>  
-             <ion-col col-2>
-                <b>RUB</b>                
-            </ion-col>       
-            <ion-col col-2>
-                {{item.total_rub}}
-            </ion-col>  
-        </ion-row>
-        
-        <ion-row  >     
-            <ion-col col-3>
-                <b>Reserva</b>                
-            </ion-col>       
-            <ion-col col-2>
-                {{item.total_res}}
-            </ion-col>             
-            <ion-col col-2>
-                <b>Metro</b>                
-            </ion-col>       
-            <ion-col col-2>
-                {{item.total_metro}}
-            </ion-col>  
-        </ion-row>
-        
-        <ion-row class="borde">     
-            <ion-col col-3 >
-                <b>Concepto</b>                
-            </ion-col>     
-            <ion-col col-8>
-                {{item.concepto}}
-            </ion-col> 
-        </ion-row>
+            <ion-row>     
+                <ion-col col-2>
+                    <b>Guía</b>                
+                </ion-col>                   
+                <ion-col col-8>
+                    {{item.guia_user_id[1]}}
+                </ion-col>   
+            </ion-row>
 
-    </ion-grid>
+            <ion-row>     
+                <ion-col col-2>
+                    <b>Tour</b>                
+                </ion-col>                   
+                <ion-col col-8>
+                    {{item.tours_id[1]}}
+                </ion-col>   
+            </ion-row>
+
+            <ion-row>     
+                <ion-col col-3>
+                    <b>Semana</b>                
+                </ion-col>     
+                <ion-col col-8>
+                    {{item.semana}}
+                </ion-col> 
+            </ion-row>
+
+            <ion-row >     
+                <ion-col col-3>
+                    <b>PAX pago</b>                
+                </ion-col>       
+                <ion-col col-2>
+                    {{item.pax_pago}}
+                </ion-col>             
+                <ion-col col-2>
+                    <b>Pagado</b>                
+                </ion-col>       
+                <ion-col col-2>
+                    {{!!item.state ? 'Si' : 'No'}}
+                </ion-col>  
+            </ion-row>
+
+            <ion-row >     
+                <ion-col col-2>
+                    <b>EUR</b>                
+                </ion-col>       
+                <ion-col col-2>
+                    {{item.total_eur}}
+                </ion-col>             
+                <ion-col col-2>
+                    <b>USD</b>                
+                </ion-col>       
+                <ion-col col-2>
+                    {{item.total_usd}}
+                </ion-col>  
+                <ion-col col-2>
+                    <b>RUB</b>                
+                </ion-col>       
+                <ion-col col-2>
+                    {{item.total_rub}}
+                </ion-col>  
+            </ion-row>
+
+            <ion-row  >     
+                <ion-col col-3>
+                    <b>Reserva</b>                
+                </ion-col>       
+                <ion-col col-2>
+                    {{item.total_res}}
+                </ion-col>             
+                <ion-col col-2>
+                    <b>Metro</b>                
+                </ion-col>       
+                <ion-col col-2>
+                    {{item.total_metro}}
+                </ion-col>  
+            </ion-row>
+
+            <ion-row class="borde">     
+                <ion-col col-3 >
+                    <b>Concepto</b>                
+                </ion-col>     
+                <ion-col col-8>
+                    {{item.concepto}}
+                </ion-col> 
+            </ion-row>
+
+        </ion-grid>
+    </div>
+
 
 </ion-content>

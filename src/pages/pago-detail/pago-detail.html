@@ -18,7 +18,12 @@
 
 <ion-content >
 
-    <form (ngSubmit)="this.conectarApp(true)">
+    <div *ngIf="cargar" style="text-align: center">    
+        <ion-spinner name="circles"></ion-spinner><br>
+        <b>Guardando...</b>
+    </div>
+    
+    <form>
 
         <ion-grid >
             <ion-row align-items-center>
