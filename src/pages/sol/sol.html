@@ -1,18 +1,62 @@
-<!--
-  Generated template for the SolPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
-
-  <ion-navbar>
-    <ion-title>sol</ion-title>
-  </ion-navbar>
-
+    <ion-navbar color="primary">
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Solicitudes</ion-title>
+        <ion-buttons end>
+            <button ion-button icon-only (click)="refresh()">
+                    <ion-icon ios="ios-refresh" md="md-refresh"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
+
+    <div>{{mensaje}}</div>
+
+    <div *ngIf="cargar" style="text-align: center">    
+        <ion-spinner name="circles"></ion-spinner><br>
+        <b>Cargando...</b>
+    </div>
+
+    <!--<ion-grid *ngFor="let item of items; let i = index" (click)="ejecute(item)">      
+
+        <ion-row>     
+            <ion-col col-3>
+                <b>Semana</b>                
+            </ion-col>                   
+            <ion-col col-8>
+                {{item.name}}
+            </ion-col>   
+        </ion-row>
+
+        <ion-row>     
+            <ion-col col-2>
+                <b>Ciudad</b>                
+            </ion-col>                   
+            <ion-col col-8>
+                {{item.city_id[1]}}
+            </ion-col>   
+        </ion-row>
+
+        <ion-row class="borde">     
+            <ion-col col-3 >
+                <b>Salario Guía</b>                
+            </ion-col>                   
+            <ion-col col-3>
+                {{item.sala_guia}}
+            </ion-col>   
+            <ion-col col-3 >
+                <b>Total Metro</b>                
+            </ion-col>                   
+            <ion-col col-3>
+                {{item.total_metro}}
+            </ion-col>  
+        </ion-row>
+
+    </ion-grid>-->
 
 </ion-content>
