@@ -22,41 +22,97 @@
         <b>Cargando...</b>
     </div>
 
-    <!--<ion-grid *ngFor="let item of items; let i = index" (click)="ejecute(item)">      
+    <ion-grid *ngFor="let item of items; let i = index" (click)="ejecute(item)">      
 
-        <ion-row>     
-            <ion-col col-3>
-                <b>Semana</b>                
+        <ion-row  *ngIf="item.mostrar">     
+            <ion-col col-4>
+                <button color="light" ion-button icon-start type="button">
+                    <ion-icon ios="ios-checkmark" md="md-checkmark"></ion-icon>
+                    Aceptar
+                </button>               
             </ion-col>                   
-            <ion-col col-8>
-                {{item.name}}
+            <ion-col col-4>
+                <button color="light" ion-button icon-start type="button">
+                    <ion-icon ios="ios-close" md="md-close"></ion-icon>
+                    Rechazar
+                </button>
             </ion-col>   
         </ion-row>
 
         <ion-row>     
             <ion-col col-2>
-                <b>Ciudad</b>                
+                <b>Tour</b>                
             </ion-col>                   
             <ion-col col-8>
-                {{item.city_id[1]}}
+                {{item.tour_id[1]}}
             </ion-col>   
         </ion-row>
 
-        <ion-row class="borde">     
-            <ion-col col-3 >
-                <b>Salario Guía</b>                
+        <ion-row>     
+            <ion-col col-2>
+                <b>Cliente</b>                
             </ion-col>                   
-            <ion-col col-3>
-                {{item.sala_guia}}
+            <ion-col col-8>
+                {{item.name[1]}}
             </ion-col>   
-            <ion-col col-3 >
-                <b>Total Metro</b>                
-            </ion-col>                   
-            <ion-col col-3>
-                {{item.total_metro}}
-            </ion-col>  
         </ion-row>
 
-    </ion-grid>-->
+        <ion-row>     
+            <ion-col col-2>
+                <b>Fecha</b>                
+            </ion-col>                   
+            <ion-col col-8>
+                {{item.create_date}}
+            </ion-col>   
+        </ion-row>
+
+        <ion-row>     
+            <ion-col col-2>
+                <b>Email</b>                
+            </ion-col>                   
+            <ion-col col-8>
+                {{item.email[1]}}
+            </ion-col>   
+        </ion-row>
+
+        <ion-row>     
+            <ion-col col-3>
+                <b>Teléfono</b>                
+            </ion-col>                   
+            <ion-col col-8>
+                {{!!item.telefono?item.telefono:''}}
+            </ion-col>   
+        </ion-row>
+
+        <ion-row>     
+            <ion-col col-2>
+                <b>Hotel</b>                
+            </ion-col>                   
+            <ion-col col-8>
+                {{!!item.nombre_hotel?item.telefono:''}}
+            </ion-col>   
+        </ion-row>
+
+        <ion-row>     
+            <ion-col col-2>
+                <b>Estado</b>                
+            </ion-col>                   
+            <ion-col col-8>
+                {{item.state}}
+            </ion-col>   
+        </ion-row>
+
+
+        <ion-row>     
+            <ion-col col-4>
+                <b>Fecha y Hora</b>                
+            </ion-col>                   
+            <ion-col col-8>
+                {{item.date_begin}}
+            </ion-col>   
+        </ion-row>
+
+
+    </ion-grid>
 
 </ion-content>
