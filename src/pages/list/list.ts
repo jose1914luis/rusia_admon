@@ -12,10 +12,10 @@ declare var OdooApi: any;
 })
 export class ListPage {
 
-    cargar = true;
+    cargar = false;
     mensaje = '';
-    conexion = global;
-//    bd = 'Free_Tour_Russia';
+    conexion = {username:'labg1214@gmail.com', password:'123456', is_guia:false, is_chofer:false};
+    bd = 'Tour_Gratis_Rusia_Test';
     constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage, public alertCtrl: AlertController) {
 
         var borrar = this.navParams.get('borrar');
@@ -27,36 +27,35 @@ export class ListPage {
             this.conectarApp(false);
         }
     }
-
-    loginSinDatos() {
-        var self = this;
-        this.storage.get('res.users').then((val) => {
-            if (val == null) {//no existe datos
-
-                self.presentAlert('Falla!', 'Imposible conectarse');
-            } else {
-
-                self.navCtrl.setRoot(HomePage);
-            }
-            self.cargar = false;
-        });
-    }
-
+    
     conectarApp(verificar) {
 
+        if (this.conexion.username.length < 5 && this.conexion.password.length < 4)return;
         var self = this;
-        var odoo = new OdooApi(global.url, global.db); 
-        odoo.login(global.username, global.password).then(
+        this.cargar = true;
+        var odoo = new OdooApi(global.url, self.bd);         
+        odoo.login(self.conexion.username, self.conexion.password).then(
             function (uid) {
 
-                console.log(uid);
-                self.navCtrl.setRoot(AsignarPage);
-
+                console.log(uid);                
+                odoo.search_read('res.users', [['id', '=', uid]],
+                    ['name', 'email', 'city_id', 'is_guia', 'is_chofer', 'salario_ext', 'salario_min',
+                    'active', 'groups_id']).then(
+                    function (value2) {
+                        console.log(value2);
+                        self.conexion.is_chofer = value2[0].is_chofer;
+                        self.conexion.is_guia = value2[0].is_chofer;
+                        self.navCtrl.setRoot(AsignarPage);
+                        self.storage.set('conexion2', self.conexion);
+                    },
+                    function () {
+                        self.presentAlert('Falla', 'Imposible Conectar');
+                    }
+                    );
+//                
             },
             function () {
-                console.log('error tranando de conectarme');
-                //self.mensaje += 'error tranando de conectarme';
-//                return self.loginSinDatos();
+                self.presentAlert('Falla', 'Imposible conectarse');
             }
         );
 

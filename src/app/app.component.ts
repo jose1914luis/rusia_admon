@@ -12,7 +12,7 @@ import {NomPage} from '../pages/nom/nom';
 import {PagoPage} from '../pages/pago/pago';
 import {SalarioPage} from '../pages/salario/salario';
 import {SolPage} from '../pages/sol/sol';
-
+import {Storage} from '@ionic/storage';
 
 @Component({
     templateUrl: 'app.html'
@@ -24,9 +24,8 @@ export class MyApp {
 
     pages: Array<{title: string, component: any}>;
 
-    constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
-        this.initializeApp();
-
+    constructor(private storage: Storage, public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
+        this.initializeApp();      
         // used for an example of ngFor and navigation
         this.pages = [
             {title: 'Ciudades', component: CiudadPage},

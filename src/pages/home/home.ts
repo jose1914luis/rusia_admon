@@ -23,7 +23,7 @@ export class HomePage {
 
         odoo.login(global.username, global.password).then(
             function (uid) {
-                odoo.search_read('tours.gastos.diversos', [['id', '!=', '0']],
+                odoo.search_read('tours.gastos.diversos', [['state', '=', 'aprobado']],
                     ['name', 'city_id', 'total_usd', 'total_eur', 'total_rub', 'total_pp', 'total_tarjeta',
                     'state', 'conceptos_ids']).then(
                     function (value2) {
