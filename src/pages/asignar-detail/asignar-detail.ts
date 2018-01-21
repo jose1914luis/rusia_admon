@@ -11,7 +11,7 @@ export class AsignarDetailPage {
 
     item;
     editable = false;
-
+    cargar = false;
     constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController) {
         this.item = this.navParams.data;
         console.log(this.navParams.data);
@@ -39,15 +39,12 @@ export class AsignarDetailPage {
         odoo.login(global.username, global.password).then(
             function (uid) {
 
-                odoo.write('tours.pago.guia', self.item.id, {
-                    name:self.item.name,
-                    semana:self.item.semana,                     
-                    total_eur:self.item.total_eur,
-                    total_usd:self.item.total_usd,
-                    total_res:self.item.total_res,
-                    total_rub:self.item.total_rub, 
-                    total_metro:self.item.total_metro,
-                    pax_pago:self.item.pax_pago
+                odoo.write('tours.guia', self.item.id, {
+                    date_begin:self.item.date_begin,date_end:self.item.date_end,personas_pago:self.item.personas_pago,
+                    personas_terceros:self.item.personas_terceros, personas_all_in:self.item.personas_all_in,
+                    total_personas:self.item.total_personas, total_rublo:self.item.total_rublo,
+                    total_dolar:self.item.total_dolar, pay_pal:self.item.pay_pal, tarjeta:self.item.tarjeta,
+                    entregado:self.item.entregado, state:self.item.state, observaciones:self.item.observaciones
                 }).then(
                     function (value2) {
                         console.log(value2);

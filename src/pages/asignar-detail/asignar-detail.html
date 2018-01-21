@@ -19,6 +19,10 @@
 
 <ion-content>
 
+    <div *ngIf="cargar" style="text-align: center">    
+        <ion-spinner name="circles"></ion-spinner><br>
+        <b>Guardando...</b>
+    </div>
     <ion-grid>                 
         <ion-row align-items-center>  
             <ion-col col-3>
@@ -54,7 +58,7 @@
                 <ion-input name="date_begin"  [readonly]="!editable" type="text" [(ngModel)]="item.date_begin"></ion-input>
             </ion-col> 
         </ion-row>
-        <ion-row align-items-center>  
+        <ion-row align-items-center >  
             <ion-col col-3>
                 <b>Entregado</b>
             </ion-col>
@@ -84,18 +88,18 @@
         </ion-row>
         <ion-row align-items-center>  
             <ion-col col-2>
-                <ion-input name="cost_one"  [readonly]="!editable" type="number" [(ngModel)]="item.total_personas"></ion-input>                
+                <ion-input name="personas_pago"  [readonly]="!editable" type="number" [(ngModel)]="item.personas_pago"></ion-input>                
             </ion-col>             
             <ion-col col-3>
-                <ion-input name="cost_two"  [readonly]="!editable" type="number" [(ngModel)]="item.personas_terceros"></ion-input>
+                <ion-input name="personas_terceros"  [readonly]="!editable" type="number" [(ngModel)]="item.personas_terceros"></ion-input>
 
             </ion-col>   
             <ion-col col-3>
-                <ion-input name="cost_three"  [readonly]="!editable" type="number" [(ngModel)]="item.personas_all_in"></ion-input>
+                <ion-input name="personas_all_in"  [readonly]="!editable" type="number" [(ngModel)]="item.personas_all_in"></ion-input>
 
             </ion-col>   
             <ion-col col-2>
-                <ion-input  name="cost_four"  [readonly]="!editable" type="number" [(ngModel)]="item.total_personas"></ion-input>
+                <ion-input  name="total_personas"  [readonly]="!editable" type="number" [(ngModel)]="item.total_personas"></ion-input>
 
             </ion-col>   
         </ion-row>

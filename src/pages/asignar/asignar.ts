@@ -43,9 +43,9 @@ export class AsignarPage {
             function (uid) {
                 odoo.search_read('tours.guia', [['id', '<>', '0']], ['id', 'guia_id', 'tour_id', 'date_begin',
                     'date_end', 'personas_terceros', 'personas_all_in', 'total_personas', 'total_rublo', 'total_dolar', 'total_rublo_res'
-                    , 'total_euro_res', 'total_dolar_res', 'pay_pal', 'tarjeta', 'is_free', 'is_private', 'entregado', 'state', 'observaciones']).then(
+                    , 'total_euro_res', 'total_dolar_res', 'pay_pal', 'tarjeta', 'is_free','personas_pago', 'is_private', 'entregado', 'state', 'observaciones']).then(
                     function (value) {
-                        //                        console.log(value);
+                        console.log(value);
                         for (var key in value) {
                             var dateStart = new Date(String((value[key]).date_begin).replace(' ', 'T'));
                             var dateEnd = new Date(String((value[key]).date_end).replace(' ', 'T'));
