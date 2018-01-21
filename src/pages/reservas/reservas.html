@@ -18,14 +18,15 @@
                 <b>Asistió?</b>
             </ion-col>
             <ion-col col-1>
-                {{item.asistencia}}         
+                {{!!item.asistencia?'Si':'No'}}         
             </ion-col>       
         </ion-row>        
         <ion-row align-items-center>  
             <ion-col col-3>
                 <b>Nombre</b>
             </ion-col>
-            <ion-col col-8>
+            <ion-col col-8 >
+                <ion-icon ios="ios-copy" md="md-copy"></ion-icon>
                 {{item.name[1]}}  
             </ion-col>       
         </ion-row>
@@ -34,11 +35,20 @@
             <ion-col col-3>
                 <b>email</b>
             </ion-col>
-            <ion-col col-8>
+            <ion-col col-8 >
+                <ion-icon ios="ios-copy" md="md-copy"></ion-icon>
                 {{item.email[1]}}                
             </ion-col> 
         </ion-row>
-
+        <ion-row align-items-center>  
+            <ion-col col-3>
+                <b>Teléfono</b>
+            </ion-col>
+            <ion-col col-8>
+                <ion-icon ios="ios-copy" md="md-copy"></ion-icon>
+                {{item.telefono}}  
+            </ion-col>       
+        </ion-row>
         <ion-row align-items-center>  
             <ion-col col-4>
                 <b>PAX</b>
@@ -60,7 +70,7 @@
         </ion-row>
         <ion-row align-items-center>  
             <ion-col col-2>
-                {{item.total_personas}}                
+                {{item.personas_pago}}                
             </ion-col>             
             <ion-col col-3>
                 {{item.personas_terceros}}
@@ -105,7 +115,7 @@
 
             </ion-col>   
             <ion-col col-2>
-                {{item.abono_rublos}}
+                {{item.abonor_rublo}}
 
             </ion-col>   
             <ion-col col-2>
@@ -137,7 +147,7 @@
 
         <ion-row align-items-center>  
             <ion-col col-2>
-                {{item.euro_exportado}}
+                {{item.euros_exportado}}
 
             </ion-col>             
             <ion-col col-2>

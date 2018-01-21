@@ -5,7 +5,16 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-    <ion-segment color="primary">
+    <ion-navbar>
+        <ion-title>Detalles Reserva</ion-title>
+        <ion-buttons end>
+            <button ion-button icon-only (click)="closeModal('x')">
+                    <ion-icon item-right name="ios-close-outline"></ion-icon>
+            </button>
+        </ion-buttons>
+       
+    </ion-navbar>
+     <ion-segment color="primary">
         <ion-segment-button value="friends" (ionSelect)="editar()">
             Editar
         </ion-segment-button>
@@ -13,6 +22,9 @@
             Guardar
         </ion-segment-button>
     </ion-segment>
+    
+    
+    
 </ion-header>
 
 
@@ -31,7 +43,7 @@
             <ion-col col-3>
                 <b>Nombre</b>
             </ion-col>
-            <ion-col col-8>
+            <ion-col col-8 (click)="copiar(item.name[1])">
                 <ion-input name="name"  [readonly]="!editable" type="text" [(ngModel)]="item.name[1]"></ion-input>  
             </ion-col>       
         </ion-row>
@@ -40,8 +52,18 @@
             <ion-col col-3>
                 <b>email</b>
             </ion-col>
-            <ion-col col-4>
+            <ion-col col-8 (click)="copiar(item.email[1])">
                 <ion-input name="email"  [readonly]="!editable" type="text" [(ngModel)]="item.email[1]"></ion-input>                
+            </ion-col> 
+        </ion-row>
+        
+        <ion-row align-items-center>  
+
+            <ion-col col-3>
+                <b>email</b>
+            </ion-col>
+            <ion-col col-8 (click)="copiar(item.telefono)">
+                <ion-input name="telefono"  [readonly]="!editable" type="text" [(ngModel)]="item.telefono"></ion-input>                
             </ion-col> 
         </ion-row>
 
@@ -111,7 +133,7 @@
 
             </ion-col>   
             <ion-col col-2>
-                <ion-input  name="gasto_three"  [readonly]="!editable" type="number" [(ngModel)]="item.abono_rublos"></ion-input>
+                <ion-input  name="gasto_three"  [readonly]="!editable" type="number" [(ngModel)]="item.abonor_rublo"></ion-input>
 
             </ion-col>   
             <ion-col col-2>
@@ -143,7 +165,7 @@
 
         <ion-row align-items-center>  
             <ion-col col-2>
-                <ion-input  name="gasto_one"  [readonly]="!editable" type="number" [(ngModel)]="item.euro_exportado"></ion-input>
+                <ion-input  name="gasto_one"  [readonly]="!editable" type="number" [(ngModel)]="item.euros_exportado"></ion-input>
 
             </ion-col>             
             <ion-col col-2>

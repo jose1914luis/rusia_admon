@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {NavController, NavParams} from 'ionic-angular';
+import {NavController, NavParams, ModalController} from 'ionic-angular';
 import {ResDetailPage} from '../../pages/res-detail/res-detail';
 
 @Component({
@@ -11,7 +11,7 @@ export class ReservasPage {
     reservas;
     editable = false;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController) {
         this.reservas = this.navParams.data.reservas;
     }
 
@@ -20,6 +20,10 @@ export class ReservasPage {
     }
     ejecute(item){
         console.log(item);
-        this.navCtrl.push(ResDetailPage, {item:item})
+//        this.navCtrl.push(ResDetailPage)
+        let profileModal = this.modalCtrl.create(ResDetailPage, {item:item});
+        profileModal.present();
+
     }
+    
 }

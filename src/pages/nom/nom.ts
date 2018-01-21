@@ -70,7 +70,7 @@ export class NomPage {
 
     buscar() {
         var self = this;
-        let profileModal = this.modalCtrl.create(NomFilterPage, {userId: 8675309});
+        let profileModal = this.modalCtrl.create(NomFilterPage);
         profileModal.onDidDismiss(data => {
             if (data != null) {
                 
