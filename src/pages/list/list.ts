@@ -15,6 +15,7 @@ export class ListPage {
     cargar = true;
     mensaje = '';
     conexion = global;
+    bd = 'Free_Tour_Russia';
     constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage, public alertCtrl: AlertController) {
 
         var borrar = this.navParams.get('borrar');

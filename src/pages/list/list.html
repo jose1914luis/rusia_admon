@@ -9,11 +9,11 @@
 
         <ion-list *ngIf="!cargar">
             <ion-item>
-                <ion-label>Base de datos</ion-label>
-                <ion-select [(ngModel)]="gender">
-                    <ion-option value="f">Free_Tour_Russia</ion-option>
-                    <ion-option value="m">Tour_Gratis_Rusia</ion-option>
-                    <ion-option value="m">Tour_Gratis_Rusia_Test</ion-option>
+                <ion-label color="primary" stacked>Base de datos</ion-label>
+                <ion-select [(ngModel)]="bd" name="bd">
+                    <ion-option value="Free_Tour_Russia">Free_Tour_Russia</ion-option>
+                    <ion-option value="Tour_Gratis_Rusia">Tour_Gratis_Rusia</ion-option>
+                    <ion-option value="Tour_Gratis_Rusia_Test">Tour_Gratis_Rusia_Test</ion-option>
                 </ion-select>
             </ion-item>
             
@@ -28,10 +28,7 @@
             </ion-item>
             <ion-item>
                 <button ion-button block type="submit">Login</button>
-            </ion-item>
-            <div style="text-align: center">
-                <a href="#" (click)="crearCuenta()">Solicitar Cuenta</a>    
-            </div>
+            </ion-item>           
         </ion-list>
     </form>
 
