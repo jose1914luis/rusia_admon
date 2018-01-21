@@ -9,6 +9,15 @@
 
         <ion-list *ngIf="!cargar">
             <ion-item>
+                <ion-label>Base de datos</ion-label>
+                <ion-select [(ngModel)]="gender">
+                    <ion-option value="f">Free_Tour_Russia</ion-option>
+                    <ion-option value="m">Tour_Gratis_Rusia</ion-option>
+                    <ion-option value="m">Tour_Gratis_Rusia_Test</ion-option>
+                </ion-select>
+            </ion-item>
+            
+            <ion-item>
                 <ion-label color="primary" stacked>Usuario</ion-label>
                 <ion-input type="email"  [(ngModel)]="conexion.username" required name='username' placeholder="Ingresa Usuario"></ion-input>
             </ion-item>

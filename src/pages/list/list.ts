@@ -21,13 +21,6 @@ export class ListPage {
         //this.conexion.username = (this.navParams.get('login') == undefined)?'' : this.navParams.get('login');
         if (borrar == true) {
             this.cargar = false;
-            //            this.storage.remove('conexion');
-            //            this.storage.remove('res.users');
-            //            this.storage.remove('tours.guia');
-            //            this.storage.remove('tours.clientes.faq');
-            //            this.storage.remove('tours.companies');
-            //            this.storage.remove('tours.promociones');
-            //            this.storage.remove('tours.eventos');
         } else {
 
             this.conectarApp(false);
