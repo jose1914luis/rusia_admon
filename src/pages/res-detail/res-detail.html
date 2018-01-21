@@ -30,6 +30,10 @@
 
 <ion-content>
 
+    <div *ngIf="cargar" style="text-align: center">    
+        <ion-spinner name="circles"></ion-spinner><br>
+        <b>Guardando...</b>
+    </div>
     <ion-grid >                 
         <ion-row align-items-center>  
             <ion-col col-3>
@@ -42,17 +46,19 @@
         <ion-row align-items-center>  
             <ion-col col-3>
                 <b>Nombre</b>
+                <ion-icon ios="ios-copy" md="md-copy"></ion-icon>
             </ion-col>
-            <ion-col col-8 (click)="copiar(item.name[1])">
+            <ion-col col-8 (click)="copiar(item.name[1])">                     
                 <ion-input name="name"  [readonly]="!editable" type="text" [(ngModel)]="item.name[1]"></ion-input>  
             </ion-col>       
         </ion-row>
         <ion-row align-items-center>  
 
             <ion-col col-3>
-                <b>email</b>
+                <b>Email</b>
+                <ion-icon ios="ios-copy" md="md-copy"></ion-icon>
             </ion-col>
-            <ion-col col-8 (click)="copiar(item.email[1])">
+            <ion-col col-8 (click)="copiar(item.email[1])">                                     
                 <ion-input name="email"  [readonly]="!editable" type="text" [(ngModel)]="item.email[1]"></ion-input>                
             </ion-col> 
         </ion-row>
@@ -60,7 +66,8 @@
         <ion-row align-items-center>  
 
             <ion-col col-3>
-                <b>email</b>
+                <b>Teléfono</b>                
+                <ion-icon ios="ios-copy" md="md-copy"></ion-icon>                
             </ion-col>
             <ion-col col-8 (click)="copiar(item.telefono)">
                 <ion-input name="telefono"  [readonly]="!editable" type="text" [(ngModel)]="item.telefono"></ion-input>                
@@ -88,7 +95,7 @@
         </ion-row>
         <ion-row align-items-center>  
             <ion-col col-2>
-                <ion-input name="cost_one"  [readonly]="!editable" type="number" [(ngModel)]="item.total_personas"></ion-input>                
+                <ion-input name="cost_one"  [readonly]="!editable" type="number" [(ngModel)]="item.personas_pago"></ion-input>                
             </ion-col>             
             <ion-col col-3>
                 <ion-input name="cost_two"  [readonly]="!editable" type="number" [(ngModel)]="item.personas_terceros"></ion-input>

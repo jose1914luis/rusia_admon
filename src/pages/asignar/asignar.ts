@@ -71,6 +71,7 @@ export class AsignarPage {
                                 for (var key in value) {
 
                                     for (var key2 in value2) {
+                                        //value[key].reserva_id = value2[key2].id;
                                         if (value[key].tour_id[0] == value2[key2].tour_id[0]) {
                                             value[key].reservas.push(value2[key2]);
                                             //console.log(value2[key2]);
