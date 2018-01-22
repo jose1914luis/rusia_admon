@@ -22,7 +22,7 @@ export class CiudadPage {
     }
     ionViewDidLoad() {
 
-        var self = this;
+        var self = this; 
         this.cargar = true;
         this.storage.get('conexion').then((conexion) => {
             var odoo = new OdooApi(global.url, conexion.bd);
@@ -37,6 +37,7 @@ export class CiudadPage {
                         },
                         function () {
                             self.presentAlert('Falla', 'Imposible Conectar');
+                            self.cargar = false;
                         }
                     );
 
