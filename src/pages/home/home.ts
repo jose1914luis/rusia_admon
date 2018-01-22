@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {NavController, AlertController} from 'ionic-angular';
 import {global} from '../../components/credenciales/credenciales';
 import {Storage} from '@ionic/storage';
+import {GastosFilterPage} from '../../pages/gastos-filter/gastos-filter';
 
 declare var OdooApi: any;
 @Component({
@@ -15,7 +16,11 @@ export class HomePage {
     mensaje = '';
     constructor(public navCtrl: NavController, private storage: Storage, public alertCtrl: AlertController) {
     }
-
+    ejecute(item) {
+        //        console.log(item);
+        this.navCtrl.push(GastosFilterPage, {item: item});
+    }
+    
     ionViewDidLoad() {
         this.cargar = true
         var self = this;

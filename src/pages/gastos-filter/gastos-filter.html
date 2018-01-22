@@ -1,18 +1,90 @@
-<!--
-  Generated template for the GastosFilterPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
-
-  <ion-navbar>
-    <ion-title>gastosFilter</ion-title>
-  </ion-navbar>
-
+    <ion-navbar>
+        <ion-title>Detalles Gastos</ion-title>
+    </ion-navbar>
+    <ion-segment color="primary">
+        <ion-segment-button *ngIf="item.nuevo" value="friends" (ionSelect)="editar()">
+            Editar
+        </ion-segment-button>
+        <ion-segment-button value="guardar" (ionSelect)="guardar()">
+            Guardar
+        </ion-segment-button>
+    </ion-segment>
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
+
+        <ion-grid *ngIf="item.visible" (click)="ejecute(item)">      
+
+            <ion-row>     
+                <ion-col col-3>
+                    <b>Día</b>                
+                </ion-col>                   
+                <ion-col col-8>
+                    <ion-input type="text"  [(ngModel)]="item.name" [readonly]="!item.editable" name='name' ></ion-input>
+                </ion-col>   
+            </ion-row>
+
+            <ion-row>     
+                <ion-col col-3>
+                    <b>Ciudad</b>                
+                </ion-col>                   
+                <ion-col col-8>
+                    <ion-input type="text"  [(ngModel)]="item.city_id[1]" [readonly]="!item.editable" name='city_id' ></ion-input>
+                </ion-col>   
+            </ion-row>
+
+            <ion-row>     
+                <ion-col col-3 >
+                    <b>USD</b>                
+                </ion-col>                   
+                <ion-col col-3>
+                    <b>EUR</b>                
+                </ion-col>   
+                <ion-col col-3 >
+                    <b>RUB</b>                
+                </ion-col>  
+            </ion-row>
+            <ion-row >     
+                <ion-col col-3 >
+                    <ion-input type="number"  [(ngModel)]="item.total_usd" [readonly]="!item.editable" name='name' ></ion-input>
+                </ion-col>                   
+                <ion-col col-3>
+                    <ion-input type="number"  [(ngModel)]="item.total_eur" [readonly]="!item.editable" name='name' ></ion-input>
+                </ion-col>   
+                <ion-col col-3 >
+                    <ion-input type="number"  [(ngModel)]="item.total_rub" [readonly]="!item.editable" name='name' ></ion-input>
+                </ion-col>  
+            </ion-row>
+
+            <ion-row>     
+                <ion-col col-3 >
+                    <b>Paypal</b>                
+                </ion-col>                   
+                <ion-col col-3>
+                    <b>Tarjeta</b>                
+                </ion-col> 
+            </ion-row>
+            <ion-row>     
+                <ion-col col-3 >
+                    <ion-input type="number"  [(ngModel)]="item.total_pp" [readonly]="!item.editable" name='name' ></ion-input>            
+                </ion-col>                   
+                <ion-col col-3>
+                    <ion-input type="number"  [(ngModel)]="item.total_tarjeta" [readonly]="!item.editable" name='name' ></ion-input>            
+                </ion-col> 
+            </ion-row>
+
+
+            <ion-row class="borde">     
+                <ion-col col-3>
+                    <b>Estado</b>                
+                </ion-col>                   
+                <ion-col col-8>
+                    <ion-input type="text"  [(ngModel)]="item.state" [readonly]="!item.editable" name='name' ></ion-input>
+                </ion-col>   
+            </ion-row>
+
+        </ion-grid>
 
 </ion-content>
