@@ -31,6 +31,10 @@ export class HomePage {
                         function (value2) {
                             console.log(value2);
                             self.items = value2
+                            for (let key in self.items) {
+
+                                self.items[key].visible = true;
+                            }
                             self.cargar = false;
                         },
                         function () {
@@ -45,6 +49,54 @@ export class HomePage {
             );
         });
 
+    }
+
+    buscar() {
+
+        var self = this;
+        let alert = this.alertCtrl.create({
+            title: 'Buscar',
+            inputs: [
+                {
+                    name: 'ciudad',
+                    placeholder: 'Ciudad'
+                },
+                {
+                    name: 'fechaIni',
+                    placeholder: 'Fecha Inicial'
+                },
+                {
+                    name: 'fechaFin',
+                    placeholder: 'Fecha Final'
+                }
+            ],
+            buttons: [
+                {
+                    text: 'Cancel',
+                    role: 'cancel',
+                    handler: data => {
+                        console.log('Cancel clicked');
+                    }
+                },
+                {
+                    text: 'Buscar',
+                    handler: data => {
+
+                        for (let key in self.items) {
+
+                            self.items[key].visible = false;
+                            //                                console.log((self.items[key].name + "").includes(data.nombre + "") + '  ' + (self.items[key].email[1] + "").includes(data.correo + ""));
+                            if ((self.items[key].city_id[1] + "").includes(data.ciudad + "")){ //&& (self.items[key].email[1] + "").includes(data.correo + "")) {
+                                //                                    console.log(self.items[key]);
+                                self.items[key].visible = true;
+                            }
+                        }
+
+                    }
+                }
+            ]
+        });
+        alert.present();
     }
 
 

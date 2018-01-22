@@ -13,14 +13,17 @@ export class ListPage {
 
     cargar = false;
     mensaje = '';
-    conexion = {bd: 'Free_Tour_Russia', username: '', password: '', is_guia: false, is_chofer: false};
+    conexion = {bd: 'Tour_Gratis_Rusia_Test', username: 'toursgratismoscu@gmail.com', password: '123456', is_guia: false, is_chofer: false};
     constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage, public alertCtrl: AlertController) {
 
         var borrar = this.navParams.get('borrar');
+//        this.storage.get('conexion').then((conexion) => {
+//            console.log(conexion); 
+//        });
         this.storage.remove('conexion');
-        //this.conexion.username = (this.navParams.get('login') == undefined)?'' : this.navParams.get('login');
         if (borrar == true) {
             this.cargar = false;
+            this.storage.remove('conexion');
         } else {
 
             this.conectarApp(false);
@@ -28,45 +31,48 @@ export class ListPage {
     }
 
     conectarApp(verificar) {
-
-        if (this.conexion.username.length < 5 && this.conexion.password.length < 4) return;
-
-        var self = this;
-        this.cargar = true;
+        
+        //console.log('entro');
+        var self = this;        
         this.storage.get('conexion').then((conexion) => {
+            
+            var tmp_con;
             if (conexion != null) {
-                var odoo = new OdooApi(global.url, self.conexion.bd);
-                odoo.login(self.conexion.username, self.conexion.password).then(
-                    function (uid) {
-
-                        console.log(uid);
-                        odoo.search_read('res.users', [['id', '=', uid]],
-                            ['name', 'email', 'city_id', 'is_guia', 'is_chofer', 'salario_ext', 'salario_min',
-                                'active', 'groups_id']).then(
-                            function (value2) {
-                                console.log(value2);
-                                self.conexion.is_chofer = value2[0].is_chofer;
-                                self.conexion.is_guia = value2[0].is_guia;
-                                self.storage.set('conexion', self.conexion);
-                                self.navCtrl.setRoot(PanelPage);
-
-                            },
-                            function () {
-                                self.presentAlert('Falla', 'Imposible Conectar');
-                                self.cargar = false;
-                            }
-                            );
-                        //                
-                    },
-                    function () {
-                        self.presentAlert('Falla', 'Imposible conectarse');
-                        self.cargar = false;
-                    }
-                );
+                tmp_con = conexion;
 
             } else {
-                self.cargar = false;
+                tmp_con = self.conexion;
             }
+            if (tmp_con.username.length < 5 && tmp_con.password.length < 4) return;
+            self.cargar = true;
+            var odoo = new OdooApi(global.url, tmp_con.bd);
+            odoo.login(tmp_con.username, tmp_con.password).then(
+                function (uid) {
+                    console.log(uid);
+                    odoo.read('res.users', [uid],
+                        ['name', 'email', 'city_id', 'is_guia', 'is_chofer', 'salario_ext', 'salario_min',
+                            'active', 'groups_id']).then(
+                        function (value2) {
+                            console.log(value2);
+                            self.conexion.is_chofer = value2[0].is_chofer;
+                            self.conexion.is_guia = value2[0].is_guia;
+                            self.storage.set('conexion', self.conexion);
+                            self.navCtrl.setRoot(PanelPage);
+
+                        },
+                        function () {
+                            self.presentAlert('Falla', 'Imposible Conectar. Verifique sus credenciales.');
+                            self.cargar = false;
+                        }
+                        );
+                    //                
+                },
+                function () {
+                    self.presentAlert('Falla', 'Imposible conectarse. Verifique sus credenciales.');
+                    self.cargar = false;
+                }
+            );
+
         });
 
     }
