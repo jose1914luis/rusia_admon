@@ -21,32 +21,62 @@ import {SolPage} from '../../pages/sol/sol';
 export class PanelPage {
     @ViewChild(Nav) nav: Nav;
     pages: Array<{title: string, component: any}>;
-    
+
     rootPage: any = AsignarPage;
-    constructor(public navCtrl: NavController, public navParams: NavParams) {
-        
-        this.pages = [
-            {title: 'Ciudades', component: CiudadPage},
-            {title: 'Asignar Guía', component: AsignarPage},
-            {title: 'Clientes', component: ClientesPage},
-            {title: 'Solicitudes', component: SolPage},
-            {title: 'Nomina', component: NomPage},
-            {title: 'Pago Diario', component: PagoPage},
-            {title: 'Salario Guías', component: SalarioPage},
-            {title: 'Gastos Extras', component: HomePage},
-            {title: 'Salir', component: ListPage}
-        ];
+    constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage) {
+
+        var self = this;
+        this.storage.get('conexion').then((conexion) => {
+
+            if (conexion.is_guia) {
+
+                self.pages = [
+                   
+                    {title: 'Tours Asignados', component: AsignarPage},                   
+                    {title: 'Nomina', component: NomPage},
+                    {title: 'Pago Diario', component: PagoPage},
+                    {title: 'Salir', component: ListPage}
+                ];
+                
+            } else if (conexion.is_chofer) {
+
+                self.pages = [
+                    {title: 'Ciudades', component: CiudadPage},
+                    {title: 'Asignar Guía', component: AsignarPage},
+                    {title: 'Clientes', component: ClientesPage},
+                    {title: 'Solicitudes', component: SolPage},
+                    {title: 'Nomina', component: NomPage},
+                    {title: 'Pago Diario', component: PagoPage},
+                    {title: 'Salario Guías', component: SalarioPage},
+                    {title: 'Gastos Extras', component: HomePage},
+                    {title: 'Salir', component: ListPage}
+                ];
+            } else {
+                self.pages = [
+                    {title: 'Ciudades', component: CiudadPage},
+                    {title: 'Asignar Guía', component: AsignarPage},
+                    {title: 'Clientes', component: ClientesPage},
+                    {title: 'Solicitudes', component: SolPage},
+                    {title: 'Nomina', component: NomPage},
+                    {title: 'Pago Diario', component: PagoPage},
+                    {title: 'Salario Guías', component: SalarioPage},
+                    {title: 'Gastos Extras', component: HomePage},
+                    {title: 'Salir', component: ListPage}
+                ];
+            }
+        });
+
 
     }
 
     openPage(page) {
-        
-        if(page.title == "Salir"){
-            this.nav.setRoot(page.component, {borrar:true});
-        }else{
+
+        if (page.title == "Salir") {
+            this.nav.setRoot(page.component, {borrar: true});
+        } else {
             this.nav.setRoot(page.component);
-        }        
-        
+        }
+
     }
 
 }
