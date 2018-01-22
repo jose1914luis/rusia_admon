@@ -17,6 +17,7 @@ import {SincPage} from '../pages/sinc/sinc';
 import {ReservasPage} from '../pages/reservas/reservas';
 import {FuturasPage} from '../pages/futuras/futuras';
 import {NuevoPage} from '../pages/nuevo/nuevo';
+import {PanelPage} from '../pages/panel/panel';
 
 import {TabsPage} from '../pages/tabs/tabs';
 
@@ -63,7 +64,8 @@ import {SplashScreen} from '@ionic-native/splash-screen';
         TabsPage,
         ResDetailPage,
         NuevoPage,
-        NomFilterPage
+        NomFilterPage,
+        PanelPage
     ],
     imports: [
         BrowserModule,
@@ -96,7 +98,8 @@ import {SplashScreen} from '@ionic-native/splash-screen';
         TabsPage,
         ResDetailPage,
         NuevoPage,
-        NomFilterPage
+        NomFilterPage,
+        PanelPage
     ],
     providers: [
         Clipboard,

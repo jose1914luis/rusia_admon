@@ -2,6 +2,7 @@ import {NavController, NavParams, AlertController} from 'ionic-angular';
 import {Component} from '@angular/core';
 import {Storage} from '@ionic/storage';
 import {HomePage} from '../../pages/home/home';
+import {PanelPage} from '../../pages/panel/panel';
 import {AsignarPage} from '../../pages/asignar/asignar';
 import {global} from '../../components/credenciales/credenciales';
 
@@ -45,8 +46,10 @@ export class ListPage {
                         console.log(value2);
                         self.conexion.is_chofer = value2[0].is_chofer;
                         self.conexion.is_guia = value2[0].is_chofer;
-                        self.navCtrl.setRoot(AsignarPage);
                         self.storage.set('conexion2', self.conexion);
+
+                        self.navCtrl.setRoot(PanelPage);
+                        
                     },
                     function () {
                         self.presentAlert('Falla', 'Imposible Conectar');

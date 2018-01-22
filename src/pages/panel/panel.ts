@@ -1,5 +1,5 @@
 import {Component, ViewChild} from '@angular/core';
-import {NavController, NavParams, Nav} from 'ionic-angular';
+import {IonicPage, NavController, NavParams, Nav} from 'ionic-angular';
 
 import {Storage} from '@ionic/storage';
 
@@ -13,7 +13,7 @@ import {PagoPage} from '../../pages/pago/pago';
 import {SalarioPage} from '../../pages/salario/salario';
 import {SolPage} from '../../pages/sol/sol';
 
-
+@IonicPage()
 @Component({
     selector: 'page-panel',
     templateUrl: 'panel.html',
