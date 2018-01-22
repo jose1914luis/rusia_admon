@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {NavController, NavParams, AlertController} from 'ionic-angular';
 import {global} from '../../components/credenciales/credenciales';
+import {Storage} from '@ionic/storage';
 
 declare var OdooApi: any;
 @Component({
@@ -12,7 +13,7 @@ export class AsignarDetailPage {
     item;
     editable = false;
     cargar = false;
-    constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController) {
+    constructor(public navCtrl: NavController, private storage: Storage, public navParams: NavParams, public alertCtrl: AlertController) {
         this.item = this.navParams.data;
         console.log(this.navParams.data);
     }
@@ -20,7 +21,7 @@ export class AsignarDetailPage {
     ionViewDidLoad() {
         console.log('ionViewDidLoad AsignarDetailPage');
     }
-    
+
     editar() {
 
         if (!this.editable) {
@@ -34,35 +35,37 @@ export class AsignarDetailPage {
 
         this.cargar = true;
         var self = this;
-        
-        var odoo = new OdooApi(global.url, global.db);
-        odoo.login(global.username, global.password).then(
-            function (uid) {
+        this.storage.get('conexion').then((conexion) => {
+            var odoo = new OdooApi(global.url, conexion.db);
+            odoo.login(conexion.username, conexion.password).then(
+                function (uid) {
 
-                odoo.write('tours.guia', self.item.id, {
-                    date_begin:self.item.date_begin,date_end:self.item.date_end,personas_pago:self.item.personas_pago,
-                    personas_terceros:self.item.personas_terceros, personas_all_in:self.item.personas_all_in,
-                    total_personas:self.item.total_personas, total_rublo:self.item.total_rublo,
-                    total_dolar:self.item.total_dolar, pay_pal:self.item.pay_pal, tarjeta:self.item.tarjeta,
-                    entregado:self.item.entregado, state:self.item.state, observaciones:self.item.observaciones
-                }).then(
-                    function (value2) {
-                        console.log(value2);
-                        if (!value2) {
+                    odoo.write('tours.guia', self.item.id, {
+                        date_begin: self.item.date_begin, date_end: self.item.date_end, personas_pago: self.item.personas_pago,
+                        personas_terceros: self.item.personas_terceros, personas_all_in: self.item.personas_all_in,
+                        total_personas: self.item.total_personas, total_rublo: self.item.total_rublo,
+                        total_dolar: self.item.total_dolar, pay_pal: self.item.pay_pal, tarjeta: self.item.tarjeta,
+                        entregado: self.item.entregado, state: self.item.state, observaciones: self.item.observaciones
+                    }).then(
+                        function (value2) {
+                            console.log(value2);
+                            if (!value2) {
+                                self.presentAlert('Falla', 'Error al Guardar, intente nuevamente');
+                            }
+                            self.cargar = false;
+                        },
+                        function () {
                             self.presentAlert('Falla', 'Error al Guardar, intente nuevamente');
                         }
-                        self.cargar = false;
-                    },
-                    function () {
-                        self.presentAlert('Falla', 'Error al Guardar, intente nuevamente');
-                    }
-                    );
+                        );
 
-            },
-            function () {
+                },
+                function () {
 
-            }
-        );
+                }
+            );
+        });
+
 
     }
 

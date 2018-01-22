@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {NavController, NavParams, AlertController} from 'ionic-angular';
 import {global} from '../../components/credenciales/credenciales';
 import {CityDetailPage} from '../../pages/city-detail/city-detail';
+import {Storage} from '@ionic/storage';
 
 declare var OdooApi: any;
 
@@ -13,7 +14,7 @@ export class CiudadPage {
 
     items;
     cargar = true;
-    constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController) {
+    constructor(public navCtrl: NavController, private storage: Storage, public navParams: NavParams, public alertCtrl: AlertController) {
 
     }
     refresh() {
@@ -23,26 +24,29 @@ export class CiudadPage {
 
         var self = this;
         this.cargar = true;
-        var odoo = new OdooApi(global.url, global.db);
-        self.items = null;
-        odoo.login(global.username, global.password).then(
-            function (uid) {
-                odoo.search_read('tours.companies', [['id', '!=', '0']], ['administrador', 'name']).then(
-                    function (value) {
-                        console.log(value);
-                        self.items = value
-                        self.cargar = false;
-                    },
-                    function () {
-                        self.presentAlert('Falla', 'Imposible Conectar');
-                    }
-                );
+        this.storage.get('conexion').then((conexion) => {
+            var odoo = new OdooApi(global.url, conexion.db);
+            self.items = null;
+            odoo.login(conexion.username, conexion.password).then(
+                function (uid) {
+                    odoo.search_read('tours.companies', [['id', '!=', '0']], ['administrador', 'name']).then(
+                        function (value) {
+                            console.log(value);
+                            self.items = value
+                            self.cargar = false;
+                        },
+                        function () {
+                            self.presentAlert('Falla', 'Imposible Conectar');
+                        }
+                    );
 
-            },
-            function () {
+                },
+                function () {
 
-            }
-        );
+                }
+            );
+        });
+
     }
 
     presentAlert(titulo, texto) {

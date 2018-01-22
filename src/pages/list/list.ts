@@ -13,8 +13,7 @@ export class ListPage {
 
     cargar = false;
     mensaje = '';
-    conexion = {username:'labg1214@gmail.com', password:'123456', is_guia:false, is_chofer:false};
-    bd = 'Tour_Gratis_Rusia_Test';
+    conexion = {bd: 'Tour_Gratis_Rusia_Test', username:'labg1214@gmail.com', password:'123456', is_guia:false, is_chofer:false};    
     constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage, public alertCtrl: AlertController) {
 
         var borrar = this.navParams.get('borrar');
@@ -32,7 +31,7 @@ export class ListPage {
         if (this.conexion.username.length < 5 && this.conexion.password.length < 4)return;
         var self = this;
         this.cargar = true;
-        var odoo = new OdooApi(global.url, self.bd);         
+        var odoo = new OdooApi(global.url, self.conexion.bd);         
         odoo.login(self.conexion.username, self.conexion.password).then(
             function (uid) {
 

@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {NavController, NavParams, AlertController} from 'ionic-angular';
 import {global} from '../../components/credenciales/credenciales';
+import {Storage} from '@ionic/storage';
 
 declare var OdooApi: any;
 @Component({
@@ -11,7 +12,7 @@ export class SalarioDetailPage {
 
     item;
     cargar = false;
-    constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController) {
+    constructor(public navCtrl: NavController, private storage: Storage, public navParams: NavParams, public alertCtrl: AlertController) {
         this.item = this.navParams.get('item');
     }
 
@@ -31,36 +32,38 @@ export class SalarioDetailPage {
 
         this.cargar = true;
         var self = this;
-        //
-        var odoo = new OdooApi(global.url, global.db);
-        odoo.login(global.username, global.password).then(
-            function (uid) {
+        this.storage.get('conexion').then((conexion) => {
+            var odoo = new OdooApi(global.url, conexion.db);
+            odoo.login(conexion.username, conexion.password).then(
+                function (uid) {
 
 
-//                console.log(self.item);
-                odoo.write('tours.gastos.generales', self.item.id, {
-                    sala_guia: self.item.sala_guia,
-                    total_metro: self.item.total_metro,
-                    name: self.item.name,
-                    city_id: self.item.city_id[0]
-                }).then(
-                    function (value2) {
-                        if (!value2) {
+                    //                console.log(self.item);
+                    odoo.write('tours.gastos.generales', self.item.id, {
+                        sala_guia: self.item.sala_guia,
+                        total_metro: self.item.total_metro,
+                        name: self.item.name,
+                        city_id: self.item.city_id[0]
+                    }).then(
+                        function (value2) {
+                            if (!value2) {
+                                self.presentAlert('Falla', 'Error al Guardar, intente nuevamente');
+                            }
+                            self.cargar = false;
+                            //console.log(value2);
+                        },
+                        function () {
                             self.presentAlert('Falla', 'Error al Guardar, intente nuevamente');
                         }
-                        self.cargar = false;
-                        //console.log(value2);
-                    },
-                    function () {
-                        self.presentAlert('Falla', 'Error al Guardar, intente nuevamente');
-                    }
-                    );
+                        );
 
-            },
-            function () {
+                },
+                function () {
 
-            }
-        );
+                }
+            );
+
+        });
 
     }
 

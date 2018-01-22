@@ -3,6 +3,7 @@ import {NavController, NavParams, AlertController, ModalController} from 'ionic-
 import {global} from '../../components/credenciales/credenciales';
 import {NomDetailPage} from '../../pages/nom-detail/nom-detail';
 import {NomFilterPage} from '../../pages/nom-filter/nom-filter';
+import {Storage} from '@ionic/storage';
 
 declare var OdooApi: any;
 
@@ -14,40 +15,43 @@ export class NomPage {
 
     items;
     cargar = true;
-    constructor(public modalCtrl: ModalController, public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController) {
+    constructor(public modalCtrl: ModalController, private storage: Storage, public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController) {
 
 
     }
 
     ionViewDidLoad() {
         var self = this;
-        self.cargar = true;
-        self.items = null;
-        var odoo = new OdooApi(global.url, global.db);
-        odoo.login(global.username, global.password).then(
-            function (uid) {
-                odoo.search_read('tours.nomina', [['id', '!=', '0']],
-                    ['name', 'semana', 'city_id', 'pax_pago', 'total_rub',
-                        'total_eur', 'total_usd', 'total_res', 'total_metro', 'state']).then(
-                    function (value2) {
-                        console.log(value2);
-                        self.items = value2;
-                        for (let key in self.items) {
+        this.storage.get('conexion').then((conexion) => {
+            self.cargar = true;
+            self.items = null;
+            var odoo = new OdooApi(global.url, conexion.db);
+            odoo.login(conexion.username, conexion.password).then(
+                function (uid) {
+                    odoo.search_read('tours.nomina', [['id', '!=', '0']],
+                        ['name', 'semana', 'city_id', 'pax_pago', 'total_rub',
+                            'total_eur', 'total_usd', 'total_res', 'total_metro', 'state']).then(
+                        function (value2) {
+                            console.log(value2);
+                            self.items = value2;
+                            for (let key in self.items) {
 
-                            self.items[key].visible = true;
+                                self.items[key].visible = true;
+                            }
+                            self.cargar = false;
+                        },
+                        function () {
+                            self.presentAlert('Falla', 'Imposible Conectar');
                         }
-                        self.cargar = false;
-                    },
-                    function () {
-                        self.presentAlert('Falla', 'Imposible Conectar');
-                    }
-                    );
+                        );
 
-            },
-            function () {
+                },
+                function () {
 
-            }
-        );
+                }
+            );
+        });
+
     }
 
     presentAlert(titulo, texto) {
@@ -73,22 +77,22 @@ export class NomPage {
         let profileModal = this.modalCtrl.create(NomFilterPage);
         profileModal.onDidDismiss(data => {
             if (data != null) {
-                
+
                 if (data.semanaIni > 0 || data.semanaFin > 0) {
                     for (let key in self.items) {
 
                         self.items[key].visible = false;
 
                         if (self.items[key].semana >= data.semanaIni && self.items[key].semana <= data.semanaFin) {
-                            
-                            if(data.estado = 'todos'){
+
+                            if (data.estado = 'todos') {
                                 self.items[key].visible = true;
-                            }else if(data.estado = 'pagados' && self.items[key].state == 'pagado'){
+                            } else if (data.estado = 'pagados' && self.items[key].state == 'pagado') {
                                 self.items[key].visible = true;
-                            }else if(data.estado = 'pedientes' && self.items[key].state == 'pedientes'){
+                            } else if (data.estado = 'pedientes' && self.items[key].state == 'pedientes') {
                                 self.items[key].visible = true;
                             }
-                            
+
                         }
                     }
                 } else {

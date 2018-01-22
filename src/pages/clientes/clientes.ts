@@ -3,6 +3,7 @@ import {NavController, NavParams, AlertController} from 'ionic-angular';
 import {global} from '../../components/credenciales/credenciales';
 import {ClienteDetailPage} from '../../pages/cliente-detail/cliente-detail';
 import {SincPage} from '../../pages/sinc/sinc';
+import {Storage} from '@ionic/storage';
 
 declare var OdooApi: any;
 
@@ -15,7 +16,7 @@ export class ClientesPage {
     items;
     cargar = true;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController) {
+    constructor(public navCtrl: NavController, private storage: Storage, public navParams: NavParams, public alertCtrl: AlertController) {
 
     }
 
@@ -30,31 +31,34 @@ export class ClientesPage {
     ionViewDidLoad() {
         var self = this;
         this.cargar = true;
-        var odoo = new OdooApi(global.url, global.db);
-        odoo.login(global.username, global.password).then(
-            function (uid) {
-                odoo.search_read('tours.clientes', [['id', '!=', '0']],
-                    ['name', 'ilike', 'email', 'telefono', 'nombre_hotel',
-                        'active_email', 'is_padrino', 'pago_tarjeta', 'padre', 'observaciones']).then(
-                    function (value2) {
-                        console.log(value2);
-                        self.items = value2
-                        for (let key in self.items) {
+        this.storage.get('conexion').then((conexion) => {
+            var odoo = new OdooApi(global.url, conexion.db);
+            odoo.login(conexion.username, conexion.password).then(
+                function (uid) {
+                    odoo.search_read('tours.clientes', [['id', '!=', '0']],
+                        ['name', 'ilike', 'email', 'telefono', 'nombre_hotel',
+                            'active_email', 'is_padrino', 'pago_tarjeta', 'padre', 'observaciones']).then(
+                        function (value2) {
+                            console.log(value2);
+                            self.items = value2
+                            for (let key in self.items) {
 
-                            self.items[key].visible = true;
+                                self.items[key].visible = true;
+                            }
+                            self.cargar = false;
+                        },
+                        function () {
+                            self.presentAlert('Falla', 'Imposible Conectar');
                         }
-                        self.cargar = false;
-                    },
-                    function () {
-                        self.presentAlert('Falla', 'Imposible Conectar');
-                    }
-                    );
+                        );
 
-            },
-            function () {
+                },
+                function () {
 
-            }
-        );
+                }
+            );
+        });
+
     }
 
     presentAlert(titulo, texto) {
