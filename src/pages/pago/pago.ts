@@ -23,7 +23,7 @@ export class PagoPage {
         this.storage.get('conexion').then((conexion) => {
             self.cargar = true;
             self.items = null;
-            var odoo = new OdooApi(global.url, conexion.db);
+            var odoo = new OdooApi(global.url, conexion.bd);
             odoo.login(conexion.username, conexion.password).then(
                 function (uid) {
                     odoo.search_read('tours.pago.guia', [['id', '!=', '0']],

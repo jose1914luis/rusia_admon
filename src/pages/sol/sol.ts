@@ -23,7 +23,7 @@ export class SolPage {
         this.items = null;
 
         this.storage.get('conexion').then((conexion) => {
-            var odoo = new OdooApi(global.url, conexion.db);
+            var odoo = new OdooApi(global.url, conexion.bd);
             odoo.login(conexion.username, conexion.password).then(
                 function (uid) {
                     odoo.search_read('tours.clientes.solicitudes', [['id', '!=', '0']],

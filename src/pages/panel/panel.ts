@@ -28,6 +28,7 @@ export class PanelPage {
         var self = this;
         this.storage.get('conexion').then((conexion) => {
 
+//            console.log('-----x-----');
             console.log(conexion);
             if (conexion.is_guia) {
 

@@ -36,11 +36,11 @@ export class AsignarPage {
 
         var self = this;
         this.storage.get('conexion').then((conexion) => {
-            
-            self.item = this.navParams.get('item');
-            console.log(self.item);
-            
-            var odoo = new OdooApi(global.url, conexion.db);
+
+            self.item = self.navParams.get('item');
+            console.log(conexion);
+
+            var odoo = new OdooApi(global.url, conexion.bd);
             self.cargar = true;
             self.calendar.eventSource = [];
             self.events = [];
@@ -50,7 +50,7 @@ export class AsignarPage {
                         'date_end', 'personas_terceros', 'personas_all_in', 'total_personas', 'total_rublo', 'total_dolar', 'total_rublo_res'
                         , 'total_euro_res', 'total_dolar_res', 'pay_pal', 'tarjeta', 'is_free', 'personas_pago', 'is_private', 'entregado', 'state', 'observaciones']).then(
                         function (value) {
-                            //                        console.log(value);
+
                             for (var key in value) {
                                 var dateStart = new Date(String((value[key]).date_begin).replace(' ', 'T'));
                                 var dateEnd = new Date(String((value[key]).date_end).replace(' ', 'T'));
@@ -70,8 +70,8 @@ export class AsignarPage {
                                 ['tour_id', 'guia_id', 'name', 'telefono', 'email',
                                     'nombre_hotel', 'personas_terceros', 'personas_all_in', 'total_personas', 'personas_pago',
                                     'abonor_rublo', 'abono_euros', 'abono_dolar', 'dolar_exportado', 'euros_exportado', 'rublo_exportado', 'pay_pal', 'tarjeta', 'asistencia', 'observaciones', 'fecha']).then(
-                                function (value2) {
 
+                                function (value2) {
 
                                     for (var key in value) {
 

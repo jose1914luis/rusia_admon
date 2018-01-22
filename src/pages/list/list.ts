@@ -13,10 +13,11 @@ export class ListPage {
 
     cargar = false;
     mensaje = '';
-    conexion = {bd: 'Tour_Gratis_Rusia_Test', username:'labg1214@gmail.com', password:'123456', is_guia:false, is_chofer:false};    
+    conexion = {bd: 'Free_Tour_Russia', username:'fernandez.bermudez.jonatan@gmail.com', password:'1jLl0bFcMR8TU4UI2Kh9', is_guia:false, is_chofer:false};    
     constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage, public alertCtrl: AlertController) {
 
         var borrar = this.navParams.get('borrar');
+        this.storage.remove('conexion');
         //this.conexion.username = (this.navParams.get('login') == undefined)?'' : this.navParams.get('login');
         if (borrar == true) {
             this.cargar = false;

@@ -18,7 +18,7 @@ export class NomDetailPage {
 
         var self = this;
         this.storage.get('conexion').then((conexion) => {
-            var odoo = new OdooApi(global.url, conexion.db);
+            var odoo = new OdooApi(global.url, conexion.bd);
             odoo.login(conexion.username, conexion.password).then(
                 function (uid) {
                     odoo.search_read('tours.pago.guia', [['semana', '=', self.item.semana]],
@@ -83,7 +83,7 @@ export class NomDetailPage {
         this.storage.get('conexion').then((conexion) => {
 
             self.texto = 'Guardando...';
-            var odoo = new OdooApi(global.url, conexion.db);
+            var odoo = new OdooApi(global.url, conexion.bd);
             odoo.login(conexion.username, conexion.password).then(
                 function (uid) {
 

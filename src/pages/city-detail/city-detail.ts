@@ -20,7 +20,7 @@ export class CityDetailPage {
         console.log(this.item);
         var self = this;
         this.storage.get('conexion').then((conexion) => {
-            var odoo = new OdooApi(global.url, conexion.db);
+            var odoo = new OdooApi(global.url, conexion.bd);
             odoo.login(conexion.username, conexion.password).then(
                 function (uid) {
                     odoo.search_read('tours', [['company_id', '=', self.item.id]], ['codigo',
