@@ -43,7 +43,9 @@ export class ListPage {
                     function (value2) {
                         console.log(value2);
                         self.conexion.is_chofer = value2[0].is_chofer;
-                        self.conexion.is_guia = value2[0].is_chofer;
+                        self.conexion.is_guia = value2[0].is_guia;
+//                        console.log(value2[0].is_guia);
+//                        console.log(self.conexion.is_guia);
                         self.storage.set('conexion', self.conexion);
 
                         self.navCtrl.setRoot(PanelPage);

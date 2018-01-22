@@ -28,6 +28,7 @@ export class PanelPage {
         var self = this;
         this.storage.get('conexion').then((conexion) => {
 
+            console.log(conexion);
             if (conexion.is_guia) {
 
                 self.pages = [
@@ -41,14 +42,7 @@ export class PanelPage {
             } else if (conexion.is_chofer) {
 
                 self.pages = [
-                    {title: 'Ciudades', component: CiudadPage},
-                    {title: 'Asignar Guía', component: AsignarPage},
-                    {title: 'Clientes', component: ClientesPage},
-                    {title: 'Solicitudes', component: SolPage},
-                    {title: 'Nomina', component: NomPage},
-                    {title: 'Pago Diario', component: PagoPage},
-                    {title: 'Salario Guías', component: SalarioPage},
-                    {title: 'Gastos Extras', component: HomePage},
+                    {title: 'Tours Asignados', component: AsignarPage},
                     {title: 'Salir', component: ListPage}
                 ];
             } else {
