@@ -1,0 +1,35 @@
+<!--
+  Generated template for the BuscarTourPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+    <ion-navbar>
+        <ion-title>Buscar Tour</ion-title> 
+        <ion-buttons end>
+            <button ion-button icon-only (click)="closeModal('x')">
+                    <ion-icon item-right name="ios-close-outline"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+    <ion-searchbar
+        [(ngModel)]="buscar"        
+        [showCancelButton]="shouldShowCancel"
+        (ionInput)="onInput($event)"
+        (ionCancel)="onCancel($event)">
+    </ion-searchbar>
+
+</ion-header>
+
+
+<ion-content>
+
+    <ion-list>
+        <ion-item *ngFor="let item of tours" (click)="closeModal(item)">
+            {{ item.name }}
+    </ion-item>
+</ion-list>
+
+</ion-content>
