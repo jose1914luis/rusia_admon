@@ -24,13 +24,15 @@ export class AsignarDetailPage {
         console.log(this.navParams.data);
         if (this.navParams.data != false) {
             this.item = this.navParams.data;
+            if (this.item.guia_id != "") this.item.guia_id.name = this.item.guia_id[1];
+            this.item.tour_id.name = this.item.tour_id[1];
         } else {
             this.editable = true;
             this.nuevo = true;
             this.item = {
                 id: '',
-                tour_id: {id:'', name:''},
-                guia_id: '',
+                tour_id: {id: '', name: ''},
+                guia_id: {id: '', name: ''},
                 date_end: '',
                 date_begin: '',
                 entregado: '',
@@ -51,17 +53,31 @@ export class AsignarDetailPage {
     ionViewDidLoad() {
         console.log('ionViewDidLoad AsignarDetailPage');
     }
-
+    buscarGuia() {
+        if (this.editable) {
+            var self = this;
+            let profileModal = this.modalCtrl.create(BuscarGuiaPage);
+            profileModal.onDidDismiss(data => {
+                if (data != null) {
+                    self.item.guia_id = data;
+                    console.log(self.item.guia_id.name);
+                }
+            });
+            profileModal.present();
+        }
+    }
     buscarTour() {
-        var self = this;
-        let profileModal = this.modalCtrl.create(BuscarTourPage);
-        profileModal.onDidDismiss(data => {
-            if (data != null) {                
-                self.item.tour_id = data;                
-                console.log(self.item.tour_id.name);
-            }
-        });
-        profileModal.present();
+        if (this.editable) {
+            var self = this;
+            let profileModal = this.modalCtrl.create(BuscarTourPage);
+            profileModal.onDidDismiss(data => {
+                if (data != null) {
+                    self.item.tour_id = data;
+                    console.log(self.item.tour_id.name);
+                }
+            });
+            profileModal.present();
+        }
     }
 
     editar() {

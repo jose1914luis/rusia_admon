@@ -41,8 +41,9 @@
             <ion-col col-3>
                 <b>Guía</b>
             </ion-col>
-            <ion-col col-8>
-                <ion-input name="guia_id"  [readonly]="!editable" type="text" [(ngModel)]="item.guia_id"></ion-input>  
+            <ion-col col-8 (click)="buscarGuia()">
+                <ion-icon ios="ios-search" md="md-search"></ion-icon>
+                {{item.guia_id.name}}<!--<ion-input name="guia_id"  [readonly]="!editable" type="text" [(ngModel)]=""></ion-input>  -->
             </ion-col>       
         </ion-row>
 
