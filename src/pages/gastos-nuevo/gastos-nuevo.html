@@ -1,0 +1,50 @@
+
+<ion-header>
+
+    <ion-navbar>
+        <ion-title>Buscar</ion-title>
+        <ion-buttons end>
+            <button ion-button icon-only (click)="closeModal('x')">
+                    <ion-icon item-right name="ios-close-outline"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+
+    <form>
+        <ion-list>
+            <ion-item>
+                <ion-label>Nombre</ion-label>                  
+                <ion-input type="text"  [(ngModel)]="item.nombre" name='nombre' ></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label color="primary" stacked>Monedad</ion-label>
+                <ion-select [(ngModel)]="item.monedad" name="bd">
+                    <ion-option value="USD">USD</ion-option>
+                    <ion-option value="EUR">EUR</ion-option>
+                    <ion-option value="RUB">RUB</ion-option>
+                    <ion-option value="RUB">Paypal</ion-option>
+                    <ion-option value="RUB">Tarjeta</ion-option>
+                </ion-select>
+            </ion-item>
+             <ion-item>
+                <ion-label>Precio</ion-label>                  
+                <ion-input type="number"  [(ngModel)]="item.precio" name='precio' ></ion-input>
+            </ion-item>
+             <ion-item>
+                <ion-label>Cantidad</ion-label>                  
+                <ion-input type="number"  [(ngModel)]="item.cantidad" name='cantidad' ></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label>Sub Total</ion-label>                  
+                <ion-input type="number"  [(ngModel)]="item.sub_total" name='cantidad' ></ion-input>
+            </ion-item>
+        </ion-list>       
+
+    </form>
+
+</ion-content>
