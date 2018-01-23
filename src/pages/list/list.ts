@@ -13,7 +13,7 @@ export class ListPage {
 
     cargar = false;
     mensaje = '';
-    conexion = {bd: 'Tour_Gratis_Rusia_Test', username: '', password: '', is_guia: false, is_chofer: false};
+    conexion = {bd: 'Tour_Gratis_Rusia_Test', username: 'toursgratismoscu@gmail.com', password: '123456', is_guia: false, is_chofer: false};
     constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage, public alertCtrl: AlertController) {
 
         var borrar = this.navParams.get('borrar');
