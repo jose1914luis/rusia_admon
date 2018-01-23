@@ -17,9 +17,9 @@ export class ListPage {
     constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage, public alertCtrl: AlertController) {
 
         var borrar = this.navParams.get('borrar');
-//        this.storage.get('conexion').then((conexion) => {
-//            console.log(conexion); 
-//        });
+        //        this.storage.get('conexion').then((conexion) => {
+        //            console.log(conexion); 
+        //        });
         this.storage.remove('conexion');
         if (borrar == true) {
             this.cargar = false;
@@ -30,50 +30,46 @@ export class ListPage {
         }
     }
 
-    conectarApp(verificar) {
-        
-        //console.log('entro');
-        var self = this;        
-        this.storage.get('conexion').then((conexion) => {
-            
-            var tmp_con;
-            if (conexion != null) {
-                tmp_con = conexion;
-
-            } else {
-                tmp_con = self.conexion;
+    loginSinDatos() {
+        var self = this;
+        this.storage.get('conexion').then((val) => {
+            if (val != null) {self.navCtrl.setRoot(PanelPage)} else {
+                self.presentAlert('Falla', 'Imposible Conectar. Verifique sus credenciales.');
+                self.cargar = false;
             }
-            if (tmp_con.username.length < 5 && tmp_con.password.length < 4) return;
-            self.cargar = true;
-            var odoo = new OdooApi(global.url, tmp_con.bd);
-            odoo.login(tmp_con.username, tmp_con.password).then(
-                function (uid) {
-                    console.log(uid);
-                    odoo.read('res.users', [uid],
-                        ['name', 'email', 'city_id', 'is_guia', 'is_chofer', 'salario_ext', 'salario_min',
-                            'active', 'groups_id']).then(
-                        function (value2) {
-                            console.log(value2);
-                            self.conexion.is_chofer = value2[0].is_chofer;
-                            self.conexion.is_guia = value2[0].is_guia;
-                            self.storage.set('conexion', self.conexion);
-                            self.navCtrl.setRoot(PanelPage);
-
-                        },
-                        function () {
-                            self.presentAlert('Falla', 'Imposible Conectar. Verifique sus credenciales.');
-                            self.cargar = false;
-                        }
-                        );
-                    //                
-                },
-                function () {
-                    self.presentAlert('Falla', 'Imposible conectarse. Verifique sus credenciales.');
-                    self.cargar = false;
-                }
-            );
-
         });
+    }
+
+    conectarApp(verificar) {
+
+        var self = this;
+        if (self.conexion.username.length < 5 && self.conexion.password.length < 4) return;
+        self.cargar = true;
+        var odoo = new OdooApi(global.url, self.conexion.bd);
+        odoo.login(self.conexion.username, self.conexion.password).then(
+            function (uid) {
+                console.log(uid);
+                odoo.read('res.users', [uid],
+                    ['name', 'email', 'city_id', 'is_guia', 'is_chofer', 'salario_ext', 'salario_min',
+                        'active', 'groups_id']).then(
+                    function (value2) {
+                        console.log(value2);
+                        self.conexion.is_chofer = value2[0].is_chofer;
+                        self.conexion.is_guia = value2[0].is_guia;
+                        self.storage.set('conexion', self.conexion);
+                        self.navCtrl.setRoot(PanelPage);
+
+                    },
+                    function () {
+                        self.loginSinDatos();
+                    }
+                    );
+                //                
+            },
+            function () {
+                self.loginSinDatos()
+            }
+        );
 
     }
 

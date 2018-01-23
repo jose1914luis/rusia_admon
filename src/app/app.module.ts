@@ -16,7 +16,6 @@ import {SolPage} from '../pages/sol/sol';
 import {SincPage} from '../pages/sinc/sinc';
 import {ReservasPage} from '../pages/reservas/reservas';
 import {FuturasPage} from '../pages/futuras/futuras';
-import {NuevoPage} from '../pages/nuevo/nuevo';
 import {PanelPage} from '../pages/panel/panel';
 
 import {TabsPage} from '../pages/tabs/tabs';
@@ -32,6 +31,8 @@ import {ResDetailPage} from '../pages/res-detail/res-detail';
 import {NomFilterPage} from '../pages/nom-filter/nom-filter';
 import {GastosFilterPage} from '../pages/gastos-filter/gastos-filter';
 import {GastosNuevoPage} from '../pages/gastos-nuevo/gastos-nuevo';
+import {BuscarTourPage} from '../pages/buscar-tour/buscar-tour';
+import {BuscarGuiaPage} from '../pages/buscar-guia/buscar-guia';
 
 
 import {IonicStorageModule} from '@ionic/storage';
@@ -39,7 +40,6 @@ import {Network} from '@ionic-native/network';
 import {NgCalendarModule} from 'ionic2-calendar';
 import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
-
 
 @NgModule({
     declarations: [
@@ -61,15 +61,16 @@ import {SplashScreen} from '@ionic-native/splash-screen';
         ClienteDetailPage,
         NomDetailPage,
         AsignarDetailPage,
-        ReservasPage,
+        ReservasPage, 
         FuturasPage,
         TabsPage,
         ResDetailPage,
-        NuevoPage,
         NomFilterPage,
         PanelPage,
         GastosFilterPage,
-        GastosNuevoPage
+        GastosNuevoPage,
+        BuscarGuiaPage,
+        BuscarTourPage
     ],
     imports: [
         BrowserModule,
@@ -101,11 +102,12 @@ import {SplashScreen} from '@ionic-native/splash-screen';
         FuturasPage,
         TabsPage,
         ResDetailPage,
-        NuevoPage,
         NomFilterPage,
         PanelPage,
         GastosFilterPage,
-        GastosNuevoPage
+        GastosNuevoPage,
+        BuscarGuiaPage,
+        BuscarTourPage
     ],
     providers: [
         Clipboard,

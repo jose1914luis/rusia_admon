@@ -5,9 +5,12 @@
   Ionic pages and navigation.
 -->
 <ion-header>
+    <ion-navbar *ngIf="nuevo" color="primary">
+        <ion-title>Nuevo Tour</ion-title>
+    </ion-navbar>
 
     <ion-segment color="primary">
-        <ion-segment-button value="friends" (ionSelect)="editar()">
+        <ion-segment-button *ngIf="!nuevo" value="friends" (ionSelect)="editar()">
             Editar
         </ion-segment-button>
         <ion-segment-button value="guardar" (ionSelect)="guardar()">
@@ -28,8 +31,10 @@
             <ion-col col-3>
                 <b>Tour</b>
             </ion-col>
-            <ion-col col-8>
-                <ion-input name="tour_id"  [readonly]="!editable" type="text" [(ngModel)]="item.tour_id[1]"></ion-input>                
+            <ion-col col-8 (click)="buscarTour()">
+                     <ion-icon ios="ios-search" md="md-search"></ion-icon>
+                <!--<ion-auto-complete [dataProvider]="completeTestService"></ion-auto-complete>-->
+                {{item.tour_id.name}}
             </ion-col>       
         </ion-row>        
         <ion-row align-items-center>  
@@ -40,25 +45,30 @@
                 <ion-input name="guia_id"  [readonly]="!editable" type="text" [(ngModel)]="item.guia_id"></ion-input>  
             </ion-col>       
         </ion-row>
-        <ion-row align-items-center>  
-
-            <ion-col col-3>
-                <b>Fecha Fin</b>
-            </ion-col>
-            <ion-col col-4>
-                <ion-input name="date_end"  [readonly]="!editable" type="text" [(ngModel)]="item.date_end"></ion-input>                
-            </ion-col> 
-        </ion-row>
 
         <ion-row align-items-center>  
             <ion-col col-3>
                 <b>Fecha Inicio</b>
             </ion-col>
-            <ion-col col-4>
-                <ion-input name="date_begin"  [readonly]="!editable" type="text" [(ngModel)]="item.date_begin"></ion-input>
+            <ion-col col-6>
+                <ion-datetime displayFormat="YYYY/MM/DD HH:mm" [(ngModel)]="tem_date_begin" name="tem_date_begin"></ion-datetime>
+                <!--<ion-input name="date_begin"  [readonly]="!editable" type="text" [(ngModel)]="item.date_begin"></ion-input>-->
             </ion-col> 
         </ion-row>
-        <ion-row align-items-center >  
+
+        <ion-row align-items-center>  
+
+            <ion-col col-3>
+                <b>Fecha Fin</b>
+            </ion-col>
+            <ion-col col-6>
+                <ion-datetime displayFormat="YYYY/MM/DD HH:mm" [(ngModel)]="tem_date_end" name="tem_date_end"></ion-datetime>
+                <!--<ion-input name="date_end"  [readonly]="!editable" type="text" [(ngModel)]="item.date_end"></ion-input>                -->
+            </ion-col> 
+        </ion-row>
+
+
+        <ion-row *ngIf="!nuevo" align-items-center >  
             <ion-col col-3>
                 <b>Entregado</b>
             </ion-col>
@@ -82,24 +92,24 @@
             <ion-col col-3>
                 <b>Todo Inc</b>
             </ion-col>   
-            <ion-col col-2>
+            <ion-col *ngIf="!nuevo" col-2>
                 <b>Total</b>
             </ion-col>   
         </ion-row>
         <ion-row align-items-center>  
             <ion-col col-2>
-                <ion-input name="personas_pago"  [readonly]="!editable" type="number" [(ngModel)]="item.personas_pago"></ion-input>                
+                <ion-input name="personas_pago" placeholder='0' [readonly]="!editable" type="number" [(ngModel)]="item.personas_pago"></ion-input>                
             </ion-col>             
             <ion-col col-3>
-                <ion-input name="personas_terceros"  [readonly]="!editable" type="number" [(ngModel)]="item.personas_terceros"></ion-input>
+                <ion-input name="personas_terceros" placeholder='0' [readonly]="!editable" type="number" [(ngModel)]="item.personas_terceros"></ion-input>
 
             </ion-col>   
             <ion-col col-3>
-                <ion-input name="personas_all_in"  [readonly]="!editable" type="number" [(ngModel)]="item.personas_all_in"></ion-input>
+                <ion-input name="personas_all_in" placeholder='0' [readonly]="!editable" type="number" [(ngModel)]="item.personas_all_in"></ion-input>
 
             </ion-col>   
-            <ion-col col-2>
-                <ion-input  name="total_personas"  [readonly]="!editable" type="number" [(ngModel)]="item.total_personas"></ion-input>
+            <ion-col *ngIf="!nuevo" col-2>
+                <ion-input  name="total_personas" placeholder='0' [readonly]="!editable" type="number" [(ngModel)]="item.total_personas"></ion-input>
 
             </ion-col>   
         </ion-row>
@@ -130,23 +140,23 @@
 
         <ion-row align-items-center>  
             <ion-col col-2>
-                <ion-input  name="gasto_one"  [readonly]="!editable" type="number" [(ngModel)]="item.total_euro_res"></ion-input>
+                <ion-input  name="gasto_one" placeholder='0' [readonly]="!editable" type="number" [(ngModel)]="item.total_euro_res"></ion-input>
 
             </ion-col>             
             <ion-col col-2>
-                <ion-input  name="gasto_two"  [readonly]="!editable" type="number" [(ngModel)]="item.total_dolar_res"></ion-input>
+                <ion-input  name="gasto_two" placeholder='0' [readonly]="!editable" type="number" [(ngModel)]="item.total_dolar_res"></ion-input>
 
             </ion-col>   
             <ion-col col-2>
-                <ion-input  name="gasto_three"  [readonly]="!editable" type="number" [(ngModel)]="item.total_rublo_res"></ion-input>
+                <ion-input  name="gasto_three" placeholder='0' [readonly]="!editable" type="number" [(ngModel)]="item.total_rublo_res"></ion-input>
 
             </ion-col>   
             <ion-col col-2>
-                <ion-input  name="gasto_four"  [readonly]="!editable" type="number" [(ngModel)]="item.pay_pal"></ion-input>
+                <ion-input  name="gasto_four" placeholder='0' [readonly]="!editable" type="number" [(ngModel)]="item.pay_pal"></ion-input>
 
             </ion-col>   
             <ion-col col-2>
-                <ion-input  name="gasto_five"  [readonly]="!editable" type="number" [(ngModel)]="item.tarjeta"></ion-input>
+                <ion-input  name="gasto_five" placeholder='0' [readonly]="!editable" type="number" [(ngModel)]="item.tarjeta"></ion-input>
 
             </ion-col>   
         </ion-row>

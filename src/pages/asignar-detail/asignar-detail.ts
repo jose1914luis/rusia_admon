@@ -1,7 +1,10 @@
 import {Component} from '@angular/core';
-import {NavController, NavParams, AlertController} from 'ionic-angular';
+import {NavController, NavParams, AlertController, ModalController} from 'ionic-angular';
 import {global} from '../../components/credenciales/credenciales';
 import {Storage} from '@ionic/storage';
+
+import {BuscarTourPage} from '../../pages/buscar-tour/buscar-tour';
+import {BuscarGuiaPage} from '../../pages/buscar-guia/buscar-guia';
 
 declare var OdooApi: any;
 @Component({
@@ -13,13 +16,52 @@ export class AsignarDetailPage {
     item;
     editable = false;
     cargar = false;
-    constructor(public navCtrl: NavController, private storage: Storage, public navParams: NavParams, public alertCtrl: AlertController) {
-        this.item = this.navParams.data;
+    nuevo = false;
+    tem_date_end = new Date().toISOString();
+    tem_date_begin = new Date().toISOString();
+    constructor(public modalCtrl: ModalController, public navCtrl: NavController, private storage: Storage, public navParams: NavParams, public alertCtrl: AlertController) {
+
         console.log(this.navParams.data);
+        if (this.navParams.data != false) {
+            this.item = this.navParams.data;
+        } else {
+            this.editable = true;
+            this.nuevo = true;
+            this.item = {
+                id: '',
+                tour_id: {id:'', name:''},
+                guia_id: '',
+                date_end: '',
+                date_begin: '',
+                entregado: '',
+                personas_pago: '',
+                personas_terceros: '',
+                personas_all_in: '',
+                total_personas: '',
+                total_euro_res: '',
+                total_dolar_res: '',
+                total_rublo_res: '',
+                pay_pal: '',
+                tarjeta: '',
+                observaciones: ''
+            }
+        }
     }
 
     ionViewDidLoad() {
         console.log('ionViewDidLoad AsignarDetailPage');
+    }
+
+    buscarTour() {
+        var self = this;
+        let profileModal = this.modalCtrl.create(BuscarTourPage);
+        profileModal.onDidDismiss(data => {
+            if (data != null) {                
+                self.item.tour_id = data;                
+                console.log(self.item.tour_id.name);
+            }
+        });
+        profileModal.present();
     }
 
     editar() {

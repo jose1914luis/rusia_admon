@@ -2,8 +2,8 @@ import {Component} from '@angular/core';
 import {Storage} from '@ionic/storage';
 import {NavController, NavParams} from 'ionic-angular';
 import {global} from '../../components/credenciales/credenciales';
-import {NuevoPage} from '../../pages/nuevo/nuevo';
 import {TabsPage} from '../../pages/tabs/tabs';
+import {AsignarDetailPage} from '../../pages/asignar-detail/asignar-detail';
 
 declare var OdooApi: any;
 @Component({
@@ -46,63 +46,70 @@ export class AsignarPage {
             self.events = [];
             odoo.login(conexion.username, conexion.password).then(
                 function (uid) {
-                    odoo.search_read('tours.guia', [['id', '<>', '0']], ['id', 'guia_id', 'tour_id', 'date_begin',
-                        'date_end', 'personas_terceros', 'personas_all_in', 'total_personas', 'total_rublo', 'total_dolar', 'total_rublo_res'
-                        , 'total_euro_res', 'total_dolar_res', 'pay_pal', 'tarjeta', 'is_free', 'personas_pago', 'is_private', 'entregado', 'state', 'observaciones']).then(
-                        function (value) {
-
-                            for (var key in value) {
-                                var dateStart = new Date(String((value[key]).date_begin).replace(' ', 'T'));
-                                var dateEnd = new Date(String((value[key]).date_end).replace(' ', 'T'));
-                                var startTime = new Date(dateStart.getFullYear(), dateStart.getMonth(), dateStart.getDate(), dateStart.getHours(), dateStart.getMinutes());
-                                var endTime = new Date(dateEnd.getFullYear(), dateEnd.getMonth(), dateEnd.getDate(), dateEnd.getHours(), dateEnd.getMinutes());
-                                value[key].startTime = startTime;
-                                value[key].endTime = endTime;
-                                value[key].title = (value[key]).tour_id[1];
-                                value[key].allDay = false;
-                                value[key].reservas = [];
-                                value[key].guia_id = value[key].guia_id ? value[key].guia_id : '';
-                                value[key].observaciones = value[key].observaciones ? value[key].observaciones : '';
-
-                            }
-
-                            odoo.search_read('tours.clientes.middle', [['name', '<>', '0']],
-                                ['tour_id', 'guia_id', 'name', 'telefono', 'email',
-                                    'nombre_hotel', 'personas_terceros', 'personas_all_in', 'total_personas', 'personas_pago',
-                                    'abonor_rublo', 'abono_euros', 'abono_dolar', 'dolar_exportado', 'euros_exportado', 'rublo_exportado', 'pay_pal', 'tarjeta', 'asistencia', 'observaciones', 'fecha']).then(
-
-                                function (value2) {
+                    odoo.search_read('tours', [['id', '<>', '0']], ['name']).then(
+                        function (tours) {
+                            console.log(tours);
+                            self.storage.set('tours',tours)
+                            odoo.search_read('tours.guia', [['id', '<>', '0']], ['id', 'guia_id', 'tour_id', 'date_begin',
+                                'date_end', 'personas_terceros', 'personas_all_in', 'total_personas', 'total_rublo', 'total_dolar', 'total_rublo_res'
+                                , 'total_euro_res', 'total_dolar_res', 'pay_pal', 'tarjeta', 'is_free', 'personas_pago', 'is_private', 'entregado', 'state', 'observaciones']).then(
+                                function (value) {
 
                                     for (var key in value) {
-
-                                        for (var key2 in value2) {
-                                            //value[key].reserva_id = value2[key2].id;
-                                            if (value[key].tour_id[0] == value2[key2].tour_id[0]) {
-                                                value[key].reservas.push(value2[key2]);
-                                                //console.log(value2[key2]);
-                                            }
-                                        }
-                                        self.events.push(value[key]);
+                                        var dateStart = new Date(String((value[key]).date_begin).replace(' ', 'T'));
+                                        var dateEnd = new Date(String((value[key]).date_end).replace(' ', 'T'));
+                                        var startTime = new Date(dateStart.getFullYear(), dateStart.getMonth(), dateStart.getDate(), dateStart.getHours(), dateStart.getMinutes());
+                                        var endTime = new Date(dateEnd.getFullYear(), dateEnd.getMonth(), dateEnd.getDate(), dateEnd.getHours(), dateEnd.getMinutes());
+                                        value[key].startTime = startTime;
+                                        value[key].endTime = endTime;
+                                        value[key].title = (value[key]).tour_id[1];
+                                        value[key].allDay = false;
+                                        value[key].reservas = [];
+                                        value[key].guia_id = value[key].guia_id ? value[key].guia_id : '';
+                                        value[key].observaciones = value[key].observaciones ? value[key].observaciones : '';
 
                                     }
-                                    self.cargar = false;
 
-                                    console.log(value2);
-                                    console.log(value);
-                                    self.calendar.eventSource = self.events;
+                                    odoo.search_read('tours.clientes.middle', [['name', '<>', '0']],
+                                        ['tour_id', 'guia_id', 'name', 'telefono', 'email',
+                                            'nombre_hotel', 'personas_terceros', 'personas_all_in', 'total_personas', 'personas_pago',
+                                            'abonor_rublo', 'abono_euros', 'abono_dolar', 'dolar_exportado', 'euros_exportado', 'rublo_exportado', 'pay_pal', 'tarjeta', 'asistencia', 'observaciones', 'fecha']).then(
+
+                                        function (value2) {
+
+                                            for (var key in value) {
+
+                                                for (var key2 in value2) {
+                                                    //value[key].reserva_id = value2[key2].id;
+                                                    if (value[key].tour_id[0] == value2[key2].tour_id[0]) {
+                                                        value[key].reservas.push(value2[key2]);
+                                                        //console.log(value2[key2]);
+                                                    }
+                                                }
+                                                self.events.push(value[key]);
+
+                                            }
+                                            self.cargar = false;
+
+                                            console.log(value2);
+                                            console.log(value);
+                                            self.calendar.eventSource = self.events;
 
 
+                                        },
+                                        function () {
+                                            //                                self.presentAlert('Falla', 'Imposible Conectar');
+                                        }
+                                        );
                                 },
                                 function () {
-                                    //                                self.presentAlert('Falla', 'Imposible Conectar');
+
                                 }
-                                );
+                                )
                         },
                         function () {
 
-                        }
-                        )
-
+                        });
                 },
                 function () {
 
@@ -132,6 +139,6 @@ export class AsignarPage {
         this.navCtrl.push(TabsPage, {item: evt});
     }
     addEvent() {
-        this.navCtrl.push(NuevoPage);
+        this.navCtrl.push(AsignarDetailPage, false);
     }
 }
