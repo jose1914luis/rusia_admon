@@ -19,6 +19,11 @@ export class PagoPage {
     }
 
     ionViewDidLoad() {
+
+        this.cargarConDatos()
+    }
+
+    cargarConDatos() {
         var self = this;
         this.storage.get('conexion').then((conexion) => {
             self.cargar = true;
@@ -29,29 +34,52 @@ export class PagoPage {
                     odoo.search_read('tours.pago.guia', [['id', '!=', '0']],
                         ['name', 'semana', 'tours_id', 'guia_user_id', 'city_id',
                             'total_eur', 'total_usd', 'total_res', 'total_rub', 'total_metro', 'pax_pago', 'state', 'concepto']).then(
-                        function (value2) {
-                            console.log(value2);
-                            self.items = value2
+                        function (pago) {
+                            console.log(pago);
+                            self.items = pago
 
                             for (let key in self.items) {
 
                                 self.items[key].visible = true;
                             }
+                            self.storage.set('pago', self.items)
                             self.cargar = false;
                         },
                         function () {
-                            self.presentAlert('Falla', 'Imposible Conectar');
+                            self.cargarSinDatos();
                         }
                         );
 
                 },
                 function () {
-
+                    self.cargarSinDatos();
                 }
             );
 
         });
+    }
 
+    cargarSinDatos() {
+
+        var self = this;
+        self.cargar = true;
+        self.items = null;
+        this.storage.get('pago').then((pago) => {
+
+            if (pago != null) {
+
+                console.log(pago);
+                self.items = pago
+
+                for (let key in self.items) {
+
+                    self.items[key].visible = true;
+                }
+                self.cargar = false;
+            } else {
+                self.presentAlert('Falla', 'Imposible Cargar Datos.');
+            }
+        });
     }
 
     presentAlert(titulo, texto) {

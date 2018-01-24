@@ -22,7 +22,7 @@
         <ion-spinner name="circles"></ion-spinner><br>
         <b>Guardando...</b>
     </div>
-    
+
     <form>
 
         <ion-grid >
@@ -31,7 +31,9 @@
                     <b>Día</b>
                 </ion-col> 
                 <ion-col col-4>
-                    <ion-input type="text"  [(ngModel)]="item.name" [readonly]="!editable" name='name' ></ion-input>
+                    <!--
+                    <ion-input type="text"  [(ngModel)]="item.name" [readonly]="!editable" name='name' ></ion-input>-->
+                    <ion-datetime displayFormat="YYYY/MM/DD" [(ngModel)]="tem_date_begin" name="tem_date_begin"></ion-datetime>
                 </ion-col>
                 <ion-col col-3>
                     <b>Semana</b>
@@ -43,11 +45,13 @@
             </ion-row>
 
             <ion-row align-items-center>
-                <ion-col col-2>
+                <ion-col col-2> 
                     <b>Tour</b>
                 </ion-col> 
-                <ion-col col-8>
-                    <ion-input type="text"  [(ngModel)]="item.tours_id[1]" [readonly]="!editable" name='tours_id' ></ion-input>
+                <ion-col col-8 (click)="buscarTour()">
+                    <ion-icon ios="ios-search" md="md-search"></ion-icon>                
+                    {{item.tours_id.name}}
+                    <!--<ion-input type="text"  [(ngModel)]="item.tours_id[1]" [readonly]="!editable" name='tours_id' ></ion-input>-->
                 </ion-col>                 
             </ion-row>
 
