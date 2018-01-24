@@ -27,7 +27,8 @@
                 <b>Día</b>                
             </ion-col>                   
             <ion-col col-8>
-                <ion-input type="text"  [(ngModel)]="item.name" [readonly]="!item.editable" name='name' ></ion-input>
+                <ion-datetime displayFormat="YYYY/MM/DD" [(ngModel)]="tem_date_begin" name="tem_date_begin"></ion-datetime>
+                <!--<ion-input type="text" placeholder="Día" [(ngModel)]="item.name" [readonly]="!item.editable" name='name' ></ion-input>-->
             </ion-col>   
         </ion-row>
 
@@ -36,7 +37,10 @@
                 <b>Ciudad</b>                
             </ion-col>                   
             <ion-col col-8>
-                <ion-input type="text"  [(ngModel)]="item.city_id[1]" [readonly]="!item.editable" name='city_id' ></ion-input>
+                    <ion-select [(ngModel)]="ciudad" name="bd">
+                        <ion-option *ngFor="let city of ciudadList" [value] = "city.name[0]" >{{city.name[1]}}</ion-option>
+                    </ion-select>
+                <!--<ion-input type="text" placeholder="Ciudad" [(ngModel)]="item.city_id[1]" [readonly]="!item.editable" name='city_id' ></ion-input>-->
             </ion-col>   
         </ion-row>
 
@@ -53,13 +57,13 @@
         </ion-row>
         <ion-row >     
             <ion-col col-3 >
-                <ion-input type="number"  [(ngModel)]="item.total_usd" [readonly]="!item.editable" name='name' ></ion-input>
+                <ion-input type="number" readonly="true"  placeholder="0" [(ngModel)]="item.total_usd"  name='name' ></ion-input>
             </ion-col>                   
             <ion-col col-3>
-                <ion-input type="number"  [(ngModel)]="item.total_eur" [readonly]="!item.editable" name='name' ></ion-input>
+                <ion-input type="number" readonly="true"  placeholder="0"  [(ngModel)]="item.total_eur"  name='name' ></ion-input>
             </ion-col>   
             <ion-col col-3 >
-                <ion-input type="number"  [(ngModel)]="item.total_rub" [readonly]="!item.editable" name='name' ></ion-input>
+                <ion-input type="number" readonly="true"  placeholder="0"  [(ngModel)]="item.total_rub"  name='name' ></ion-input>
             </ion-col>  
         </ion-row>
 
@@ -71,22 +75,22 @@
                 <b>Tarjeta</b>                
             </ion-col> 
         </ion-row>
-        <ion-row align-items-center>     
+        <ion-row align-items-center >     
             <ion-col col-3 >
-                <ion-input type="number"  [(ngModel)]="item.total_pp" [readonly]="!item.editable" name='name' ></ion-input>            
+                <ion-input type="number" readonly="true"  placeholder="0"  [(ngModel)]="item.total_pp"  name='name' ></ion-input>            
             </ion-col>                   
             <ion-col col-3>
-                <ion-input type="number"  [(ngModel)]="item.total_tarjeta" [readonly]="!item.editable" name='name' ></ion-input>            
+                <ion-input type="number" readonly="true"  placeholder="0"  [(ngModel)]="item.total_tarjeta" name='name' ></ion-input>            
             </ion-col> 
         </ion-row>
 
 
-        <ion-row align-items-center>     
+        <ion-row align-items-center class="borde" *ngIf="item.nuevo">     
             <ion-col col-3>
                 <b>Estado</b>                
             </ion-col>                   
             <ion-col col-8>
-                <ion-input type="text"  [(ngModel)]="item.state" [readonly]="!item.editable" name='name' ></ion-input>
+                <ion-input type="text" placeholder="Estado"  [(ngModel)]="item.state" [readonly]="!item.editable" name='name' ></ion-input>
             </ion-col>   
         </ion-row>                
 
@@ -98,7 +102,7 @@
                 <b>Producto</b>                
             </ion-col>                   
             <ion-col col-8>
-                <ion-input type="text"  [(ngModel)]="con.concepto" [readonly]="!item.editable" name='concepto' ></ion-input>
+                <ion-input type="text" placeholder="Producto" [(ngModel)]="con.concepto" [readonly]="!item.editable" name='concepto' ></ion-input>
             </ion-col>   
         </ion-row>
         <ion-row align-items-center>     
@@ -106,7 +110,7 @@
                 <b>Moneda</b>                
             </ion-col>                   
             <ion-col col-8>
-                <ion-input type="text"  [(ngModel)]="con.moneda" [readonly]="!item.editable" name='moneda' ></ion-input>
+                <ion-input type="text" placeholder="Moneda" [(ngModel)]="con.moneda" [readonly]="!item.editable" name='moneda' ></ion-input>
             </ion-col>   
         </ion-row>
 
@@ -124,13 +128,13 @@
 
         <ion-row align-items-center>     
             <ion-col col-3>
-                <ion-input type="number"  [(ngModel)]="con.price_unit" [readonly]="!item.editable" name='price_unit' ></ion-input>             
+                <ion-input type="number" placeholder="0" [(ngModel)]="con.price_unit" [readonly]="!item.editable" name='price_unit' ></ion-input>             
             </ion-col>                   
             <ion-col col-3>
-                <ion-input type="number"  [(ngModel)]="con.unidades" [readonly]="!item.editable" name='unidades' ></ion-input>             
+                <ion-input type="number" placeholder="0" [(ngModel)]="con.unidades" [readonly]="!item.editable" name='unidades' ></ion-input>             
             </ion-col>   
             <ion-col col-3>
-                <ion-input type="number"  [(ngModel)]="con.sub_total" [readonly]="!item.sub_total" name='moneda' ></ion-input>             
+                <ion-input type="number" placeholder="0" [(ngModel)]="con.sub_total" [readonly]="!item.sub_total" name='moneda' ></ion-input>             
             </ion-col>   
         </ion-row>
     </ion-grid>

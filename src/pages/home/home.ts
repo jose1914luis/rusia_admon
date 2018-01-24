@@ -20,8 +20,14 @@ export class HomePage {
         //        console.log(item);
         this.navCtrl.push(GastosFilterPage, {item: item});
     }
-    
+
     ionViewDidLoad() {
+
+        this.cargarConDatos();
+
+    }
+
+    cargarConDatos() {
         this.cargar = true
         var self = this;
         this.items = null;
@@ -30,30 +36,75 @@ export class HomePage {
 
             odoo.login(conexion.username, conexion.password).then(
                 function (uid) {
-                    odoo.search_read('tours.gastos.diversos', [['state', '=', 'aprobado']],
+                    odoo.search_read('tours.gastos.diversos', [['id', '<>', '0']],
                         ['name', 'city_id', 'total_usd', 'total_eur', 'total_rub', 'total_pp', 'total_tarjeta',
                             'state', 'conceptos_ids']).then(
-                        function (value2) {
-                            console.log(value2);
-                            self.items = value2
-                            for (let key in self.items) {
+                        function (gastos) {
+                            //console.log(gastos);
+                            gastos
+                            var ids = [];
+                            for (let key in gastos) {
 
-                                self.items[key].visible = true;
+                                gastos[key].visible = true;
+                                gastos[key].conceptos = [];
+                                ids.push(gastos[key].id);
                             }
-                            self.cargar = false;
+                            odoo.search_read('tours.gastos.conceptos', [['gastos_id', 'in', ids]],
+                                ['concepto', 'moneda', 'price_unit', 'unidades', 'sub_total', 'gastos_id']).then(
+                                function (conceptos) {
+                                    console.log(conceptos);
+                                    for (var key_g in gastos) {
+
+                                        for (var key in gastos[key_g].conceptos_ids) {
+
+                                            for (var key_c in conceptos) {
+
+
+                                                if (conceptos[key_c].id == gastos[key_g].conceptos_ids[key]) {
+                                                    gastos[key_g].conceptos.push(conceptos[key_c]);
+                                                }
+                                            }
+                                        }
+
+                                    }
+                                    self.items = gastos;
+                                    self.storage.set('gastos', gastos);
+                                    console.log(self.items);
+                                    self.cargar = false;
+                                },
+                                function () {
+                                    self.presentAlert('Falla', 'Imposible Conectar');
+                                }
+                                );
+                            //                            
                         },
                         function () {
-                            self.presentAlert('Falla', 'Imposible Conectar');
+                            self.cargarSinDatos();
                         }
                         );
 
                 },
                 function () {
-
+                    self.cargarSinDatos();
                 }
             );
         });
+    }
 
+    cargarSinDatos() {
+
+        this.cargar = true
+        var self = this;
+        this.items = null;
+        this.storage.get('gastos').then((gastos) => {
+
+            if (gastos != null) {
+                self.items = gastos
+                self.cargar = false;
+            } else {
+                self.presentAlert('Falla', 'Imposible cargar los datos');
+            }
+        });
     }
 
     buscar() {
@@ -91,7 +142,7 @@ export class HomePage {
 
                             self.items[key].visible = false;
                             //                                console.log((self.items[key].name + "").includes(data.nombre + "") + '  ' + (self.items[key].email[1] + "").includes(data.correo + ""));
-                            if ((self.items[key].city_id[1] + "").includes(data.ciudad + "")){ //&& (self.items[key].email[1] + "").includes(data.correo + "")) {
+                            if ((self.items[key].city_id[1] + "").includes(data.ciudad + "")) { //&& (self.items[key].email[1] + "").includes(data.correo + "")) {
                                 //                                    console.log(self.items[key]);
                                 self.items[key].visible = true;
                             }
@@ -116,6 +167,10 @@ export class HomePage {
 
     refresh() {
         this.ionViewDidLoad();
+    }
+    
+    nuevo(){
+        this.navCtrl.push(GastosFilterPage, {item:null});
     }
 
 }

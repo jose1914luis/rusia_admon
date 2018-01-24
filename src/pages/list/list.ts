@@ -51,30 +51,42 @@ export class ListPage {
                 console.log(uid);
                 odoo.search_read('tours', [['id', '<>', '0']], ['name']).then(
                     function (tours) {
-                        console.log(tours);
+//                        console.log(tours);
                         self.storage.set('tours', tours)//<--- lista de los tours
                         odoo.read('res.users', [uid],
                             ['name', 'email', 'city_id', 'is_guia', 'is_chofer', 'salario_ext', 'salario_min',
                                 'active', 'groups_id']).then(
                             function (value2) {
-                                console.log(value2);
+//                                console.log(value2);
                                 self.conexion.is_chofer = value2[0].is_chofer;
                                 self.conexion.is_guia = value2[0].is_guia;
                                 self.storage.set('conexion', self.conexion);
-                                odoo.search_read('tours.companies', [['administrador', '=', uid]], ['name', 'administrador']).then(
+                                odoo.search_read('tours.companies', [['id', '!=', 0]], ['name', 'administrador']).then(
                                     function (companies) {
-                                        console.log(companies);
-                                        self.storage.set('companies', companies);
-                                        odoo.search_read('res.users', [['city_id', '=', companies[0].name[0]], ['active', '=', 1]],
-                                            ['name']).then(
-                                            function (guias) {
-                                                console.log(guias);
-                                                self.storage.set('guias', guias);//<--Guias
-                                                self.navCtrl.setRoot(PanelPage);
-                                            }, function () {
-                                                self.loginSinDatos();
-                                            }
-                                            )
+//                                        console.log(companies);
+                                        self.storage.set('companies', companies); //<--- Todas las Ciudades
+                                        var ban = true;
+
+                                        for (var key = 0; companies.length > key; key++) {
+
+                                            (function (key) {
+                                                console.log(key);
+                                                
+                                                if (companies[key].administrador[0] == uid) {
+                                                    odoo.search_read('res.users', [['city_id', '=', companies[key].name[0]], ['active', '=', 1]],
+                                                        ['name']).then(
+                                                        function (guias) {
+                                                            console.log(guias)
+                                                            self.storage.set('guias', guias);//<--Guias si los hay                      
+                                                        }, function () {
+                                                            self.loginSinDatos();
+                                                        }
+                                                        )
+                                                }
+                                            })(key);
+                                        }
+                                        self.navCtrl.setRoot(PanelPage);
+
                                     },
                                     function () {
                                         self.loginSinDatos();
