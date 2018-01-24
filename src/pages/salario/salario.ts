@@ -21,6 +21,10 @@ export class SalarioPage {
 
     ionViewDidLoad() {
 
+        this.cargarConDatos();
+    }
+
+    cargarConDatos() {
         this.cargar = true
         var self = this;
         this.items = null;
@@ -31,23 +35,41 @@ export class SalarioPage {
                 function (uid) {
                     odoo.search_read('tours.gastos.generales', [['id', '!=', '0']],
                         ['name', 'sala_guia', 'city_id', 'total_metro']).then(
-                        function (value2) {
-                            console.log(value2);
-                            self.items = value2
+                        function (generales) {
+                            console.log(generales);
+                            self.items = generales
+                            self.storage.set('generales', generales);
                             self.cargar = false;
                         },
                         function () {
-                            self.presentAlert('Falla', 'Imposible Conectar');
+                            self.cargarSinDatos();
                         }
                         );
 
                 },
                 function () {
-
+                    self.cargarSinDatos();
                 }
             );
         });
+    }
 
+    cargarSinDatos() {
+
+        this.cargar = true
+        var self = this;
+        this.items = null;
+        this.storage.get('generales').then((generales) => {
+
+            if (generales != null) {
+                console.log(generales);
+                self.items = generales
+                self.cargar = false;
+            } else {
+                self.presentAlert('Falla', 'Imposible Cargar Datos.');
+            }
+
+        });
     }
 
     presentAlert(titulo, texto) {
@@ -66,13 +88,7 @@ export class SalarioPage {
     }
 
     nuevo() {
-        this.navCtrl.push(SalarioDetailPage,
-            {
-                item: {
-                    name: '', city_id: ['', ''], sala_guia: '', total_metro: '',
-                    nuevo: false, editable: true
-                }
-            })
+        this.navCtrl.push(SalarioDetailPage,{item: null});
     }
 
     refresh() {

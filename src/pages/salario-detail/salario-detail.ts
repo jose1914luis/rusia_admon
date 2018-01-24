@@ -12,13 +12,35 @@ export class SalarioDetailPage {
 
     item;
     cargar = false;
+    ciudad;
+    ciudadList = [];
     constructor(public navCtrl: NavController, private storage: Storage, public navParams: NavParams, public alertCtrl: AlertController) {
-        this.item = this.navParams.get('item');
+
+        if (this.navParams.get('item') != null) {
+            this.item = this.navParams.get('item');
+            this.item.nuevo = false;
+        } else {
+            this.item = {
+                name: '', city_id: ['', ''], sala_guia: '', total_metro: '',
+                nuevo: true, editable: true
+            }
+        }
+        var self = this;
+        this.storage.get('companies').then((ciudad) => {
+
+            console.log(ciudad);
+            self.ciudadList = ciudad;
+            self.ciudad = ciudad[0].name[0];
+        });
+
+
     }
 
     ionViewDidLoad() {
         console.log('ionViewDidLoad SalarioDetailPage');
     }
+
+
     editar() {
 
         if (!this.item.editable) {
@@ -37,25 +59,60 @@ export class SalarioDetailPage {
             odoo.login(conexion.username, conexion.password).then(
                 function (uid) {
 
+                    if (self.item.nuevo == true) {
 
-                    //                console.log(self.item);
-                    odoo.write('tours.gastos.generales', self.item.id, {
-                        sala_guia: self.item.sala_guia,
-                        total_metro: self.item.total_metro,
-                        name: self.item.name,
-                        city_id: self.item.city_id[0]
-                    }).then(
-                        function (value2) {
-                            if (!value2) {
+                        console.log('nuevo');
+                        console.log({
+                            sala_guia: self.item.sala_guia,
+                            total_metro: self.item.total_metro,
+                            name: self.item.name,
+                            city_id: self.ciudad
+                        });
+                        odoo.create('tours.gastos.generales', {
+                            sala_guia: self.item.sala_guia,
+                            total_metro: self.item.total_metro,
+                            name: self.item.name,
+                            city_id: self.ciudad
+                        }).then(
+                            function (value2) {
+                                if (!value2) {
+                                    self.presentAlert('Falla', 'Error al Guardar, intente nuevamente');
+                                }
+                                self.cargar = false;
+                                //console.log(value2);
+                            },
+                            function () {
                                 self.presentAlert('Falla', 'Error al Guardar, intente nuevamente');
                             }
-                            self.cargar = false;
-                            //console.log(value2);
-                        },
-                        function () {
-                            self.presentAlert('Falla', 'Error al Guardar, intente nuevamente');
-                        }
-                        );
+                            );
+                    } else {
+
+                        console.log('editar');
+                        console.log({
+                            sala_guia: self.item.sala_guia,
+                            total_metro: self.item.total_metro,
+                            name: self.item.name,
+                            city_id: self.ciudad
+                        });
+
+                        odoo.write('tours.gastos.generales', self.item.id, {
+                            sala_guia: self.item.sala_guia,
+                            total_metro: self.item.total_metro,
+                            name: self.item.name,
+                            city_id: self.ciudad
+                        }).then(
+                            function (value2) {
+                                if (!value2) {
+                                    self.presentAlert('Falla', 'Error al Guardar, intente nuevamente');
+                                }
+                                self.cargar = false;
+                                //console.log(value2);
+                            },
+                            function () {
+                                self.presentAlert('Falla', 'Error al Guardar, intente nuevamente');
+                            }
+                            );
+                    }
 
                 },
                 function () {

@@ -52,7 +52,7 @@ export class ListPage {
                 odoo.search_read('tours', [['id', '<>', '0']], ['name']).then(
                     function (tours) {
 //                        console.log(tours);
-                        self.storage.set('tours', tours)//<--- lista de los tours
+                        self.storage.set('tours', tours)//<--- lista de los tours 
                         odoo.read('res.users', [uid],
                             ['name', 'email', 'city_id', 'is_guia', 'is_chofer', 'salario_ext', 'salario_min',
                                 'active', 'groups_id']).then(
