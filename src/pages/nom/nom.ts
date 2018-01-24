@@ -21,6 +21,12 @@ export class NomPage {
     }
 
     ionViewDidLoad() {
+
+        this.cargarConDatos();
+
+    }   
+
+    cargarConDatos() {
         var self = this;
         this.storage.get('conexion').then((conexion) => {
             self.cargar = true;
@@ -31,27 +37,78 @@ export class NomPage {
                     odoo.search_read('tours.nomina', [['id', '!=', '0']],
                         ['name', 'semana', 'city_id', 'pax_pago', 'total_rub',
                             'total_eur', 'total_usd', 'total_res', 'total_metro', 'state']).then(
-                        function (value2) {
-                            console.log(value2);
-                            self.items = value2;
-                            for (let key in self.items) {
+                        function (nomina) {
 
-                                self.items[key].visible = true;
+                            var ids = [];
+                            for (let key in nomina) {
+
+                                nomina[key].visible = true;
+                                ids.push(nomina[key].semana)
                             }
-                            self.cargar = false;
+
+                            odoo.search_read('tours.pago.guia', [['semana', 'in', ids]],
+                                ['name', 'semana', 'tours_id', 'guia_user_id', 'city_id',
+                                    'pax_pago', 'total_rub', 'total_eur', 'total_usd', 'total_res', 'total_metro', 'concepto']).then(
+                                function (pago) {
+
+                                    console.log(pago)
+                                    for (let key_no in nomina) {
+                                        for (let key_p in pago) {
+                                            if (nomina[key_no].semana == pago[key_p].semana) {
+                                                nomina[key_no].pago_id =  pago[key_p].id;
+                                                nomina[key_no].name = pago[key_p].name;
+                                                nomina[key_no].semana = pago[key_p].semana;
+                                                nomina[key_no].tours_id = pago[key_p].tours_id;
+                                                nomina[key_no].guia_user_id = pago[key_p].guia_user_id[1];
+                                                nomina[key_no].city_id = pago[key_p].city_id;
+                                                nomina[key_no].pax_pago = pago[key_p].pax_pago;
+                                                nomina[key_no].total_rub = pago[key_p].total_rub;
+                                                nomina[key_no].total_eur = pago[key_p].total_eur;
+                                                nomina[key_no].total_usd = pago[key_p].total_usd;
+                                                nomina[key_no].total_res = pago[key_p].total_res;
+                                                nomina[key_no].total_metro = pago[key_p].total_metro;
+                                                nomina[key_no].concepto = pago[key_p].concepto;
+//                                                
+                                            }
+                                        }
+                                    }
+                                    console.log(nomina);
+                                    self.items = nomina;
+
+                                    self.storage.set('nomina', self.items);
+                                    self.cargar = false;
+                                },
+                                function () {
+                                    self.cargarSinDatos()
+                                }
+                                );
                         },
                         function () {
-                            self.presentAlert('Falla', 'Imposible Conectar');
+                            self.cargarSinDatos()
+
                         }
                         );
 
                 },
                 function () {
-
+                    self.cargarSinDatos()
                 }
             );
         });
+    }
 
+    cargarSinDatos() {
+
+        var self = this;
+        this.storage.get('nomina').then((nomina) => {
+
+            if (nomina != null) {
+                self.items = nomina;
+                self.cargar = false;
+            } else {
+                self.presentAlert('Falla', 'Imposible Cargar Datos.');
+            }
+        });
     }
 
     presentAlert(titulo, texto) {

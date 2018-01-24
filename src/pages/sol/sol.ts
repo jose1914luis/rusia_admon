@@ -18,6 +18,27 @@ export class SolPage {
     }
 
     ionViewDidLoad() {
+
+        this.cargarConDatos();
+    }
+
+    cargarSinDatos() {
+
+        this.cargar = true
+        var self = this;
+        this.items = null;
+
+        this.storage.get('solicitudes').then((solicitudes) => {
+            if(solicitudes!= null){
+                self.items = solicitudes
+            }else{
+                 self.presentAlert('Falla', 'Imposible Cargar Datos');
+            }
+        });
+    }
+
+    cargarConDatos() {
+        
         this.cargar = true
         var self = this;
         this.items = null;
@@ -28,52 +49,53 @@ export class SolPage {
                 function (uid) {
                     odoo.search_read('tours.clientes.solicitudes', [['id', '!=', '0']],
                         ['name', 'tour_id', 'num_person', 'date_begin', 'state', 'estado', 'comentarios', 'create_date']).then(
-                        function (value2) {
-                            console.log(value2);
+                        function (solicitudes) {
+                            console.log(solicitudes);
 
                             var ids = [];
-                            for (var key in value2) {
-                                ids.push(value2[key].name[0]);
-                                value2[key].mostrar = false;
-                                if (value2[key].state = 'borrador') {
-                                    value2[key].mostrar = true;
+                            for (var key in solicitudes) {
+                                ids.push(solicitudes[key].name[0]);
+                                solicitudes[key].mostrar = false;
+                                if (solicitudes[key].state = 'borrador') {
+                                    solicitudes[key].mostrar = true;
                                 }
                             }
                             odoo.read('tours.clientes', ids,
                                 ['email', 'telefono', 'hotel', 'nombre_hotel']).then(
-                                function (value) {
+                                function (clientes) {
 
-                                    for (var key2 in value2) {
-                                        for (var key in value) {
-                                            if (value2[key2].name[0] == value[key].id) {
-                                                value2[key2].nombre_hotel = value[key].nombre_hotel;
-                                                value2[key2].telefono = value[key].telefono;
-                                                value2[key2].email = value[key].email;
+                                    for (var key2 in solicitudes) {
+                                        for (var key in clientes) {
+                                            if (solicitudes[key2].name[0] == clientes[key].id) {
+                                                solicitudes[key2].nombre_hotel = clientes[key].nombre_hotel;
+                                                solicitudes[key2].telefono = clientes[key].telefono;
+                                                solicitudes[key2].email = clientes[key].email;
                                             }
                                         }
                                     }
-                                    console.log(value2);
-                                    self.items = value2
+                                    console.log(solicitudes);
+                                    self.items = solicitudes
+
+                                    self.storage.set('solicitudes', solicitudes)
                                     self.cargar = false;
                                 },
                                 function () {
-                                    self.presentAlert('Falla', 'Imposible Conectar');
+                                   self.cargarSinDatos();
                                 }
                                 );
 
                         },
                         function () {
-                            self.presentAlert('Falla', 'Imposible Conectar');
+                            self.cargarSinDatos();
                         }
                         );
 
                 },
                 function () {
-
+self.cargarSinDatos();
                 }
             );
         });
-
     }
 
     presentAlert(titulo, texto) {

@@ -95,7 +95,7 @@ export class PagoDetailPage {
                         total_rub: self.item.total_rub,
                         total_metro: self.item.total_metro,
                         pax_pago: self.item.pax_pago,
-                        tours_id: self.item.tours_id.id
+//                        tours_id: self.item.tours_id.id
                     }).then(
                         function (value2) {
                             console.log(value2);

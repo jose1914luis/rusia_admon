@@ -1,16 +1,16 @@
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>Detalles de Nomina</ion-title>
-  </ion-navbar>
+    <ion-navbar>
+        <ion-title>Detalles de Nomina</ion-title>
+    </ion-navbar>
     <!-- Segment buttons with icons -->
     <ion-segment [(ngModel)]="icons">
         <ion-segment-button value="camera" icon-start (click)="editar()">
-            <ion-icon ios="ios-create" md="md-create"></ion-icon>
+                            <ion-icon ios="ios-create" md="md-create"></ion-icon>
             Editar
         </ion-segment-button>
         <ion-segment-button value="bookmark" icon-start (ionSelect)="guardar()">
-            <ion-icon ios="ios-cloud-upload" md="md-cloud-upload"></ion-icon>
+                            <ion-icon ios="ios-cloud-upload" md="md-cloud-upload"></ion-icon>
             Guardar
         </ion-segment-button>
     </ion-segment>
@@ -20,12 +20,12 @@
 
 <ion-content>
 
-    
+
     <div *ngIf="cargar" style="text-align: center">    
         <ion-spinner name="circles"></ion-spinner><br>
         <b>{{texto}}</b>
     </div>
-    
+
     <ion-grid *ngIf="!cargar">      
 
         <ion-row align-items-center>     
@@ -33,51 +33,54 @@
                 <b>Día</b>                
             </ion-col>                   
             <ion-col col-8 >
-                <ion-input name="name"  [readonly]="!editable" type="text" [(ngModel)]="item.name"></ion-input>
-                
+                <!--<ion-input name="name"  [readonly]="!editable" type="text" [(ngModel)]="item.name"></ion-input>-->
+                <ion-datetime displayFormat="YYYY/MM/DD" [(ngModel)]="tem_date_begin" name="tem_date_begin"></ion-datetime>
+
             </ion-col>   
         </ion-row>
 
         <ion-row align-items-center *ngIf="!editable"> 
-            <ion-col col-3>
+                 <ion-col col-3>
                 <b>Guía</b>                
             </ion-col>     
             <ion-col col-8 >
-                <ion-input name="guia_user_id"  [readonly]="!editable" type="text" [(ngModel)]="item.guia_user_id[1]"></ion-input>                
+                <ion-input name="guia_user_id"  [readonly]="!editable" type="text" [(ngModel)]="item.guia_user_id"></ion-input>                
             </ion-col> 
         </ion-row>
 
         <ion-row align-items-center>     
             <ion-col col-3>
                 <b>Tour</b>                
-            </ion-col>       
-            <ion-col col-8 >
-                <ion-input name="tours_id"  [readonly]="!editable" type="text" [(ngModel)]="item.tours_id[1]"></ion-input>                
+            </ion-col>     
+            <ion-col col-8 (click)="buscarTour()">
+                     <ion-icon ios="ios-search" md="md-search"></ion-icon>                
+                {{item.tours_id.name}}
+                <!--<ion-input name="tours_id"  [readonly]="!editable" type="text" [(ngModel)]="item.tours_id[1]"></ion-input>                -->
             </ion-col>             
         </ion-row>    
-        
-        
+
+
         <ion-row align-items-center>  
             <ion-col col-3>
                 <b>Semana</b>
             </ion-col>
-            <ion-col col-2>
+            <ion-col col-3>
                 <ion-input name="semana"  [readonly]="!editable" type="number" [(ngModel)]="item.semana"></ion-input>
             </ion-col>       
             <ion-col col-3 *ngIf="!editable">
-                <b>PAX pago</b>
+                     <b>PAX pago</b>
             </ion-col>
             <ion-col col-2 *ngIf="!editable">
-                <ion-input name="pax_pago"  [readonly]="!editable" type="number" [(ngModel)]="item.pax_pago"></ion-input>
+                     <ion-input name="pax_pago"  [readonly]="!editable" type="number" [(ngModel)]="item.pax_pago"></ion-input>
             </ion-col>    
             <ion-col col-3 *ngIf="!editable">
-                <b>Pagado</b>
+                     <b>Pagado</b>
             </ion-col>
             <ion-col col-3  *ngIf="!editable">
-                <ion-input name="state"  [readonly]="!editable" type="text" [(ngModel)]="item.state"></ion-input>                     
+                     <ion-input name="state"  [readonly]="!editable" type="text" [(ngModel)]="item.state"></ion-input>                     
             </ion-col>    
         </ion-row>
-        
+
         <ion-row align-items-center>  
             <ion-col col-3>
                 <b>EUR</b>
@@ -89,7 +92,7 @@
                 <b>RUB</b>
             </ion-col>   
         </ion-row>
-        
+
         <ion-row align-items-center>  
             <ion-col col-3>
                 <ion-input name="total_eur"  [readonly]="!editable" type="number" [(ngModel)]="item.total_eur"></ion-input>
@@ -101,7 +104,7 @@
                 <ion-input name="total_rub"  [readonly]="!editable" type="number" [(ngModel)]="item.total_rub"></ion-input>
             </ion-col>   
         </ion-row>
-        
+
         <ion-row align-items-center>  
             <ion-col col-3>
                 <b>Reserva</b>
@@ -110,8 +113,8 @@
                 <b>Metro</b>
             </ion-col> 
         </ion-row>
-        
-       <ion-row align-items-center>  
+
+        <ion-row align-items-center>  
             <ion-col col-3>
                 <ion-input name="total_res"  [readonly]="!editable" type="number" [(ngModel)]="item.total_res"></ion-input>
             </ion-col>      
@@ -119,17 +122,17 @@
                 <ion-input name="total_metro"  [readonly]="!editable" type="number" [(ngModel)]="item.total_metro"></ion-input>
             </ion-col>  
         </ion-row>
-        
+
         <ion-row  align-items-center *ngIf="!editable">     
-            <ion-col col-3>
+                  <ion-col col-3>
                 <b>Concepto</b>                
             </ion-col>       
             <ion-col col-8 >
                 <ion-textarea rows="3" [readonly]="!editable" [(ngModel)]="item.concepto"></ion-textarea>             
             </ion-col>             
         </ion-row>
-        
+
 
     </ion-grid>
-    
+
 </ion-content>
