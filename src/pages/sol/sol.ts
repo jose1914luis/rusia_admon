@@ -29,16 +29,16 @@ export class SolPage {
         this.items = null;
 
         this.storage.get('solicitudes').then((solicitudes) => {
-            if(solicitudes!= null){
+            if (solicitudes != null) {
                 self.items = solicitudes
-            }else{
-                 self.presentAlert('Falla', 'Imposible Cargar Datos');
+            } else {
+                self.presentAlert('Falla', 'Imposible Cargar Datos');
             }
         });
     }
 
     cargarConDatos() {
-        
+
         this.cargar = true
         var self = this;
         this.items = null;
@@ -56,7 +56,7 @@ export class SolPage {
                             for (var key in solicitudes) {
                                 ids.push(solicitudes[key].name[0]);
                                 solicitudes[key].mostrar = false;
-                                if (solicitudes[key].state = 'borrador') {
+                                if (solicitudes[key].state == 'borrador') {
                                     solicitudes[key].mostrar = true;
                                 }
                             }
@@ -80,7 +80,7 @@ export class SolPage {
                                     self.cargar = false;
                                 },
                                 function () {
-                                   self.cargarSinDatos();
+                                    self.cargarSinDatos();
                                 }
                                 );
 
@@ -92,7 +92,7 @@ export class SolPage {
 
                 },
                 function () {
-self.cargarSinDatos();
+                    self.cargarSinDatos();
                 }
             );
         });
@@ -107,6 +107,44 @@ self.cargarSinDatos();
         alert.present();
     }
 
+    ejecutar(estado, item) {
+
+        var self = this;
+        this.cargar = true;
+        this.storage.get('conexion').then((conexion) => {
+            var odoo = new OdooApi(global.url, conexion.bd);
+            odoo.login(conexion.username, conexion.password).then(
+                function (uid) {
+
+                    console.log(estado);
+                    console.log(item);
+
+                    odoo.write('tours.clientes.solicitudes', item.id, {
+                        state: estado
+                    }).then(
+                        function (value2) {
+                            console.log(value2);
+                            item.mostrar = false;
+                            item.state = estado;
+                            if (!value2) {
+                                self.presentAlert('Falla', 'Error al Guardar, intente nuevamente');
+                            }
+                            self.cargar = false;
+                        },
+                        function () {
+                            self.presentAlert('Falla', 'Error al Guardar, intente nuevamente');
+                        }
+                        );
+                },
+                function () {
+
+                }
+            );
+        });
+
+
+
+    }
     refresh() {
         this.ionViewDidLoad();
     }

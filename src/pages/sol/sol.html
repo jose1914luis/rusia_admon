@@ -22,17 +22,17 @@
         <b>Cargando...</b>
     </div>
 
-    <ion-grid *ngFor="let item of items; let i = index" (click)="ejecute(item)">      
+    <ion-grid *ngFor="let item of items; let i = index">      
 
         <ion-row  *ngIf="item.mostrar">     
             <ion-col col-4>
-                <button color="light" ion-button icon-start type="button">
+                <button color="light" ion-button icon-start type="button" (click)="ejecutar('aceptado', item)">
                     <ion-icon ios="ios-checkmark" md="md-checkmark"></ion-icon>
                     Aceptar
                 </button>               
             </ion-col>                   
             <ion-col col-4>
-                <button color="light" ion-button icon-start type="button">
+                <button color="light" ion-button icon-start type="button" (click)="ejecutar('rechazado', item)">
                     <ion-icon ios="ios-close" md="md-close"></ion-icon>
                     Rechazar
                 </button>
@@ -103,8 +103,8 @@
         </ion-row>
 
 
-        <ion-row>     
-            <ion-col col-4>
+        <ion-row class="borde">     
+            <ion-col col-4 >
                 <b>Fecha y Hora</b>                
             </ion-col>                   
             <ion-col col-8>

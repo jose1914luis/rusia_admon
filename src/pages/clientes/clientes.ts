@@ -29,6 +29,11 @@ export class ClientesPage {
     }
 
     ionViewDidLoad() {
+
+        this.cargarConDatos();
+    }
+
+    cargarConDatos() {
         var self = this;
         this.cargar = true;
         this.storage.get('conexion').then((conexion) => {
@@ -38,27 +43,70 @@ export class ClientesPage {
                     odoo.search_read('tours.clientes', [['id', '!=', '0']],
                         ['name', 'ilike', 'email', 'telefono', 'nombre_hotel',
                             'active_email', 'is_padrino', 'pago_tarjeta', 'padre', 'observaciones']).then(
-                        function (value2) {
-                            console.log(value2);
-                            self.items = value2
-                            for (let key in self.items) {
+                        function (clientes) {
 
-                                self.items[key].visible = true;
+                            var ids = [];
+                            for (let key in clientes) {
+
+                                clientes[key].visible = true;
+                                clientes[key].middle = [];
+                                ids.push(clientes[key].id)
                             }
-                            self.cargar = false;
+                            odoo.search_read('tours.clientes.middle', [['name', 'in', ids]],
+                                ['tour_id', 'guia_id', 'name', 'telefono', 'email',
+                                    'nombre_hotel', 'personas_terceros', 'personas_all_in', 'total_personas', 'personas_pago',
+                                    'abonor_rublo', 'abono_euros', 'abono_dolar', 'dolar_exportado', 'euros_exportado', 'rublo_exportado', 'pay_pal', 'tarjeta', 'asistencia', 'observaciones', 'fecha']).then(
+                                function (middle) {
+
+                                    console.log(middle);
+                                    for (let key_c in clientes) {
+                                        for (let key_m in middle) {
+                                            if (clientes[key_c].id == middle[key_m].name[0]) {
+                                                clientes[key_c].middle.push(middle[key_m]);
+                                                self.cargar = false;
+                                            }
+                                        }
+                                    }
+
+                                    console.log(clientes);
+                                    self.items = clientes
+                                    //                            for (let key in self.items) {
+                                    //
+                                    //                                self.items[key].visible = true;
+                                    //                            }
+                                    self.storage.set('clientes', self.items)
+                                    self.cargar = false;
+                                },
+                                function () {
+                                    self.presentAlert('Falla', 'Imposible Conectar');
+                                }
+                                );
                         },
                         function () {
-                            self.presentAlert('Falla', 'Imposible Conectar');
+                            self.cargarSinDatos()
                         }
                         );
 
                 },
                 function () {
-
+                    self.cargarSinDatos()
                 }
             );
         });
+    }
 
+    cargarSinDatos() {
+        var self = this;
+        this.cargar = true;
+        this.storage.get('clientes').then((clientes) => {
+            if (clientes != null) {
+                self.items = clientes
+                self.cargar = false;
+            } else {
+
+                self.presentAlert('Falla', 'Imposible Cargar Datos.');
+            }
+        })
     }
 
     presentAlert(titulo, texto) {
