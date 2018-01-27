@@ -10,10 +10,10 @@ declare var OdooApi: any;
     templateUrl: 'list.html'
 })
 export class ListPage {
-
+ 
     cargar = false;
     mensaje = '';
-    conexion = {bd: 'Tour_Gratis_Rusia_Test', username: 'toursgratismoscu@gmail.com', password: '123456', is_guia: false, is_chofer: false};
+    conexion = {bd: 'Tour_Gratis_Rusia_Test', username: 'labg1214@gmail.com', password: '123456', is_guia: false, is_chofer: false, is_promotor:false};
     constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage, public alertCtrl: AlertController) {
 
         var borrar = this.navParams.get('borrar');
@@ -54,16 +54,17 @@ export class ListPage {
 //                        console.log(tours);
                         self.storage.set('tours', tours)//<--- lista de los tours 
                         odoo.read('res.users', [uid],
-                            ['name', 'email', 'city_id', 'is_guia', 'is_chofer', 'salario_ext', 'salario_min',
+                            ['name', 'email', 'city_id', 'is_guia', 'is_chofer','is_promotor', 'salario_ext', 'salario_min',
                                 'active', 'groups_id']).then(
                             function (users) {
                                 console.log(users);
                                 self.conexion.is_chofer = users[0].is_chofer;
                                 self.conexion.is_guia = users[0].is_guia;
+                                self.conexion.is_promotor = users[0].is_promotor;
                                 self.storage.set('conexion', self.conexion);
                                 odoo.search_read('tours.companies', [['id', '!=', 0]], ['name', 'administrador']).then(
                                     function (companies) {
-//                                        console.log(companies);
+                                        console.log(companies);
                                         self.storage.set('companies', companies); //<--- Todas las Ciudades
                                         var ban = true;
 

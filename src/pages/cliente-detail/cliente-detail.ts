@@ -74,16 +74,53 @@ export class ClienteDetailPage {
 
                     if (self.nuevo) {
 
-                        console.log({
-                            nombre_hotel: self.item.nombre_hotel,
-                            is_padrino: self.item.is_padrino,
-                            name: self.item.name,
+                        //                        console.log({
+                        //                            nombre_hotel: self.item.nombre_hotel,
+                        //                            is_padrino: self.item.is_padrino,
+                        //                            name: self.item.name,
+                        //                            email: self.item.email[1],
+                        //                            observaciones: self.item.observaciones,
+                        //                            active_email: self.item.active_email,
+                        //                            telefono: self.item.telefono,
+                        //                            pago_tarjeta: self.item.pago_tarjeta
+                        //                        });
+                        odoo.create('tours.clientes.email', {
                             email: self.item.email[1],
-                            observaciones: self.item.observaciones,
-                            active_email: self.item.active_email,
-                            telefono: self.item.telefono,
-                            pago_tarjeta: self.item.pago_tarjeta
-                        });
+                        }).then(
+                            function (email) {
+                                console.log(email);
+                                if (!email) {
+                                    self.presentAlert('Falla', 'Error al Guardar, intente nuevamente');
+                                }
+//                                self.cargar = false;
+                                odoo.create('tours.clientes', {
+                                    nombre_hotel: self.item.nombre_hotel,
+                                    is_padrino: self.item.is_padrino,
+                                    name: self.item.name,
+                                    email: email,
+                                    observaciones: self.item.observaciones,
+                                    active_email: self.item.active_email,
+                                    telefono: self.item.telefono,
+                                    pago_tarjeta: self.item.pago_tarjeta
+                                }).then(
+                                    function (clientes) {
+                                        console.log(clientes);
+                                        if (!clientes) {
+                                            self.presentAlert('Falla', 'Error al Guardar, intente nuevamente');
+                                        }
+                                        self.closeModal('n');
+                                        self.cargar = false;
+                                    },
+                                    function () {
+                                        self.presentAlert('Falla', 'Error al Guardar, intente nuevamente');
+                                    }
+                                    );
+                            },
+                            function () {
+                                self.presentAlert('Falla', 'Error al Guardar, intente nuevamente');
+                            }
+                            );
+
                         odoo.create('tours.clientes', {
                             nombre_hotel: self.item.nombre_hotel,
                             is_padrino: self.item.is_padrino,

@@ -69,7 +69,7 @@
         </ion-row>
 
 
-        <ion-row *ngIf="!nuevo" align-items-center >  
+        <ion-row *ngIf="!nuevo && no_editable" align-items-center >  
             <ion-col col-3>
                 <b>Entregado</b>
             </ion-col>
@@ -99,18 +99,18 @@
         </ion-row>
         <ion-row align-items-center>  
             <ion-col col-2>
-                <ion-input name="personas_pago" placeholder='0' [readonly]="!editable" type="number" [(ngModel)]="item.personas_pago"></ion-input>                
+                <ion-input name="personas_pago" placeholder='0' [readonly]="!editable"  (keyup)="calcular()" type="number" [(ngModel)]="item.personas_pago"></ion-input>                
             </ion-col>             
             <ion-col col-3>
-                <ion-input name="personas_terceros" placeholder='0' [readonly]="!editable" type="number" [(ngModel)]="item.personas_terceros"></ion-input>
+                <ion-input name="personas_terceros" placeholder='0' [readonly]="!editable" (keyup)="calcular()" type="number" [(ngModel)]="item.personas_terceros"></ion-input>
 
             </ion-col>   
             <ion-col col-3>
-                <ion-input name="personas_all_in" placeholder='0' [readonly]="!editable" type="number" [(ngModel)]="item.personas_all_in"></ion-input>
+                <ion-input name="personas_all_in" placeholder='0' [readonly]="!editable" (keyup)="calcular()" type="number" [(ngModel)]="item.personas_all_in"></ion-input>
 
             </ion-col>   
             <ion-col *ngIf="!nuevo" col-2>
-                <ion-input  name="total_personas" placeholder='0' [readonly]="!editable" type="number" [(ngModel)]="item.total_personas"></ion-input>
+                <ion-input  name="total_personas" placeholder='0' readonly="true" type="number" [(ngModel)]="item.total_personas"></ion-input>
 
             </ion-col>   
         </ion-row>
@@ -141,23 +141,23 @@
 
         <ion-row align-items-center>  
             <ion-col col-2>
-                <ion-input  name="gasto_one" placeholder='0' [readonly]="!editable" type="number" [(ngModel)]="item.total_euro_res"></ion-input>
+                <ion-input  name="total_euro" placeholder='0' [readonly]="!editable" type="number" [(ngModel)]="item.total_euro"></ion-input>
 
             </ion-col>             
             <ion-col col-2>
-                <ion-input  name="gasto_two" placeholder='0' [readonly]="!editable" type="number" [(ngModel)]="item.total_dolar_res"></ion-input>
+                <ion-input  name="total_dolar" placeholder='0' [readonly]="!editable" type="number" [(ngModel)]="item.total_dolar"></ion-input>
 
             </ion-col>   
             <ion-col col-2>
-                <ion-input  name="gasto_three" placeholder='0' [readonly]="!editable" type="number" [(ngModel)]="item.total_rublo_res"></ion-input>
+                <ion-input  name="total_rublo" placeholder='0' [readonly]="!editable" type="number" [(ngModel)]="item.total_rublo"></ion-input>
 
             </ion-col>   
             <ion-col col-2>
-                <ion-input  name="gasto_four" placeholder='0' [readonly]="!editable" type="number" [(ngModel)]="item.pay_pal"></ion-input>
+                <ion-input  name="pay_pal" placeholder='0' [readonly]="!editable" type="number" [(ngModel)]="item.pay_pal"></ion-input>
 
             </ion-col>   
             <ion-col col-2>
-                <ion-input  name="gasto_five" placeholder='0' [readonly]="!editable" type="number" [(ngModel)]="item.tarjeta"></ion-input>
+                <ion-input  name="tarjeta" placeholder='0' [readonly]="!editable" type="number" [(ngModel)]="item.tarjeta"></ion-input>
 
             </ion-col>   
         </ion-row>

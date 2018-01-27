@@ -28,6 +28,7 @@ export class AsignarPage {
     item;
     tours;
     events = [];
+    add = true;
     constructor(public alertCtrl: AlertController, public navCtrl: NavController, public navParams: NavParams, private storage: Storage) {
 
     }
@@ -35,15 +36,19 @@ export class AsignarPage {
     ionViewDidLoad() {
 
         this.cargarConDatos();
-//        this.cargarSinDatos();
+        //        this.cargarSinDatos();
     }
-    
-    cargarConDatos(){
-                var self = this;
+
+    cargarConDatos() {
+        var self = this;
         this.storage.get('conexion').then((conexion) => {
 
             self.item = self.navParams.get('item');
             console.log(conexion);
+
+            if (conexion.is_chofer || conexion.is_guia || conexion.is_promotor) {
+                self.add = false
+            }
 
             var odoo = new OdooApi(global.url, conexion.bd);
             self.cargar = true;
@@ -52,11 +57,12 @@ export class AsignarPage {
             odoo.login(conexion.username, conexion.password).then(
                 function (uid) {
 
+
                     odoo.search_read('tours.guia', [['date_begin', '>=', '2017-12-01']], ['id', 'guia_id', 'tour_id', 'date_begin',
-                        'date_end', 'personas_terceros', 'personas_all_in', 'total_personas', 'total_rublo', 'total_dolar', 'total_rublo_res'
+                        'date_end', 'personas_terceros', 'personas_all_in', 'total_personas', 'total_rublo', 'total_dolar', 'total_euro', 'total_rublo_res'
                         , 'total_euro_res', 'total_dolar_res', 'pay_pal', 'tarjeta', 'is_free', 'personas_pago', 'is_private', 'entregado', 'state', 'observaciones']).then(
                         function (guia) {
-                            self.storage.set('guia', guia);
+
                             console.log(guia);
                             var ids = [];
                             for (var key in guia) {
@@ -71,6 +77,8 @@ export class AsignarPage {
                                 guia[key].reservas = [];
                                 guia[key].guia_id = guia[key].guia_id ? guia[key].guia_id : '';
                                 guia[key].observaciones = guia[key].observaciones ? guia[key].observaciones : '';
+                                guia[key].no_editable = self.add;
+
                                 ids.push(guia[key].id);
                             }
 
@@ -94,6 +102,7 @@ export class AsignarPage {
                                         self.events.push(guia[key]);
 
                                     }
+                                    self.storage.set('guia', guia);
                                     self.cargar = false;
                                     self.calendar.eventSource = self.events;
 

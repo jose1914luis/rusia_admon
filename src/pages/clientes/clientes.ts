@@ -17,6 +17,31 @@ export class ClientesPage {
 
     constructor(public modalCtrl: ModalController, public navCtrl: NavController, private storage: Storage, public navParams: NavParams, public alertCtrl: AlertController) {
 
+//        var self = this;
+//        this.cargar = true;
+//        self.items = [];
+//        this.storage.get('conexion').then((conexion) => {
+//            var odoo = new OdooApi(global.url, conexion.bd);
+//            odoo.login(conexion.username, conexion.password).then(
+//                function (uid) {
+////                    odoo.delete('tours.clientes.email', [396],
+//                    odoo.search_read('tours.clientes.email', [['id', '!=', '0']],
+//                        ['email']).then(
+//                        function (clientes) {
+//                            console.log(clientes);
+//
+//                        },
+//                        function () {
+////                            self.cargarSinDatos()
+//                        }
+//                        );
+//
+//                },
+//                function () {
+////                    self.cargarSinDatos()
+//                }
+//            );
+//        });
     }
 
     refresh() {
@@ -24,7 +49,7 @@ export class ClientesPage {
     }
 
     nuevo() {
-//        this.navCtrl.push(ClienteDetailPage, {item: null});
+        //        this.navCtrl.push(ClienteDetailPage, {item: null});
         var self = this;
         let profileModal = this.modalCtrl.create(ClienteDetailPage, {item: null});
         profileModal.onDidDismiss(data => {
@@ -176,7 +201,7 @@ export class ClientesPage {
 
     ejecute(item) {
         //        console.log(item);
-//        this.navCtrl.push(ClienteDetailPage, {item: item});
+        //        this.navCtrl.push(ClienteDetailPage, {item: item});
         this.navCtrl.push(ClienteDetailPage, {item: item});
         var self = this;
         let profileModal = this.modalCtrl.create(ClienteDetailPage, {item: null});

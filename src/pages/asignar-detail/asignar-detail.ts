@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {NavController, NavParams, AlertController, ModalController} from 'ionic-angular';
+import {NavController, NavParams, AlertController, ModalController, ViewController} from 'ionic-angular';
 import {global} from '../../components/credenciales/credenciales';
 import {Storage} from '@ionic/storage';
 
@@ -15,17 +15,21 @@ export class AsignarDetailPage {
 
     item;
     editable = false;
+    no_editable = true;
     cargar = false;
     nuevo = false;
     tem_date_end = new Date().toISOString();
     tem_date_begin = new Date().toISOString();
-    constructor(public modalCtrl: ModalController, public navCtrl: NavController, private storage: Storage, public navParams: NavParams, public alertCtrl: AlertController) {
+    constructor(public viewCtrl: ViewController, public modalCtrl: ModalController, public navCtrl: NavController, private storage: Storage, public navParams: NavParams, public alertCtrl: AlertController) {
 
         console.log(this.navParams.data);
         if (this.navParams.data != false) {
             this.item = this.navParams.data;
             if (this.item.guia_id != "") this.item.guia_id.name = this.item.guia_id[1];
             this.item.tour_id.name = this.item.tour_id[1];
+            this.no_editable = this.item.no_editable;
+            
+//            this.tem_date_begin = this.item
         } else {
             this.editable = true;
             this.nuevo = true;
@@ -54,7 +58,7 @@ export class AsignarDetailPage {
         console.log('ionViewDidLoad AsignarDetailPage');
     }
     buscarGuia() {
-        if (this.editable) {
+        if (this.editable && this.no_editable) {
             var self = this;
             let profileModal = this.modalCtrl.create(BuscarGuiaPage);
             profileModal.onDidDismiss(data => {
@@ -67,7 +71,7 @@ export class AsignarDetailPage {
         }
     }
     buscarTour() {
-        if (this.editable) {
+        if (this.editable && this.no_editable) {
             var self = this;
             let profileModal = this.modalCtrl.create(BuscarTourPage);
             profileModal.onDidDismiss(data => {
@@ -101,7 +105,7 @@ export class AsignarDetailPage {
                     odoo.write('tours.guia', self.item.id, {
                         date_begin: self.item.date_begin, date_end: self.item.date_end, personas_pago: self.item.personas_pago,
                         personas_terceros: self.item.personas_terceros, personas_all_in: self.item.personas_all_in,
-                        total_personas: self.item.total_personas, total_rublo: self.item.total_rublo,
+                        total_personas: self.item.total_personas, total_rublo: self.item.total_rublo, total_euro:self.item.total_euro,
                         total_dolar: self.item.total_dolar, pay_pal: self.item.pay_pal, tarjeta: self.item.tarjeta,
                         entregado: self.item.entregado, state: self.item.state, observaciones: self.item.observaciones
                     }).then(
@@ -111,6 +115,7 @@ export class AsignarDetailPage {
                                 self.presentAlert('Falla', 'Error al Guardar, intente nuevamente');
                             }
                             self.cargar = false;
+//                            self.viewCtrl.dismiss();
                         },
                         function () {
                             self.presentAlert('Falla', 'Error al Guardar, intente nuevamente');
@@ -134,6 +139,10 @@ export class AsignarDetailPage {
             buttons: ['Ok']
         });
         alert.present();
+    }
+    
+    calcular(){
+        this.item.total_personas =  parseInt(this.item.personas_pago) +  parseInt(this.item.personas_terceros) +  parseInt(this.item.personas_all_in);
     }
 
 
