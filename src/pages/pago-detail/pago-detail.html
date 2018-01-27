@@ -2,6 +2,11 @@
 
     <ion-navbar>
         <ion-title>Detalles del Pago</ion-title>
+        <ion-buttons end>
+            <button ion-button icon-end (click)="closeModal('x')">
+                     <ion-icon ios="ios-close" md="md-close"></ion-icon>
+            </button>
+        </ion-buttons>
     </ion-navbar>
     <ion-segment color="primary">
         <ion-segment-button value="friends" (ionSelect)="editar()">

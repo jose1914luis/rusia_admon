@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {NavController, ModalController, NavParams, AlertController} from 'ionic-angular';
+import {NavController, ModalController, NavParams, AlertController, ViewController} from 'ionic-angular';
 import {global} from '../../components/credenciales/credenciales';
 import {Storage} from '@ionic/storage';
 import {BuscarTourPage} from '../../pages/buscar-tour/buscar-tour';
@@ -15,14 +15,14 @@ export class PagoDetailPage {
     editable = false;
     cargar = false;
     tem_date_begin;
-    constructor(public modalCtrl: ModalController, public navCtrl: NavController, private storage: Storage, public navParams: NavParams, public alertCtrl: AlertController) {
+    constructor(public modalCtrl: ModalController, public viewCtrl: ViewController, public navCtrl: NavController, private storage: Storage, public navParams: NavParams, public alertCtrl: AlertController) {
         this.item = this.navParams.get('item');
         console.log(this.item)
         this.item.tours_id.name = this.item.tours_id[1];
         this.item.tours_id.id = this.item.tours_id[0];
-        
-        var dateStart = new Date(this.item.name);        
-        this.tem_date_begin = dateStart.toISOString();                
+
+        var dateStart = new Date(this.item.name);
+        this.tem_date_begin = dateStart.toISOString();
     }
 
     ionViewDidLoad() {
@@ -44,14 +44,18 @@ export class PagoDetailPage {
             let profileModal = this.modalCtrl.create(BuscarTourPage);
             profileModal.onDidDismiss(data => {
                 if (data != null) {
+                    console.log(data);
                     self.item.tours_id = data;
+                    self.item.tours_id.id = data.id
+                    self.item.tours_id.name = data.name;
+
                     console.log(self.item.tours_id.name);
                 }
             });
             profileModal.present();
         }
     }
-    
+
     formatDate(date) {
         var d = new Date(date),
             month = '' + (d.getMonth() + 1),
@@ -74,17 +78,17 @@ export class PagoDetailPage {
             odoo.login(conexion.username, conexion.password).then(
                 function (uid) {
 
-//                    console.log({
-//                        name: self.formatDate(self.tem_date_begin),
-//                        semana: self.item.semana,
-//                        total_eur: self.item.total_eur,
-//                        total_usd: self.item.total_usd,
-//                        total_res: self.item.total_res,
-//                        total_rub: self.item.total_rub,
-//                        total_metro: self.item.total_metro,
-//                        pax_pago: self.item.pax_pago,
-//                        tours_id: self.item.tours_id.id
-//                    });
+                    //                    console.log({
+                    //                        name: self.formatDate(self.tem_date_begin),
+                    //                        semana: self.item.semana,
+                    //                        total_eur: self.item.total_eur,
+                    //                        total_usd: self.item.total_usd,
+                    //                        total_res: self.item.total_res,
+                    //                        total_rub: self.item.total_rub,
+                    //                        total_metro: self.item.total_metro,
+                    //                        pax_pago: self.item.pax_pago,
+                    //                        tours_id: self.item.tours_id.id
+                    //                    });
 
                     odoo.write('tours.pago.guia', self.item.id, {
                         name: self.formatDate(self.tem_date_begin),
@@ -95,7 +99,7 @@ export class PagoDetailPage {
                         total_rub: self.item.total_rub,
                         total_metro: self.item.total_metro,
                         pax_pago: self.item.pax_pago,
-//                        tours_id: self.item.tours_id.id
+                        tours_id: self.item.tours_id.id
                     }).then(
                         function (value2) {
                             console.log(value2);
@@ -103,6 +107,7 @@ export class PagoDetailPage {
                                 self.presentAlert('Falla', 'Error al Guardar, intente nuevamente');
                             }
                             self.cargar = false;
+                            self.closeModal('n');
                         },
                         function () {
                             self.presentAlert('Falla', 'Error al Guardar, intente nuevamente');
@@ -117,6 +122,14 @@ export class PagoDetailPage {
 
 
 
+    }
+    
+    closeModal(x) {
+        if (x == 'x') {
+            this.viewCtrl.dismiss(null);
+        } else {
+            this.viewCtrl.dismiss(x);
+        }
     }
 
     presentAlert(titulo, texto) {

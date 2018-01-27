@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {NavController, NavParams, AlertController} from 'ionic-angular';
+import {NavController, NavParams, AlertController, ModalController} from 'ionic-angular';
 import {global} from '../../components/credenciales/credenciales';
 import {PagoDetailPage} from '../../pages/pago-detail/pago-detail';
 import {Storage} from '@ionic/storage';
@@ -14,7 +14,7 @@ export class PagoPage {
 
     items;
     cargar = true;
-    constructor(public navCtrl: NavController, private storage: Storage, public navParams: NavParams, public alertCtrl: AlertController) {
+    constructor(public modalCtrl: ModalController, public navCtrl: NavController, private storage: Storage, public navParams: NavParams, public alertCtrl: AlertController) {
 
     }
 
@@ -93,18 +93,29 @@ export class PagoPage {
 
     ejecute(item) {
 
-        this.navCtrl.push(PagoDetailPage, {item: item});
+//        this.navCtrl.push(PagoDetailPage, {item: item});
+        
+          var self = this;
+        let profileModal = this.modalCtrl.create(PagoDetailPage, {item: item});
+        profileModal.onDidDismiss(data => {
+            if (data != null) {
+                self.cargarConDatos();
+            }
+        });
+        profileModal.present();
     }
 
     refresh() {
         this.ionViewDidLoad();
     }
+    
+    
 
     buscar() {
 
         var self = this;
         let alert = this.alertCtrl.create({
-            title: 'Buscar',
+            title: 'Buscar Pago Diario',
             inputs: [
                 {
                     name: 'semIni',
@@ -113,6 +124,14 @@ export class PagoPage {
                 {
                     name: 'semFin',
                     placeholder: 'Semana Final'
+                },
+                {
+                    name: 'fechaIni',
+                    placeholder: 'Fecha Inicial (YYYY-MM-DD)'
+                },
+                {
+                    name: 'fechaFin',
+                    placeholder: 'Fecha Final (YYYY-MM-DD)'
                 }
             ],
             buttons: [
@@ -131,9 +150,15 @@ export class PagoPage {
                             for (let key in self.items) {
 
                                 self.items[key].visible = false;
-
+                                 
+                                var fechaIni = new Date(data.fechaIni);
+                                var fechaFin = new Date(data.fechaFin);
+                                var fecha = new Date(self.items[key].name);
                                 if (self.items[key].semana >= data.semIni && self.items[key].semana <= data.semFin) {
-                                    //                                    console.log(self.items[key]);
+                                    
+                                    self.items[key].visible = true;
+                                }
+                                if(fecha >= fechaIni && fecha <= fechaFin){
                                     self.items[key].visible = true;
                                 }
                             }
