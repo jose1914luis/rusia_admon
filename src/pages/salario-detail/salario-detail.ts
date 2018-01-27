@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {NavController, NavParams, AlertController} from 'ionic-angular';
+import {NavController, NavParams, AlertController, ViewController} from 'ionic-angular';
 import {global} from '../../components/credenciales/credenciales';
 import {Storage} from '@ionic/storage';
 
@@ -14,7 +14,7 @@ export class SalarioDetailPage {
     cargar = false;
     ciudad;
     ciudadList = [];
-    constructor(public navCtrl: NavController, private storage: Storage, public navParams: NavParams, public alertCtrl: AlertController) {
+    constructor(public navCtrl: NavController,public viewCtrl: ViewController, private storage: Storage, public navParams: NavParams, public alertCtrl: AlertController) {
 
         if (this.navParams.get('item') != null) {
             this.item = this.navParams.get('item');
@@ -49,6 +49,15 @@ export class SalarioDetailPage {
             this.item.editable = false;
         }
     }
+    
+    closeModal(x) {
+        if (x == 'x') {
+            this.viewCtrl.dismiss(null);
+        } else {
+            this.viewCtrl.dismiss(x);
+        }
+    }
+
 
     guardar() {
 
@@ -59,7 +68,7 @@ export class SalarioDetailPage {
             odoo.login(conexion.username, conexion.password).then(
                 function (uid) {
 
-                    if (self.item.nuevo == true) {
+                    if (self.item.nuevo) {
 
                         console.log('nuevo');
                         console.log({
@@ -79,7 +88,7 @@ export class SalarioDetailPage {
                                     self.presentAlert('Falla', 'Error al Guardar, intente nuevamente');
                                 }
                                 self.cargar = false;
-                                //console.log(value2);
+                                self.closeModal('n');
                             },
                             function () {
                                 self.presentAlert('Falla', 'Error al Guardar, intente nuevamente');
@@ -106,7 +115,7 @@ export class SalarioDetailPage {
                                     self.presentAlert('Falla', 'Error al Guardar, intente nuevamente');
                                 }
                                 self.cargar = false;
-                                //console.log(value2);
+                                self.closeModal('n');
                             },
                             function () {
                                 self.presentAlert('Falla', 'Error al Guardar, intente nuevamente');

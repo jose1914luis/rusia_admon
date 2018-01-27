@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {NavController, NavParams, AlertController} from 'ionic-angular';
+import {NavController, NavParams, AlertController, ModalController} from 'ionic-angular';
 import {global} from '../../components/credenciales/credenciales';
 import {SalarioDetailPage} from '../../pages/salario-detail/salario-detail';
 import {Storage} from '@ionic/storage';
@@ -15,7 +15,7 @@ export class SalarioPage {
     items;
     cargar;
     mensaje = '';
-    constructor(public navCtrl: NavController, private storage: Storage, public navParams: NavParams, public alertCtrl: AlertController) {
+    constructor(public navCtrl: NavController, public modalCtrl: ModalController, private storage: Storage, public navParams: NavParams, public alertCtrl: AlertController) {
 
     }
 
@@ -84,11 +84,30 @@ export class SalarioPage {
     ejecute(item) {
         item.nuevo = true;
         item.editable = false;
-        this.navCtrl.push(SalarioDetailPage, {item: item});
+        //        this.navCtrl.push(SalarioDetailPage, {item: item});
+        var self = this;
+        let profileModal = this.modalCtrl.create(SalarioDetailPage, {item: item});
+        profileModal.onDidDismiss(data => {
+            if (data != null) {
+                self.cargarConDatos();
+            }
+        });
+        profileModal.present();
+
     }
 
     nuevo() {
-        this.navCtrl.push(SalarioDetailPage,{item: null});
+        
+        var self = this;
+        let profileModal = this.modalCtrl.create(SalarioDetailPage, {item: null});
+        profileModal.onDidDismiss(data => {
+            if (data != null) {
+                self.cargarConDatos();
+            }
+        });
+        profileModal.present();
+
+//        this.navCtrl.push(SalarioDetailPage, {item: null});
     }
 
     refresh() {

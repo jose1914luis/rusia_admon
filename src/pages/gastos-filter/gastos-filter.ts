@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {NavController, NavParams, AlertController, ModalController, ViewController} from 'ionic-angular';
+import {NavController, NavParams, AlertController, ViewController} from 'ionic-angular';
 import {global} from '../../components/credenciales/credenciales';
 import {Storage} from '@ionic/storage';
 
@@ -16,7 +16,7 @@ export class GastosFilterPage {
     ciudad;
     ciudadList = [];
     tem_date_begin = new Date().toISOString();
-    constructor(public viewCtrl: ViewController, public modalCtrl: ModalController, public navCtrl: NavController, private storage: Storage, public navParams: NavParams, public alertCtrl: AlertController) {
+    constructor(public viewCtrl: ViewController,public navCtrl: NavController, private storage: Storage, public navParams: NavParams, public alertCtrl: AlertController) {
 
         var self = this;
         self.item = self.navParams.get('item');
