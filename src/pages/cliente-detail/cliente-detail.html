@@ -8,6 +8,11 @@
 
     <ion-navbar>
         <ion-title>Detalles del Cliente</ion-title>
+        <ion-buttons end>
+            <button ion-button icon-end (click)="closeModal('x')">
+                     <ion-icon ios="ios-close" md="md-close"></ion-icon>
+            </button>
+        </ion-buttons>
     </ion-navbar>
     <ion-segment [(ngModel)]="icons">
         <ion-segment-button  *ngIf="!nuevo" value="camera" icon-start (click)="editar()">
@@ -37,7 +42,7 @@
                 <b>Nombre</b>                
             </ion-col>                   
             <ion-col col-8 >
-                <ion-input name="name"  [readonly]="!editable" type="text" [(ngModel)]="item.name"></ion-input>
+                <ion-input name="name" placeholder="Nombre" [readonly]="!editable" type="text" [(ngModel)]="item.name"></ion-input>
 
             </ion-col>   
         </ion-row>
@@ -47,7 +52,7 @@
                 <b>Email</b>                
             </ion-col>     
             <ion-col col-8 >
-                <ion-input name="email"  [readonly]="!editable" type="email" [(ngModel)]="item.email[1]"></ion-input>                
+                <ion-input name="email" placeholder="Email" [readonly]="!editable" type="email" [(ngModel)]="item.email[1]"></ion-input>                
             </ion-col> 
         </ion-row>
 
@@ -56,7 +61,7 @@
                 <b>Teléfono</b>                
             </ion-col>       
             <ion-col col-8 >
-                <ion-input name="telefono"  [readonly]="!editable" type="text" [(ngModel)]="item.telefono"></ion-input>                
+                <ion-input name="telefono" placeholder="Teléfono" [readonly]="!editable" type="text" [(ngModel)]="item.telefono"></ion-input>                
             </ion-col>             
         </ion-row>
 
@@ -65,7 +70,7 @@
                 <b>Hotel</b>                
             </ion-col>       
             <ion-col col-8 >
-                <ion-textarea rows="3" [readonly]="!editable" [(ngModel)]="item.nombre_hotel"></ion-textarea>             
+                <ion-textarea rows="3" placeholder="Hotel" [readonly]="!editable" [(ngModel)]="item.nombre_hotel"></ion-textarea>             
             </ion-col>             
         </ion-row>
 
@@ -77,18 +82,18 @@
             <ion-col col-1>
                 <ion-checkbox  [disabled] = "!editable" [(ngModel)]="item.is_padrino"></ion-checkbox>
             </ion-col>       
-            <ion-col col-3>
-                <b>Es Tarjeta?</b>
+            <ion-col col-5>
+                <b>Es Paypal ó Tarjeta?</b>
             </ion-col>
             <ion-col col-1>
-                <ion-checkbox  [disabled] = "!editable" [(ngModel)]="item.es_tarjeta"></ion-checkbox>
+                <ion-checkbox  [disabled] = "!editable" [(ngModel)]="item.pago_tarjeta"></ion-checkbox>
             </ion-col>    
-            <ion-col col-3>
+            <!--<ion-col col-3>
                 <b>Es Paypal?</b>
             </ion-col>
             <ion-col col-1>
                 <ion-checkbox  [disabled] = "!editable" [(ngModel)]="item.es_pay_pal"></ion-checkbox>        
-            </ion-col>    
+            </ion-col>    -->
         </ion-row>
         <ion-row align-items-center>  
             <ion-col col-8>
@@ -107,7 +112,7 @@
         </ion-row>
         <ion-row align-items-center class="borde">  
             <ion-col col-12>
-                <ion-textarea rows="3"  [readonly]="!editable" [(ngModel)]="item.observaciones"></ion-textarea>
+                <ion-textarea rows="3" placeholder="Observaciones" [readonly]="!editable" [(ngModel)]="item.observaciones"></ion-textarea>
             </ion-col>             
         </ion-row>
 

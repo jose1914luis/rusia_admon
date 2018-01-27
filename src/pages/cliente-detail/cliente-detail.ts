@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {NavController, NavParams, AlertController} from 'ionic-angular';
+import {NavController, NavParams, AlertController, ViewController} from 'ionic-angular';
 import {global} from '../../components/credenciales/credenciales';
 import {Storage} from '@ionic/storage';
 
@@ -14,15 +14,17 @@ export class ClienteDetailPage {
     item;
     cargar = false;
     nuevo = false;
-    constructor(public navCtrl: NavController, private storage: Storage, public navParams: NavParams, public alertCtrl: AlertController) {
+    constructor(public viewCtrl: ViewController, public navCtrl: NavController, private storage: Storage, public navParams: NavParams, public alertCtrl: AlertController) {
         this.item = this.navParams.get('item');
+
         if (this.item == null) {
             this.item = {
-                name: '', ilike: '', email: '', telefono: '',
-                nombre_hotel: '', active_email: '', is_padrino: '',
-                pago_tarjeta: '', padre: '', observaciones: '', middle: null
+                name: '', ilike: '', email: ['', ''], telefono: '',
+                nombre_hotel: '', active_email: false, is_padrino: false,
+                pago_tarjeta: false, padre: '', observaciones: '', middle: null
             }
             this.nuevo = true;
+            this.editable = true;
         } else {
             this.item.observaciones = this.item.observaciones ? this.item.observaciones : '';
             this.item.telefono = this.item.telefono ? this.item.telefono : '';
@@ -53,6 +55,14 @@ export class ClienteDetailPage {
         }
     }
 
+    closeModal(x) {
+        if (x == 'x') {
+            this.viewCtrl.dismiss(null);
+        } else {
+            this.viewCtrl.dismiss(x);
+        }
+    }
+
     guardar() {
 
         this.cargar = true;
@@ -62,48 +72,63 @@ export class ClienteDetailPage {
             odoo.login(conexion.username, conexion.password).then(
                 function (uid) {
 
-                    if(self.nuevo){
-                        odoo.create('tours.clientes',{
-                        nombre_hotel: self.item.nombre_hotel,
-                        is_padrino: self.item.is_padrino,
-                        name: self.item.name,
-                        observaciones: self.item.observaciones,
-                        active_email: self.item.active_email,
-                        telefono: self.item.telefono
-                    }).then(
-                        function (value2) {
-                            console.log(value2);
-                            if (!value2) {
+                    if (self.nuevo) {
+
+                        console.log({
+                            nombre_hotel: self.item.nombre_hotel,
+                            is_padrino: self.item.is_padrino,
+                            name: self.item.name,
+                            email: self.item.email[1],
+                            observaciones: self.item.observaciones,
+                            active_email: self.item.active_email,
+                            telefono: self.item.telefono,
+                            pago_tarjeta: self.item.pago_tarjeta
+                        });
+                        odoo.create('tours.clientes', {
+                            nombre_hotel: self.item.nombre_hotel,
+                            is_padrino: self.item.is_padrino,
+                            name: self.item.name,
+                            email: self.item.email[1],
+                            observaciones: self.item.observaciones,
+                            active_email: self.item.active_email,
+                            telefono: self.item.telefono,
+                            pago_tarjeta: self.item.pago_tarjeta
+                        }).then(
+                            function (value2) {
+                                console.log(value2);
+                                if (!value2) {
+                                    self.presentAlert('Falla', 'Error al Guardar, intente nuevamente');
+                                }
+                                self.closeModal('n');
+                                self.cargar = false;
+                            },
+                            function () {
                                 self.presentAlert('Falla', 'Error al Guardar, intente nuevamente');
                             }
-                            self.cargar = false;
-                        },
-                        function () {
-                            self.presentAlert('Falla', 'Error al Guardar, intente nuevamente');
-                        }
-                        );
-                    }else{
+                            );
+                    } else {
                         odoo.write('tours.clientes', self.item.id, {
-                        nombre_hotel: self.item.nombre_hotel,
-                        is_padrino: self.item.is_padrino,
-                        name: self.item.name,
-                        observaciones: self.item.observaciones,
-                        active_email: self.item.active_email,
-                        telefono: self.item.telefono
-                    }).then(
-                        function (value2) {
-                            console.log(value2);
-                            if (!value2) {
+                            nombre_hotel: self.item.nombre_hotel,
+                            is_padrino: self.item.is_padrino,
+                            name: self.item.name,
+                            observaciones: self.item.observaciones,
+                            active_email: self.item.active_email,
+                            telefono: self.item.telefono
+                        }).then(
+                            function (value2) {
+                                console.log(value2);
+                                if (!value2) {
+                                    self.presentAlert('Falla', 'Error al Guardar, intente nuevamente');
+                                }
+                                self.cargar = false;
+                                self.closeModal('n');
+                            },
+                            function () {
                                 self.presentAlert('Falla', 'Error al Guardar, intente nuevamente');
                             }
-                            self.cargar = false;
-                        },
-                        function () {
-                            self.presentAlert('Falla', 'Error al Guardar, intente nuevamente');
-                        }
-                        );
+                            );
                     }
-                    
+
 
                 },
                 function () {

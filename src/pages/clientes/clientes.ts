@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {NavController, NavParams, AlertController} from 'ionic-angular';
+import {NavController, NavParams, AlertController, ModalController} from 'ionic-angular';
 import {global} from '../../components/credenciales/credenciales';
 import {ClienteDetailPage} from '../../pages/cliente-detail/cliente-detail';
 import {Storage} from '@ionic/storage';
@@ -15,7 +15,7 @@ export class ClientesPage {
     items;
     cargar = true;
 
-    constructor(public navCtrl: NavController, private storage: Storage, public navParams: NavParams, public alertCtrl: AlertController) {
+    constructor(public modalCtrl: ModalController, public navCtrl: NavController, private storage: Storage, public navParams: NavParams, public alertCtrl: AlertController) {
 
     }
 
@@ -24,7 +24,15 @@ export class ClientesPage {
     }
 
     nuevo() {
-        this.navCtrl.push(ClienteDetailPage, {item: null});
+//        this.navCtrl.push(ClienteDetailPage, {item: null});
+        var self = this;
+        let profileModal = this.modalCtrl.create(ClienteDetailPage, {item: null});
+        profileModal.onDidDismiss(data => {
+            if (data != null) {
+                self.cargarConDatos();
+            }
+        });
+        profileModal.present();
     }
 
     ionViewDidLoad() {
@@ -168,6 +176,15 @@ export class ClientesPage {
 
     ejecute(item) {
         //        console.log(item);
+//        this.navCtrl.push(ClienteDetailPage, {item: item});
         this.navCtrl.push(ClienteDetailPage, {item: item});
+        var self = this;
+        let profileModal = this.modalCtrl.create(ClienteDetailPage, {item: null});
+        profileModal.onDidDismiss(data => {
+            if (data != null) {
+                self.cargarConDatos();
+            }
+        });
+        profileModal.present();
     }
 }
