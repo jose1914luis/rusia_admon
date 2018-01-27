@@ -30,7 +30,6 @@ import {AsignarDetailPage} from '../pages/asignar-detail/asignar-detail';
 import {ResDetailPage} from '../pages/res-detail/res-detail';
 import {NomFilterPage} from '../pages/nom-filter/nom-filter';
 import {GastosFilterPage} from '../pages/gastos-filter/gastos-filter';
-import {GastosNuevoPage} from '../pages/gastos-nuevo/gastos-nuevo';
 import {BuscarTourPage} from '../pages/buscar-tour/buscar-tour';
 import {BuscarGuiaPage} from '../pages/buscar-guia/buscar-guia';
 
@@ -68,7 +67,6 @@ import {SplashScreen} from '@ionic-native/splash-screen';
         NomFilterPage,
         PanelPage,
         GastosFilterPage,
-        GastosNuevoPage,
         BuscarGuiaPage,
         BuscarTourPage
     ],
@@ -105,7 +103,6 @@ import {SplashScreen} from '@ionic-native/splash-screen';
         NomFilterPage,
         PanelPage,
         GastosFilterPage,
-        GastosNuevoPage,
         BuscarGuiaPage,
         BuscarTourPage
     ],

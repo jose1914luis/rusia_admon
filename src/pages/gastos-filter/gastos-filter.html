@@ -1,6 +1,11 @@
 <ion-header>
     <ion-navbar>
         <ion-title>Detalles Gastos</ion-title>
+        <ion-buttons end>
+            <button ion-button icon-end (click)="closeModal('x')">
+                     <ion-icon ios="ios-close" md="md-close"></ion-icon>
+            </button>
+        </ion-buttons>
     </ion-navbar>
     <ion-segment color="primary">
         <ion-segment-button *ngIf="!item.nuevo" value="friends" (ionSelect)="editar()">
@@ -85,7 +90,7 @@
         </ion-row>
 
 
-        <ion-row align-items-center class="borde" *ngIf="item.nuevo">     
+        <ion-row align-items-center class="borde" *ngIf="!item.nuevo">     
             <ion-col col-3>
                 <b>Estado</b>                
             </ion-col>                   
@@ -110,7 +115,7 @@
                 <b>Moneda</b>                
             </ion-col>                   
             <ion-col col-8>
-                <ion-select [(ngModel)]="con.moneda" name="bd">
+                <ion-select [(ngModel)]="con.moneda" name="moneda" (ionChange)="onChange()">
                     <ion-option value="usd">USD</ion-option>
                     <ion-option value="eur">EUR</ion-option>
                     <ion-option value="rub">RUB</ion-option>

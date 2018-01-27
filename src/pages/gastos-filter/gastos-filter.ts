@@ -1,8 +1,7 @@
 import {Component} from '@angular/core';
-import {NavController, NavParams, AlertController, ModalController} from 'ionic-angular';
+import {NavController, NavParams, AlertController, ModalController, ViewController} from 'ionic-angular';
 import {global} from '../../components/credenciales/credenciales';
 import {Storage} from '@ionic/storage';
-import {GastosNuevoPage} from '../../pages/gastos-nuevo/gastos-nuevo';
 
 declare var OdooApi: any;
 @Component({
@@ -17,17 +16,18 @@ export class GastosFilterPage {
     ciudad;
     ciudadList = [];
     tem_date_begin = new Date().toISOString();
-    constructor(public modalCtrl: ModalController, public navCtrl: NavController, private storage: Storage, public navParams: NavParams, public alertCtrl: AlertController) {
+    constructor(public viewCtrl: ViewController, public modalCtrl: ModalController, public navCtrl: NavController, private storage: Storage, public navParams: NavParams, public alertCtrl: AlertController) {
 
         var self = this;
-
-        if (this.navParams.get('item') != null) {
-            this.item = this.navParams.get('item');
-
-            this.item.nuevo = false;
-            this.item.editable = false;
+        self.item = self.navParams.get('item');
+        if (self.item != null) {
+                        
+            self.item.nuevo = false;
+            self.item.editable = false;
+            self.ciudad = self.item.city_id[0];
         } else {
-            this.item = {
+        
+            self.item = {
                 name: '',
                 city_id: ['', ''],
                 total_usd: 0,
@@ -39,28 +39,26 @@ export class GastosFilterPage {
                 conceptos: [],
                 nuevo: true
             }
-            this.item.editable = true;
-
-            this.storage.get('companies').then((ciudad) => {
-
-                console.log(ciudad);
-                self.ciudadList = ciudad;
-                self.ciudad = ciudad[0].name[0];
-            });
+            self.item.editable = true;
         }
+
+        self.storage.get('companies').then((ciudad) => {
+
+            console.log(self.item);
+            self.ciudadList = ciudad;
+            if (self.item.city_id[0] == '') {
+                self.ciudad = ciudad[0].name[0];
+            }            
+        });
 
     }
 
-    modificar(con) {
-        var self = this;
-        let profileModal = this.modalCtrl.create(GastosNuevoPage, {con: con});
-        profileModal.onDidDismiss(data => {
-            if (data != null) {
-                //                self.item.conceptos.push(data);
-                self.calcular();
-            }
-        });
-        profileModal.present();
+    closeModal(x) {
+        if (x == 'x') {
+            this.viewCtrl.dismiss(null);
+        } else {
+            this.viewCtrl.dismiss(x);
+        }
     }
 
     ionViewDidLoad() {
@@ -107,7 +105,7 @@ export class GastosFilterPage {
         console.log(con.unidades * con.price_unit);
         con.sub_total = con.unidades * con.price_unit;
         console.log(con.sub_total);
-        this.calcular()
+        this.calcular();
     }
 
     editar() {
@@ -130,6 +128,11 @@ export class GastosFilterPage {
 
         return [year, month, day].join('-');
     }
+     
+    onChange(){
+        console.log('entro');
+        this.calcular();
+    }
 
     guardar() {
 
@@ -149,13 +152,17 @@ export class GastosFilterPage {
                         }).then(
                             function (id_nuevo) {
 
-                                for (var key in self.item.conceptos) {
+                                for (var key = 0; self.item.conceptos.length > key; key++) {
+                                    //for (var key in self.item.conceptos) {
                                     self.item.conceptos[key].gastos_id = id_nuevo;
                                     console.log(self.item.conceptos[key]);
                                     (function (key) {
                                         odoo.create('tours.gastos.conceptos', self.item.conceptos[key]).then(
                                             function (id_conceptos) {
-                                                console.log(id_conceptos)
+                                                console.log(self.item.conceptos.length + '   ' + key)
+                                                if (self.item.conceptos.length == key + 1) {
+                                                    self.closeModal('n');
+                                                }
                                             }, function () {
                                             }
                                         )
@@ -176,21 +183,30 @@ export class GastosFilterPage {
                         }).then(
                             function (id_nuevo) {
 
-                                for (var key in self.item.conceptos) {
+                                for (var key = 0; self.item.conceptos.length > key; key++) {
+                                    //for (var key in self.item.conceptos) {
                                     self.item.conceptos[key].gastos_id = id_nuevo;
                                     console.log(self.item.conceptos[key]);
                                     (function (key) {
                                         if (self.item.conceptos[key].id != null) {
+                                             self.item.conceptos[key].gastos_id = self.item.id;
                                             odoo.write('tours.gastos.conceptos', self.item.conceptos[key].id, self.item.conceptos[key]).then(
                                                 function (id_conceptos) {
-                                                    console.log(id_conceptos)
+                                                    console.log(self.item.conceptos.length + '   ' + key)
+                                                    if (self.item.conceptos.length == key + 1) {
+                                                        self.closeModal('n');
+                                                    }
                                                 }, function () {
                                                 }
                                             )
                                         } else {
                                             odoo.create('tours.gastos.conceptos', self.item.conceptos[key]).then(
                                                 function (id_conceptos) {
-                                                    console.log(id_conceptos)
+                                                    //console.log(id_conceptos)
+                                                    console.log(self.item.conceptos.length + '   ' + key)
+                                                    if (self.item.conceptos.length == key + 1) {
+                                                        self.closeModal('n');
+                                                    }
                                                 }, function () {
                                                 }
                                             )

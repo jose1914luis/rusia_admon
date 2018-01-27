@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {NavController, AlertController} from 'ionic-angular';
+import {NavController, AlertController, ModalController} from 'ionic-angular';
 import {global} from '../../components/credenciales/credenciales';
 import {Storage} from '@ionic/storage';
 import {GastosFilterPage} from '../../pages/gastos-filter/gastos-filter';
@@ -14,17 +14,26 @@ export class HomePage {
     items;
     cargar;
     mensaje = '';
-    constructor(public navCtrl: NavController, private storage: Storage, public alertCtrl: AlertController) {
+    constructor(public navCtrl: NavController, public modalCtrl: ModalController, private storage: Storage, public alertCtrl: AlertController) {
     }
+
     ejecute(item) {
-        //        console.log(item);
-        this.navCtrl.push(GastosFilterPage, {item: item});
+        var self = this;
+        let profileModal = this.modalCtrl.create(GastosFilterPage, {item: item});
+        profileModal.onDidDismiss(data => {
+            if (data != null) {
+                self.cargarConDatos();
+            }
+        });
+        profileModal.present();
+
+
+        //        this.navCtrl.push(GastosFilterPage, {item: item});
     }
 
     ionViewDidLoad() {
 
         this.cargarConDatos();
-
     }
 
     cargarConDatos() {
@@ -168,9 +177,16 @@ export class HomePage {
     refresh() {
         this.ionViewDidLoad();
     }
-    
-    nuevo(){
-        this.navCtrl.push(GastosFilterPage, {item:null});
+
+    nuevo() {
+        var self = this;
+        let profileModal = this.modalCtrl.create(GastosFilterPage, {item: null});
+        profileModal.onDidDismiss(data => {
+            if (data != null) {
+                self.cargarConDatos();
+            }
+        });
+        profileModal.present();
     }
 
 }
