@@ -56,10 +56,10 @@ export class ListPage {
                         odoo.read('res.users', [uid],
                             ['name', 'email', 'city_id', 'is_guia', 'is_chofer', 'salario_ext', 'salario_min',
                                 'active', 'groups_id']).then(
-                            function (value2) {
-//                                console.log(value2);
-                                self.conexion.is_chofer = value2[0].is_chofer;
-                                self.conexion.is_guia = value2[0].is_guia;
+                            function (users) {
+                                console.log(users);
+                                self.conexion.is_chofer = users[0].is_chofer;
+                                self.conexion.is_guia = users[0].is_guia;
                                 self.storage.set('conexion', self.conexion);
                                 odoo.search_read('tours.companies', [['id', '!=', 0]], ['name', 'administrador']).then(
                                     function (companies) {

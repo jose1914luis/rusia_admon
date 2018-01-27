@@ -13,12 +13,22 @@ export class ClienteDetailPage {
     editable = false;
     item;
     cargar = false;
+    nuevo = false;
     constructor(public navCtrl: NavController, private storage: Storage, public navParams: NavParams, public alertCtrl: AlertController) {
         this.item = this.navParams.get('item');
-   
-        this.item.observaciones = this.item.observaciones ? this.item.observaciones : '';
-        this.item.telefono = this.item.telefono ? this.item.telefono : '';
-        this.item.nombre_hotel = this.item.nombre_hotel ? this.item.nombre_hotel : '';
+        if (this.item == null) {
+            this.item = {
+                name: '', ilike: '', email: '', telefono: '',
+                nombre_hotel: '', active_email: '', is_padrino: '',
+                pago_tarjeta: '', padre: '', observaciones: '', middle: null
+            }
+            this.nuevo = true;
+        } else {
+            this.item.observaciones = this.item.observaciones ? this.item.observaciones : '';
+            this.item.telefono = this.item.telefono ? this.item.telefono : '';
+            this.item.nombre_hotel = this.item.nombre_hotel ? this.item.nombre_hotel : '';
+        }
+
     }
 
     ionViewDidLoad() {
@@ -52,7 +62,8 @@ export class ClienteDetailPage {
             odoo.login(conexion.username, conexion.password).then(
                 function (uid) {
 
-                    odoo.write('tours.clientes', self.item.id, {
+                    if(self.nuevo){
+                        odoo.create('tours.clientes',{
                         nombre_hotel: self.item.nombre_hotel,
                         is_padrino: self.item.is_padrino,
                         name: self.item.name,
@@ -71,6 +82,28 @@ export class ClienteDetailPage {
                             self.presentAlert('Falla', 'Error al Guardar, intente nuevamente');
                         }
                         );
+                    }else{
+                        odoo.write('tours.clientes', self.item.id, {
+                        nombre_hotel: self.item.nombre_hotel,
+                        is_padrino: self.item.is_padrino,
+                        name: self.item.name,
+                        observaciones: self.item.observaciones,
+                        active_email: self.item.active_email,
+                        telefono: self.item.telefono
+                    }).then(
+                        function (value2) {
+                            console.log(value2);
+                            if (!value2) {
+                                self.presentAlert('Falla', 'Error al Guardar, intente nuevamente');
+                            }
+                            self.cargar = false;
+                        },
+                        function () {
+                            self.presentAlert('Falla', 'Error al Guardar, intente nuevamente');
+                        }
+                        );
+                    }
+                    
 
                 },
                 function () {

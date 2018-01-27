@@ -15,6 +15,31 @@ export class TourDetailPage {
     cargar = false;
     constructor(public navCtrl: NavController, private storage: Storage, public navParams: NavParams, public alertCtrl: AlertController) {
         this.item = this.navParams.get('item');
+        if (this.item == null) {
+            this.item = {
+                company_id: ['', ''],
+                codigo: '',
+                name: '', init_hours: '',
+                end_hours: '',
+                no_show: '', pax_maximo: '',
+                price_tour: '', salario_maximo: '',
+                gastos_minimos: '', gastos_extra: '',
+                gastos_tour: '', cost_one: '',
+                cost_two: '', cost_three: '',
+                cost_four: '', cost_five: '',
+                cost_six: '', cost_seven: '',
+                cost_eight: '', cost_nine: '',
+                cost_ten: '', cost_more_ten: '',
+                gasto_one: '', gasto_two: '',
+                gasto_three: '', gasto_four: '',
+                gasto_five: '', gasto_six: '',
+                gasto_seven: '', gasto_eight: '',
+                gasto_nine: '', gasto_ten: '',
+                gasto_more_ten: '', is_museo: '',
+                porcentaje_museo: '', is_extra: '',
+                is_private: '', is_free: '', description: ''
+            }
+        }
     }
 
     ionViewDidLoad() {

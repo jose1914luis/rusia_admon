@@ -3,7 +3,7 @@
         <ion-title>Detalles Gastos</ion-title>
     </ion-navbar>
     <ion-segment color="primary">
-        <ion-segment-button *ngIf="item.nuevo" value="friends" (ionSelect)="editar()">
+        <ion-segment-button *ngIf="!item.nuevo" value="friends" (ionSelect)="editar()">
             Editar
         </ion-segment-button>
         <ion-segment-button value="guardar" (ionSelect)="guardar()">
@@ -110,7 +110,14 @@
                 <b>Moneda</b>                
             </ion-col>                   
             <ion-col col-8>
-                <ion-input type="text" placeholder="Moneda" [(ngModel)]="con.moneda" [readonly]="!item.editable" name='moneda' ></ion-input>
+                <ion-select [(ngModel)]="con.moneda" name="bd">
+                    <ion-option value="usd">USD</ion-option>
+                    <ion-option value="eur">EUR</ion-option>
+                    <ion-option value="rub">RUB</ion-option>
+                    <ion-option value="pp">Paypal</ion-option>
+                    <ion-option value="card">Tarjeta</ion-option>
+                </ion-select>
+                <!--<ion-input type="text" placeholder="Moneda" [(ngModel)]="con.moneda" [readonly]="!item.editable" name='moneda' ></ion-input>-->
             </ion-col>   
         </ion-row>
 
@@ -126,15 +133,15 @@
             </ion-col>   
         </ion-row>
 
-        <ion-row align-items-center>     
+        <ion-row align-items-center class="borde">     
             <ion-col col-3>
-                <ion-input type="number" placeholder="0" [(ngModel)]="con.price_unit" [readonly]="!item.editable" name='price_unit' ></ion-input>             
+                <ion-input type="number" placeholder="0" [(ngModel)]="con.price_unit" (keyup)="calcular_sub(con)" [readonly]="!item.editable" name='price_unit' ></ion-input>             
             </ion-col>                   
             <ion-col col-3>
-                <ion-input type="number" placeholder="0" [(ngModel)]="con.unidades" [readonly]="!item.editable" name='unidades' ></ion-input>             
+                <ion-input type="number" placeholder="0" [(ngModel)]="con.unidades" (keyup)="calcular_sub(con)" [readonly]="!item.editable" name='unidades' ></ion-input>             
             </ion-col>   
             <ion-col col-3>
-                <ion-input type="number" placeholder="0" [(ngModel)]="con.sub_total" [readonly]="!item.sub_total" name='moneda' ></ion-input>             
+                <ion-input type="number" placeholder="0" [(ngModel)]="con.sub_total" readonly="true" name='moneda' ></ion-input>             
             </ion-col>   
         </ion-row>
     </ion-grid>

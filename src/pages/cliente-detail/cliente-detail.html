@@ -10,7 +10,7 @@
         <ion-title>Detalles del Cliente</ion-title>
     </ion-navbar>
     <ion-segment [(ngModel)]="icons">
-        <ion-segment-button value="camera" icon-start (click)="editar()">
+        <ion-segment-button  *ngIf="!nuevo" value="camera" icon-start (click)="editar()">
                             <ion-icon ios="ios-create" md="md-create"></ion-icon>
             Editar
         </ion-segment-button>

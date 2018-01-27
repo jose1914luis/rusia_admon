@@ -15,6 +15,9 @@ export class GastosNuevoPage {
         sub_total: 0
     }
     constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController) {
+
+        //this.item = this.navParams.get('con');
+        console.log(this.navParams.get('con'));
     }
 
     ionViewDidLoad() {
@@ -29,19 +32,19 @@ export class GastosNuevoPage {
         }
 
     }
-    
-    agregar(){
+
+    agregar() {
         this.closeModal(this.item)
     }
-    
-    calcular(e){
-        
-//        isNaN('');
-//        if (!isNaN(this.item.unidades) && !isNaN(this.item.price_unit)){
+
+    calcular(e) {
+
+        //        isNaN('');
+        //        if (!isNaN(this.item.unidades) && !isNaN(this.item.price_unit)){
         console.log(this.item.unidades * this.item.price_unit);
-            this.item.sub_total = this.item.unidades * this.item.price_unit;
-            console.log(this.item.sub_total);
-//        }        
+        this.item.sub_total = this.item.unidades * this.item.price_unit;
+        console.log(this.item.sub_total);
+        //        }        
     }
 
 }

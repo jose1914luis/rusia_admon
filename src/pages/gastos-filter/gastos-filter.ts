@@ -24,7 +24,7 @@ export class GastosFilterPage {
         if (this.navParams.get('item') != null) {
             this.item = this.navParams.get('item');
 
-            this.item.nuevo = true;
+            this.item.nuevo = false;
             this.item.editable = false;
         } else {
             this.item = {
@@ -36,7 +36,8 @@ export class GastosFilterPage {
                 total_pp: 0,
                 total_tarjeta: 0,
                 state: '',
-                conceptos: []
+                conceptos: [],
+                nuevo: true
             }
             this.item.editable = true;
 
@@ -48,6 +49,18 @@ export class GastosFilterPage {
             });
         }
 
+    }
+
+    modificar(con) {
+        var self = this;
+        let profileModal = this.modalCtrl.create(GastosNuevoPage, {con: con});
+        profileModal.onDidDismiss(data => {
+            if (data != null) {
+                //                self.item.conceptos.push(data);
+                self.calcular();
+            }
+        });
+        profileModal.present();
     }
 
     ionViewDidLoad() {
@@ -71,8 +84,6 @@ export class GastosFilterPage {
             } else if (this.item.conceptos[key].moneda == 'card') {
                 tar = tar + this.item.conceptos[key].sub_total;
             }
-
-
         }
         this.item.total_usd = usd;
         this.item.total_eur = eur;
@@ -81,16 +92,24 @@ export class GastosFilterPage {
         this.item.total_tarjeta = tar;
     }
     addConcepto() {
-        var self = this;
-        let profileModal = this.modalCtrl.create(GastosNuevoPage);
-        profileModal.onDidDismiss(data => {
-            if (data != null) {
-                self.item.conceptos.push(data);
-                self.calcular();
-            }
+
+        this.item.conceptos.push({
+            concepto: '',
+            moneda: 'eur',
+            price_unit: 0,
+            unidades: 0,
+            sub_total: 0
         });
-        profileModal.present();
     }
+
+    calcular_sub(con) {
+
+        console.log(con.unidades * con.price_unit);
+        con.sub_total = con.unidades * con.price_unit;
+        console.log(con.sub_total);
+        this.calcular()
+    }
+
     editar() {
 
         if (!this.item.editable) {
@@ -114,7 +133,6 @@ export class GastosFilterPage {
 
     guardar() {
 
-//        this.cargar = true;
         var self = this;
         self.mensaje = 'Guardando...';
         this.storage.get('conexion').then((conexion) => {
@@ -122,39 +140,74 @@ export class GastosFilterPage {
             odoo.login(conexion.username, conexion.password).then(
                 function (uid) {
 
-                    odoo.create('tours.gastos.diversos',{
-                        name: self.formatDate(self.tem_date_begin), city_id: self.ciudad,
-                        total_usd: self.item.total_usd, total_eur: self.item.total_eur,
-                        total_rub: self.item.total_rub, total_pp: self.item.total_pp, total_tarjeta: self.item.total_tarjeta,
-                        state: 'borrador'
-                    }).then(
-                        function (id_nuevo) {
-                            console.log(id_nuevo)
-//                            if (id_nuevo > 0) {
-//                                self.presentAlert('Falla', 'Error al Guardar, intente nuevamente');
-//                                return;
-//                            }
+                    if (self.item.nuevo) {
+                        odoo.create('tours.gastos.diversos', {
+                            name: self.formatDate(self.tem_date_begin), city_id: self.ciudad,
+                            total_usd: self.item.total_usd, total_eur: self.item.total_eur,
+                            total_rub: self.item.total_rub, total_pp: self.item.total_pp, total_tarjeta: self.item.total_tarjeta,
+                            state: 'borrador'
+                        }).then(
+                            function (id_nuevo) {
 
-                            for(var key in self.item.conceptos) {
-                                self.item.conceptos[key].gastos_id = id_nuevo;
-                                console.log(self.item.conceptos[key]); 
-                                (function (key) { 
-                                    odoo.create('tours.gastos.conceptos', self.item.conceptos[key]).then(
-                                        function (id_conceptos) {
-                                            console.log(id_conceptos)                     
-                                        }, function () {
-                                        }
+                                for (var key in self.item.conceptos) {
+                                    self.item.conceptos[key].gastos_id = id_nuevo;
+                                    console.log(self.item.conceptos[key]);
+                                    (function (key) {
+                                        odoo.create('tours.gastos.conceptos', self.item.conceptos[key]).then(
+                                            function (id_conceptos) {
+                                                console.log(id_conceptos)
+                                            }, function () {
+                                            }
                                         )
-                                })(key);
+                                    })(key);
+                                }
+                            },
+                            function () {
+                                self.presentAlert('Falla', 'Imposible Conectar.');
                             }
-                        },
-                        function () {
-//                            self.presentAlert('Falla', 'Error al Guardar, intente nuevamente');
-                        }
-                        );
+                            );
+                    } else {
+
+                        odoo.write('tours.gastos.diversos', self.item.id, {
+                            name: self.formatDate(self.tem_date_begin), city_id: self.ciudad,
+                            total_usd: self.item.total_usd, total_eur: self.item.total_eur,
+                            total_rub: self.item.total_rub, total_pp: self.item.total_pp, total_tarjeta: self.item.total_tarjeta,
+                            state: 'borrador'
+                        }).then(
+                            function (id_nuevo) {
+
+                                for (var key in self.item.conceptos) {
+                                    self.item.conceptos[key].gastos_id = id_nuevo;
+                                    console.log(self.item.conceptos[key]);
+                                    (function (key) {
+                                        if (self.item.conceptos[key].id != null) {
+                                            odoo.write('tours.gastos.conceptos', self.item.conceptos[key].id, self.item.conceptos[key]).then(
+                                                function (id_conceptos) {
+                                                    console.log(id_conceptos)
+                                                }, function () {
+                                                }
+                                            )
+                                        } else {
+                                            odoo.create('tours.gastos.conceptos', self.item.conceptos[key]).then(
+                                                function (id_conceptos) {
+                                                    console.log(id_conceptos)
+                                                }, function () {
+                                                }
+                                            )
+                                        }
+
+                                    })(key);
+                                }
+                            },
+                            function () {
+                                self.presentAlert('Falla', 'Imposible Conectar.');
+                            }
+                            );
+                    }
+
                 },
                 function () {
-
+                    self.presentAlert('Falla', 'Imposible Conectar.');
                 }
             );
 

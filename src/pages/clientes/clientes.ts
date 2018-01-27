@@ -2,7 +2,6 @@ import {Component} from '@angular/core';
 import {NavController, NavParams, AlertController} from 'ionic-angular';
 import {global} from '../../components/credenciales/credenciales';
 import {ClienteDetailPage} from '../../pages/cliente-detail/cliente-detail';
-import {SincPage} from '../../pages/sinc/sinc';
 import {Storage} from '@ionic/storage';
 
 declare var OdooApi: any;
@@ -25,7 +24,7 @@ export class ClientesPage {
     }
 
     nuevo() {
-        this.navCtrl.push(SincPage);
+        this.navCtrl.push(ClienteDetailPage, {item: null});
     }
 
     ionViewDidLoad() {
@@ -36,6 +35,7 @@ export class ClientesPage {
     cargarConDatos() {
         var self = this;
         this.cargar = true;
+        self.items = [];
         this.storage.get('conexion').then((conexion) => {
             var odoo = new OdooApi(global.url, conexion.bd);
             odoo.login(conexion.username, conexion.password).then(
@@ -70,10 +70,6 @@ export class ClientesPage {
 
                                     console.log(clientes);
                                     self.items = clientes
-                                    //                            for (let key in self.items) {
-                                    //
-                                    //                                self.items[key].visible = true;
-                                    //                            }
                                     self.storage.set('clientes', self.items)
                                     self.cargar = false;
                                 },
