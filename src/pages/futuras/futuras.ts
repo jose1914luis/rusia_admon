@@ -1,24 +1,30 @@
-import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import {Component} from '@angular/core';
+import {NavController, NavParams, ModalController} from 'ionic-angular';
 
-/**
- * Generated class for the FuturasPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+
 
 @Component({
-  selector: 'page-futuras',
-  templateUrl: 'futuras.html',
+    selector: 'page-futuras',
+    templateUrl: 'futuras.html',
 })
 export class FuturasPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
+    futuras;
+    editable = false;
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad FuturasPage');
-  }
+    constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController) {
+        this.futuras = this.navParams.data.futuras;
+    }
+
+    ionViewDidLoad() {
+        console.log('ionViewDidLoad ReservasPage');
+    }
+    ejecute(item) {
+        console.log(item);
+        //        this.navCtrl.push(ResDetailPage)
+//        let profileModal = this.modalCtrl.create(ResDetailPage, {item: item});
+//        profileModal.present();
+
+    }
 
 }

@@ -24,7 +24,7 @@ export class NomPage {
 
         this.cargarConDatos();
 
-    }   
+    }
 
     cargarConDatos() {
         var self = this;
@@ -44,31 +44,38 @@ export class NomPage {
 
                                 nomina[key].visible = true;
                                 ids.push(nomina[key].semana)
+                                nomina[key].pago = [];
                             }
 
                             odoo.search_read('tours.pago.guia', [['semana', 'in', ids]],
                                 ['name', 'semana', 'tours_id', 'guia_user_id', 'city_id',
-                                    'pax_pago', 'total_rub', 'total_eur', 'total_usd', 'total_res', 'total_metro', 'concepto']).then(
+                                    'pax_pago', 'total_rub', 'total_eur', 'total_usd', 'total_res', 'total_metro', 'concepto', 'state']).then(
                                 function (pago) {
 
                                     console.log(pago)
                                     for (let key_no in nomina) {
                                         for (let key_p in pago) {
                                             if (nomina[key_no].semana == pago[key_p].semana) {
-                                                nomina[key_no].pago_id =  pago[key_p].id;
-                                                nomina[key_no].name = pago[key_p].name;
-                                                nomina[key_no].semana = pago[key_p].semana;
-                                                nomina[key_no].tours_id = pago[key_p].tours_id;
-                                                nomina[key_no].guia_user_id = pago[key_p].guia_user_id[1];
-                                                nomina[key_no].city_id = pago[key_p].city_id;
-                                                nomina[key_no].pax_pago = pago[key_p].pax_pago;
-                                                nomina[key_no].total_rub = pago[key_p].total_rub;
-                                                nomina[key_no].total_eur = pago[key_p].total_eur;
-                                                nomina[key_no].total_usd = pago[key_p].total_usd;
-                                                nomina[key_no].total_res = pago[key_p].total_res;
-                                                nomina[key_no].total_metro = pago[key_p].total_metro;
-                                                nomina[key_no].concepto = pago[key_p].concepto;
-//                                                
+
+                                                pago[key_p].tours_id.name = pago[key_p].tours_id[1];
+                                                pago[key_p].tours_id.id = pago[key_p].tours_id[0];
+                                                nomina[key_no].pago.push({
+                                                    pago_id: pago[key_p].id,
+                                                    name: pago[key_p].name,
+                                                    dateStart: new Date(pago[key_p].name).toISOString(),
+                                                    semana: pago[key_p].semana,
+                                                    tours_id: pago[key_p].tours_id,
+                                                    guia_user_id: pago[key_p].guia_user_id[1],
+                                                    city_id: pago[key_p].city_id,
+                                                    pax_pago: pago[key_p].pax_pago,
+                                                    total_rub: pago[key_p].total_rub,
+                                                    total_eur: pago[key_p].total_eur,
+                                                    total_usd: pago[key_p].total_usd,
+                                                    total_res: pago[key_p].total_res,
+                                                    total_metro: pago[key_p].total_metro,
+                                                    concepto: pago[key_p].concepto,
+                                                    state: pago[key_p].state,
+                                                })
                                             }
                                         }
                                     }

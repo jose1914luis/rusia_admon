@@ -26,7 +26,7 @@
         <b>{{texto}}</b>
     </div>
 
-    <ion-grid *ngIf="!cargar">      
+    <ion-grid *ngFor="let pago of item.pago;">      
 
         <ion-row align-items-center>     
             <ion-col col-3>
@@ -34,7 +34,7 @@
             </ion-col>                   
             <ion-col col-8 >
                 <!--<ion-input name="name"  [readonly]="!editable" type="text" [(ngModel)]="item.name"></ion-input>-->
-                <ion-datetime displayFormat="YYYY/MM/DD" [(ngModel)]="tem_date_begin" name="tem_date_begin"></ion-datetime>
+                <ion-datetime displayFormat="YYYY/MM/DD" [(ngModel)]="pago.dateStart" name="tem_date_begin"></ion-datetime>
 
             </ion-col>   
         </ion-row>
@@ -44,7 +44,7 @@
                 <b>Guía</b>                
             </ion-col>     
             <ion-col col-8 >
-                <ion-input name="guia_user_id"  [readonly]="!editable" type="text" [(ngModel)]="item.guia_user_id"></ion-input>                
+                <ion-input name="guia_user_id"  [readonly]="!editable" type="text" [(ngModel)]="pago.guia_user_id"></ion-input>                
             </ion-col> 
         </ion-row>
 
@@ -54,7 +54,7 @@
             </ion-col>     
             <ion-col col-8 (click)="buscarTour()">
                      <ion-icon ios="ios-search" md="md-search"></ion-icon>                
-                {{item.tours_id.name}}
+                {{pago.tours_id.name}}
                 <!--<ion-input name="tours_id"  [readonly]="!editable" type="text" [(ngModel)]="item.tours_id[1]"></ion-input>                -->
             </ion-col>             
         </ion-row>    
@@ -65,19 +65,21 @@
                 <b>Semana</b>
             </ion-col>
             <ion-col col-3>
-                <ion-input name="semana"  [readonly]="!editable" type="number" [(ngModel)]="item.semana"></ion-input>
+                <ion-input name="semana"  [readonly]="!editable" type="number" [(ngModel)]="pago.semana"></ion-input>
             </ion-col>       
             <ion-col col-3 *ngIf="!editable">
                      <b>PAX pago</b>
             </ion-col>
             <ion-col col-2 *ngIf="!editable">
-                     <ion-input name="pax_pago"  [readonly]="!editable" type="number" [(ngModel)]="item.pax_pago"></ion-input>
-            </ion-col>    
+                     <ion-input name="pax_pago"  [readonly]="!editable" type="number" [(ngModel)]="pago.pax_pago"></ion-input>
+            </ion-col>     
             <ion-col col-3 *ngIf="!editable">
                      <b>Pagado</b>
             </ion-col>
             <ion-col col-3  *ngIf="!editable">
-                     <ion-input name="state"  [readonly]="!editable" type="text" [(ngModel)]="item.state"></ion-input>                     
+                     <!--<ion-checkbox  [disabled] = "!editable" [(ngModel)]="pago.state"></ion-checkbox>-->
+                     {{!!pago.state?'Si':'No'}}
+                     <!--<ion-input name="state"  [readonly]="!editable" type="text" [(ngModel)]="pago.state"></ion-input>                     -->
             </ion-col>    
         </ion-row>
 
@@ -95,13 +97,13 @@
 
         <ion-row align-items-center>  
             <ion-col col-3>
-                <ion-input name="total_eur"  [readonly]="!editable" type="number" [(ngModel)]="item.total_eur"></ion-input>
+                <ion-input name="total_eur"  [readonly]="!editable" type="number" [(ngModel)]="pago.total_eur"></ion-input>
             </ion-col>      
             <ion-col col-3>
-                <ion-input name="total_usd"  [readonly]="!editable" type="number" [(ngModel)]="item.total_usd"></ion-input>
+                <ion-input name="total_usd"  [readonly]="!editable" type="number" [(ngModel)]="pago.total_usd"></ion-input>
             </ion-col>    
             <ion-col col-3>
-                <ion-input name="total_rub"  [readonly]="!editable" type="number" [(ngModel)]="item.total_rub"></ion-input>
+                <ion-input name="total_rub"  [readonly]="!editable" type="number" [(ngModel)]="pago.total_rub"></ion-input>
             </ion-col>   
         </ion-row>
 
@@ -116,19 +118,19 @@
 
         <ion-row align-items-center>  
             <ion-col col-3>
-                <ion-input name="total_res"  [readonly]="!editable" type="number" [(ngModel)]="item.total_res"></ion-input>
+                <ion-input name="total_res"  [readonly]="!editable" type="number" [(ngModel)]="pago.total_res"></ion-input>
             </ion-col>      
             <ion-col col-2>
-                <ion-input name="total_metro"  [readonly]="!editable" type="number" [(ngModel)]="item.total_metro"></ion-input>
+                <ion-input name="total_metro"  [readonly]="!editable" type="number" [(ngModel)]="pago.total_metro"></ion-input>
             </ion-col>  
         </ion-row>
 
-        <ion-row  align-items-center *ngIf="!editable">     
+        <ion-row  align-items-center *ngIf="!editable" class="borde">     
                   <ion-col col-3>
                 <b>Concepto</b>                
             </ion-col>       
             <ion-col col-8 >
-                <ion-textarea rows="3" [readonly]="!editable" [(ngModel)]="item.concepto"></ion-textarea>             
+                <ion-textarea rows="3" [readonly]="!editable" [(ngModel)]="pago.concepto"></ion-textarea>             
             </ion-col>             
         </ion-row>
 

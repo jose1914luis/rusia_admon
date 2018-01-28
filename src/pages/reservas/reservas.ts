@@ -26,4 +26,10 @@ export class ReservasPage {
 
     }
     
+    addReserva(){ 
+        
+        let profileModal = this.modalCtrl.create(ResDetailPage, {item:null});
+        profileModal.present();
+    }
+    
 }

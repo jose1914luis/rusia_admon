@@ -12,19 +12,19 @@
                     <ion-icon item-right name="ios-close-outline"></ion-icon>
             </button>
         </ion-buttons>
-       
+
     </ion-navbar>
-     <ion-segment color="primary">
-        <ion-segment-button value="friends" (ionSelect)="editar()">
+    <ion-segment color="primary">
+        <ion-segment-button *ngIf="!nueva" value="friends" (ionSelect)="editar()">
             Editar
         </ion-segment-button>
         <ion-segment-button value="guardar" (ionSelect)="guardar()">
             Guardar
         </ion-segment-button>
     </ion-segment>
-    
-    
-    
+
+
+
 </ion-header>
 
 
@@ -46,155 +46,172 @@
         <ion-row align-items-center>  
             <ion-col col-3>
                 <b>Nombre</b>
-                <ion-icon ios="ios-copy" md="md-copy"></ion-icon>
+                <ion-icon *ngIf="!nueva" ios="ios-copy" md="md-copy"></ion-icon>
             </ion-col>
-            <ion-col col-8 (click)="copiar(item.name[1])">                     
-                <ion-input name="name"  [readonly]="!editable" type="text" [(ngModel)]="item.name[1]"></ion-input>  
-            </ion-col>       
-        </ion-row>
-        <ion-row align-items-center>  
+            <ion-col col-8 (click)="copiar(item.name[1])">        
+                     <div class="autocomplete">
+                    <ion-searchbar
+                        [(ngModel)]="buscar"        
+                        [showCancelButton]="shouldShowCancel"
+                        (ionInput)="onInput($event)"
+                        (ionCancel)="onCancel($event)">
+                    </ion-searchbar>
 
-            <ion-col col-3>
-                <b>Email</b>
-                <ion-icon ios="ios-copy" md="md-copy"></ion-icon>
-            </ion-col>
-            <ion-col col-8 (click)="copiar(item.email[1])">                                     
-                <ion-input name="email"  [readonly]="!editable" type="text" [(ngModel)]="item.email[1]"></ion-input>                
-            </ion-col> 
-        </ion-row>
-        
-        <ion-row align-items-center>  
-
-            <ion-col col-3>
-                <b>Teléfono</b>                
-                <ion-icon ios="ios-copy" md="md-copy"></ion-icon>                
-            </ion-col>
-            <ion-col col-8 (click)="copiar(item.telefono)">
-                <ion-input name="telefono"  [readonly]="!editable" type="text" [(ngModel)]="item.telefono"></ion-input>                
-            </ion-col> 
-        </ion-row>
-
-        <ion-row align-items-center>  
-            <ion-col col-4>
-                <b>PAX</b>
-            </ion-col>             
-        </ion-row>
-        <ion-row align-items-center>  
-            <ion-col col-2>
-                <b>Pago</b>
-            </ion-col>             
-            <ion-col col-3>
-                <b>Terceros</b>
-            </ion-col>   
-            <ion-col col-3>
-                <b>Todo Inc</b>
-            </ion-col>   
-            <ion-col col-2>
-                <b>Total</b>
-            </ion-col>   
-        </ion-row>
-        <ion-row align-items-center>  
-            <ion-col col-2>
-                <ion-input name="cost_one"  [readonly]="!editable" type="number" [(ngModel)]="item.personas_pago"></ion-input>                
-            </ion-col>             
-            <ion-col col-3>
-                <ion-input name="cost_two"  [readonly]="!editable" type="number" [(ngModel)]="item.personas_terceros"></ion-input>
-
-            </ion-col>   
-            <ion-col col-3>
-                <ion-input name="cost_three"  [readonly]="!editable" type="number" [(ngModel)]="item.personas_all_in"></ion-input>
-
-            </ion-col>   
-            <ion-col col-2>
-                <ion-input  name="cost_four"  [readonly]="!editable" type="number" [(ngModel)]="item.total_personas"></ion-input>
-
-            </ion-col>   
-        </ion-row>
+                    <ion-list>
+                        <ion-item *ngFor="let item of tours" (click)="closeModal(item)">
+                            {{ item.name }}
+                    </ion-item>
+                </ion-list>
+            </div>
+            <!--                <ion-input name="name"  [readonly]="!editable" type="text" placeholder="Nombre" [(ngModel)]="item.name[1]"></ion-input>  -->
+        </ion-col>  
 
 
-        <ion-row align-items-center>  
-            <ion-col col-2>
-                <b>EUR</b>
-            </ion-col>             
-            <ion-col col-2>
-                <b>USD</b>
-            </ion-col>   
-            <ion-col col-2>
-                <b>RUB</b>
-            </ion-col>   
-            <ion-col col-2>
-                <b>PP</b>
-            </ion-col>   
-            <ion-col col-2>
-                <b>Tarj</b>
-            </ion-col>    
-        </ion-row>
 
-        <ion-row align-items-center>  
-            <ion-col col-2>
-                <ion-input  name="gasto_one"  [readonly]="!editable" type="number" [(ngModel)]="item.abono_euros"></ion-input>
+    </ion-row>
+    <ion-row align-items-center>  
 
-            </ion-col>             
-            <ion-col col-2>
-                <ion-input  name="gasto_two"  [readonly]="!editable" type="number" [(ngModel)]="item.abono_dolar"></ion-input>
+        <ion-col col-3>
+            <b>Email</b>
+            <ion-icon *ngIf="!nueva" ios="ios-copy" md="md-copy"></ion-icon>
+        </ion-col>
+        <ion-col col-8 (click)="copiar(item.email[1])">                                     
+                 <ion-input name="email"  [readonly]="!editable" type="text" placeholder="Email" [(ngModel)]="item.email[1]"></ion-input>                
+        </ion-col> 
+    </ion-row>
 
-            </ion-col>   
-            <ion-col col-2>
-                <ion-input  name="gasto_three"  [readonly]="!editable" type="number" [(ngModel)]="item.abonor_rublo"></ion-input>
+    <ion-row align-items-center>  
 
-            </ion-col>   
-            <ion-col col-2>
-                <ion-input  name="gasto_four"  [readonly]="!editable" type="number" [(ngModel)]="item.pay_pal"></ion-input>
+        <ion-col col-3>
+            <b>Teléfono</b>                
+            <ion-icon ios="ios-copy" md="md-copy"></ion-icon>                
+        </ion-col>
+        <ion-col col-8 (click)="copiar(item.telefono)">
+                 <ion-input name="telefono"  [readonly]="!editable" type="text" placeholder="Teléfono" [(ngModel)]="item.telefono"></ion-input>                
+        </ion-col> 
+    </ion-row>
 
-            </ion-col>   
-            <ion-col col-2>
-                <ion-input  name="gasto_five"  [readonly]="!editable" type="number" [(ngModel)]="item.tarjeta"></ion-input>
+    <ion-row align-items-center>  
+        <ion-col col-4>
+            <b>PAX</b>
+        </ion-col>             
+    </ion-row>
+    <ion-row align-items-center>  
+        <ion-col col-2>
+            <b>Pago</b>
+        </ion-col>             
+        <ion-col col-3>
+            <b>Terceros</b>
+        </ion-col>   
+        <ion-col col-3>
+            <b>Todo Inc</b>
+        </ion-col>   
+        <ion-col col-2>
+            <b>Total</b>
+        </ion-col>   
+    </ion-row>
+    <ion-row align-items-center>  
+        <ion-col col-2>
+            <ion-input name="cost_one"  [readonly]="!editable" type="number" [(ngModel)]="item.personas_pago"></ion-input>                
+        </ion-col>             
+        <ion-col col-3>
+            <ion-input name="cost_two"  [readonly]="!editable" type="number" [(ngModel)]="item.personas_terceros"></ion-input>
 
-            </ion-col>   
-        </ion-row>
+        </ion-col>   
+        <ion-col col-3>
+            <ion-input name="cost_three"  [readonly]="!editable" type="number" [(ngModel)]="item.personas_all_in"></ion-input>
 
-        <ion-row align-items-center>  
-            <ion-col col-4>
-                <b>EXP</b>
-            </ion-col>             
-        </ion-row>
-        <ion-row align-items-center>  
-            <ion-col col-2>
-                <b>EUR</b>
-            </ion-col>             
-            <ion-col col-2>
-                <b>USD</b>
-            </ion-col>   
-            <ion-col col-2>
-                <b>RUB</b>
-            </ion-col>  
-        </ion-row>
+        </ion-col>   
+        <ion-col col-2>
+            <ion-input  name="cost_four"  [readonly]="!editable" type="number" [(ngModel)]="item.total_personas"></ion-input>
 
-        <ion-row align-items-center>  
-            <ion-col col-2>
-                <ion-input  name="gasto_one"  [readonly]="!editable" type="number" [(ngModel)]="item.euros_exportado"></ion-input>
+        </ion-col>   
+    </ion-row>
 
-            </ion-col>             
-            <ion-col col-2>
-                <ion-input  name="gasto_two"  [readonly]="!editable" type="number" [(ngModel)]="item.dolar_exportado"></ion-input>
 
-            </ion-col>   
-            <ion-col col-2>
-                <ion-input  name="gasto_three"  [readonly]="!editable" type="number" [(ngModel)]="item.rublo_exportado"></ion-input>
+    <ion-row align-items-center>  
+        <ion-col col-2>
+            <b>EUR</b>
+        </ion-col>             
+        <ion-col col-2>
+            <b>USD</b>
+        </ion-col>   
+        <ion-col col-2>
+            <b>RUB</b>
+        </ion-col>   
+        <ion-col col-2>
+            <b>PP</b>
+        </ion-col>   
+        <ion-col col-2>
+            <b>Tarj</b>
+        </ion-col>    
+    </ion-row>
 
-            </ion-col> 
-        </ion-row>
+    <ion-row align-items-center>  
+        <ion-col col-2>
+            <ion-input  name="gasto_one"  [readonly]="!editable" type="number" [(ngModel)]="item.abono_euros"></ion-input>
 
-        <ion-row align-items-center>  
-            <ion-col col-4>
-                <b>Observaciones</b>
-            </ion-col>             
-        </ion-row>
-        <ion-row align-items-center>  
-            <ion-col col-12>
-                <ion-textarea rows="3"  [readonly]="!editable" [(ngModel)]="item.observaciones"></ion-textarea>
-            </ion-col>             
-        </ion-row>
-    </ion-grid>
+        </ion-col>             
+        <ion-col col-2>
+            <ion-input  name="gasto_two"  [readonly]="!editable" type="number" [(ngModel)]="item.abono_dolar"></ion-input>
+
+        </ion-col>   
+        <ion-col col-2>
+            <ion-input  name="gasto_three"  [readonly]="!editable" type="number" [(ngModel)]="item.abonor_rublo"></ion-input>
+
+        </ion-col>   
+        <ion-col col-2>
+            <ion-input  name="gasto_four"  [readonly]="!editable" type="number" [(ngModel)]="item.pay_pal"></ion-input>
+
+        </ion-col>   
+        <ion-col col-2>
+            <ion-input  name="gasto_five"  [readonly]="!editable" type="number" [(ngModel)]="item.tarjeta"></ion-input>
+
+        </ion-col>   
+    </ion-row>
+
+    <ion-row align-items-center>  
+        <ion-col col-4>
+            <b>EXP</b>
+        </ion-col>             
+    </ion-row>
+    <ion-row align-items-center>  
+        <ion-col col-2>
+            <b>EUR</b>
+        </ion-col>             
+        <ion-col col-2>
+            <b>USD</b>
+        </ion-col>   
+        <ion-col col-2>
+            <b>RUB</b>
+        </ion-col>  
+    </ion-row>
+
+    <ion-row align-items-center>  
+        <ion-col col-2>
+            <ion-input  name="gasto_one"  [readonly]="!editable" type="number" [(ngModel)]="item.euros_exportado"></ion-input>
+
+        </ion-col>             
+        <ion-col col-2>
+            <ion-input  name="gasto_two"  [readonly]="!editable" type="number" [(ngModel)]="item.dolar_exportado"></ion-input>
+
+        </ion-col>   
+        <ion-col col-2>
+            <ion-input  name="gasto_three"  [readonly]="!editable" type="number" [(ngModel)]="item.rublo_exportado"></ion-input>
+
+        </ion-col> 
+    </ion-row>
+
+    <ion-row align-items-center>  
+        <ion-col col-4>
+            <b>Observaciones</b>
+        </ion-col>             
+    </ion-row>
+    <ion-row align-items-center>  
+        <ion-col col-12>
+            <ion-textarea rows="3" placeholder="Observaciones" [readonly]="!editable" [(ngModel)]="item.observaciones"></ion-textarea>
+        </ion-col>             
+    </ion-row>
+</ion-grid>
 
 </ion-content>

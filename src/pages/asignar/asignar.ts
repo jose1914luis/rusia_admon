@@ -75,6 +75,7 @@ export class AsignarPage {
                                 guia[key].title = (guia[key]).tour_id[1];
                                 guia[key].allDay = false;
                                 guia[key].reservas = [];
+                                guia[key].futuras = [];
                                 guia[key].guia_id = guia[key].guia_id ? guia[key].guia_id : '';
                                 guia[key].observaciones = guia[key].observaciones ? guia[key].observaciones : '';
                                 guia[key].no_editable = self.add;
@@ -88,8 +89,8 @@ export class AsignarPage {
                                     'abonor_rublo', 'abono_euros', 'abono_dolar', 'dolar_exportado', 'euros_exportado', 'rublo_exportado', 'pay_pal', 'tarjeta', 'asistencia', 'observaciones', 'fecha']).then(
 
                                 function (middle) {
-                                    self.storage.set('middle', middle);
-                                    console.log(middle);
+                                    //                                    self.storage.set('middle', middle);
+                                    //                                    console.log(middle);
                                     for (var key in guia) {
 
                                         for (var key2 in middle) {
@@ -99,12 +100,45 @@ export class AsignarPage {
                                                 //console.log(middle[key2]);
                                             }
                                         }
-                                        self.events.push(guia[key]);
+//                                        self.events.push(guia[key]);
 
                                     }
-                                    self.storage.set('guia', guia);
-                                    self.cargar = false;
-                                    self.calendar.eventSource = self.events;
+
+                                    odoo.search_read('tours.clientes.reservar.futuras', [['guia_id', 'in', ids]],
+                                        ['tour_id', 'guia_id', 'name', 'telefono', 'email',
+                                            'nombre_hotel', 'personas_terceros', 'personas_all_in', 'total_personas', 'personas_pago',
+                                            'abonor_rublo', 'abono_euros', 'abono_dolar', 'is_sim', 'is_museo', 'hotel', 'pay_pal', 'tarjeta', 'observaciones', 'fecha']).then(
+
+                                        function (futuras) {
+                                            
+                                            
+                                            for (var key_g in guia) {
+
+                                                for (var key_f in futuras) {
+                                                    //guia[key].reserva_id = middle[key2].id;
+                                                    if (guia[key_g].tour_id[0] == futuras[key_f].tour_id[0]) {
+                                                        guia[key_g].futuras.push(futuras[key_f]);
+                                                        //console.log(middle[key2]);
+                                                    }
+                                                }
+                                                self.events.push(guia[key_g]);
+                                            }
+                                            console.log(futuras);
+                                            console.log(guia);
+                                            self.storage.set('guia', guia);
+                                            self.cargar = false;
+                                            self.calendar.eventSource = self.events;
+
+
+                                        },
+                                        function () {
+                                            self.cargarSinDatos();
+                                        }
+                                        );
+
+//                                    self.storage.set('guia', guia);
+//                                    self.cargar = false;
+//                                    self.calendar.eventSource = self.events;
 
 
                                 },
