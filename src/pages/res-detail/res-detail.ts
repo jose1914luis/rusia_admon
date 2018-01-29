@@ -15,11 +15,29 @@ export class ResDetailPage {
     editable = false;
     cargar = false;
     nueva = false;
-    tours = [];
-    tours2 = [];
-    buscar = '';
+    clientes = [];
+    clientes2 = [];
+    padrino = [];
+    padrino2 = [];
+    email = [];
+    email2 = [];
+    buscarCliente = '';
+    buscarPadrino = '';
+    buscarEmail = '';
+    id_cliente = 0;
+    id_email = 0;
+    id_padrino = 0;
+    visible_list = false;
+    visible_list_email = false;
+    visible_list_padrino = false;
+    tour_id;
+    guia_id;
     constructor(public navCtrl: NavController, private storage: Storage, public navParams: NavParams, public alertCtrl: AlertController, private clipboard: Clipboard, public viewCtrl: ViewController) {
         this.item = this.navParams.get('item');
+        this.tour_id = this.navParams.get('tour_id');
+        console.log(this.tour_id)
+        this.guia_id = this.navParams.get('guia_id');
+        console.log(this.guia_id)
         if (this.item == null) {
             this.item = {
                 asistencia: false,
@@ -38,43 +56,113 @@ export class ResDetailPage {
                 euros_exportado: 0,
                 dolar_exportado: 0,
                 rublo_exportado: 0,
-                observaciones: ''
+                observaciones: '',
+                padrino: '',
             }
             this.nueva = true;
             this.editable = true;
+        } else {
+            this.buscarCliente = this.item.name[1]
+            this.buscarEmail = this.item.email[1]
+            this.buscarPadrino = this.item.padrino[1]
+            this.id_cliente = this.item.name[0]
+            this.id_email = this.item.email[0]
+            this.id_padrino = this.item.padrino[0]
         }
         console.log(this.item);
 
         var self = this;
-        this.storage.get('tours').then((tours) => {
-            self.tours = tours;
-            self.tours2 = tours;
+        this.storage.get('clientes').then((clientes) => {
+            self.clientes = clientes;
+            self.clientes2 = clientes;
+            self.padrino = clientes;
+            self.padrino2 = clientes;
         });
+
+        this.storage.get('email').then((email) => {
+            self.email = email;
+            self.email2 = email;
+        });
+
     }
 
-    onInput(e) {
-        console.log(e);
-        this.tours = [];
-        for (var key in this.tours2) {
-            if (String(this.tours2[key].name).toLowerCase().includes(this.buscar)) {
-                console.log(this.tours2[key].name);
-                this.tours.push(this.tours2[key]);
+    onKeyPadrino(e) {
+        console.log(this.buscarPadrino.length);
+        if (this.buscarPadrino.length > 0) {
+            this.visible_list_padrino = true;
+            this.padrino = [];
+            for (var key in this.padrino2) {
+                if (String(this.padrino2[key].name).toLowerCase().includes(this.buscarPadrino)) {
+                    //                console.log(this.tours2[key].name);
+                    this.padrino.push(this.padrino2[key]);
+                }
             }
+        } else {
+            this.visible_list_padrino = false;
         }
-        //this.buscar.
     }
 
+    selectPadrino(valor) {
+        this.visible_list_padrino = false;
+        this.buscarPadrino = valor.name;
+        this.id_padrino = valor.id;
+    }
+    onCancelPadrino(e) {
+        console.log(e);
+        this.visible_list_padrino = false;
+    }
+
+    onKey(e) {
+        console.log(this.buscarCliente.length);
+        if (this.buscarCliente.length > 0) {
+            this.visible_list = true;
+            this.clientes = [];
+            for (var key in this.clientes2) {
+                if (String(this.clientes2[key].name).toLowerCase().includes(this.buscarCliente)) {
+                    //                console.log(this.tours2[key].name);
+                    this.clientes.push(this.clientes2[key]);
+                }
+            }
+        } else {
+            this.visible_list = false;
+        }
+    }
+    selectNombre(valor) {
+        this.visible_list = false;
+        this.buscarCliente = valor.name;
+        this.id_cliente = valor.id;
+    }
     onCancel(e) {
         console.log(e);
+        this.visible_list = false;
     }
-    
-//    closeModal(x) {
-//        if (x == 'x') {
-//            this.viewCtrl.dismiss(null);
-//        } else {
-//            this.viewCtrl.dismiss(x);
-//        }
-//    }
+
+
+    onKeyEmail(e) {
+        console.log(this.buscarEmail.length);
+        if (this.buscarEmail.length > 0) {
+            this.visible_list_email = true;
+            this.email = [];
+            for (var key in this.email2) {
+                if (String(this.email2[key].name).toLowerCase().includes(this.buscarEmail)) {
+                    //                console.log(this.tours2[key].name);
+                    this.email.push(this.email2[key]);
+                }
+            }
+        } else {
+            this.visible_list_email = false;
+        }
+    }
+    selectEmail(valor) {
+        this.visible_list_email = false;
+        this.buscarEmail = valor.name;
+        this.id_email = valor.id;
+    }
+
+    onCancelEmail(e) {
+        console.log(e);
+        this.visible_list_email = false;
+    }
 
     ionViewDidLoad() {
         console.log('ionViewDidLoad ResDetailPage');
@@ -114,62 +202,70 @@ export class ResDetailPage {
 
                     if (self.nueva) {
 
-                        console.log({
+                        var new_res = {
+                            name: self.id_cliente,
+                            tour_id: self.tour_id[0],
+                            total_personas: parseInt(self.item.personas_pago) + parseInt(self.item.personas_all_in) + parseInt(self.item.personas_terceros), //calculado
+                            guia_id: self.guia_id,
+                            padrino: self.id_padrino,
+                            email: self.id_email,
                             telefono: self.item.telefono, nombre_hotel: self.item.nombre_hotel,
                             personas_terceros: self.item.personas_terceros,
-                            personas_all_in: self.item.personas_all_in, total_personas: self.item.total_personas,
+                            personas_all_in: self.item.personas_all_in,
                             personas_pago: self.item.personas_pago, abonor_rublo: self.item.abonor_rublo,
                             abono_euros: self.item.abono_euros, abono_dolar: self.item.abono_dolar,
-                            dolar_exportado: self.item.dolar_exportado, euros_exportado: self.item.euros_exportado,
-                            rublo_exportado: self.item.rublo_exportado, pay_pal: self.item.pay_pal,
-                            tarjeta: self.item.tarjeta, asistencia: self.item.asistencia, observaciones: self.item.observaciones
-                        });
+                            pay_pal: self.item.pay_pal,
+                            tarjeta: self.item.tarjeta, asistencia: self.item.asistencia,
+                            observaciones: self.item.observaciones
+                        };
+                        console.log(new_res);
 
-                        //                        odoo.create('tours.clientes.middle', {
-                        //                            telefono: self.item.telefono, nombre_hotel: self.item.nombre_hotel,
-                        //                            personas_terceros: self.item.personas_terceros,
-                        //                            personas_all_in: self.item.personas_all_in, total_personas: self.item.total_personas,
-                        //                            personas_pago: self.item.personas_pago, abonor_rublo: self.item.abonor_rublo,
-                        //                            abono_euros: self.item.abono_euros, abono_dolar: self.item.abono_dolar,
-                        //                            dolar_exportado: self.item.dolar_exportado, euros_exportado: self.item.euros_exportado,
-                        //                            rublo_exportado: self.item.rublo_exportado, pay_pal: self.item.pay_pal,
-                        //                            tarjeta: self.item.tarjeta, asistencia: self.item.asistencia, observaciones: self.item.observaciones
-                        //                        }).then(
-                        //                            function (value2) {
-                        //                                console.log(value2);
-                        //                                if (!value2) {
-                        //                                    self.presentAlert('Falla', 'Error al Guardar, intente nuevamente');
-                        //                                }
-                        //                                self.cargar = false;
-                        //                            },
-                        //                            function () {
-                        //                                self.presentAlert('Falla', 'Error al Guardar, intente nuevamente');
-                        //                            }
-                        //                            );
+                        odoo.create('tours.clientes.middle', new_res).then(
+                            function (value2) {
+                                console.log(value2);
+                                if (!value2) {
+                                    self.presentAlert('Falla', 'Error al Guardar, intente nuevamente');
+                                }
+                                self.cargar = false;
+                                self.viewCtrl.dismiss(new_res)
+                            },
+                            function () {
+                                self.presentAlert('Falla', 'Error al Guardar, intente nuevamente');
+                            }
+                        );
 
                     } else {
 
-                        //                        odoo.write('tours.clientes.middle', self.item.id, {
-                        //                            telefono: self.item.telefono, nombre_hotel: self.item.nombre_hotel,
-                        //                            personas_terceros: self.item.personas_terceros,
-                        //                            personas_all_in: self.item.personas_all_in, total_personas: self.item.total_personas,
-                        //                            personas_pago: self.item.personas_pago, abonor_rublo: self.item.abonor_rublo,
-                        //                            abono_euros: self.item.abono_euros, abono_dolar: self.item.abono_dolar,
-                        //                            dolar_exportado: self.item.dolar_exportado, euros_exportado: self.item.euros_exportado,
-                        //                            rublo_exportado: self.item.rublo_exportado, pay_pal: self.item.pay_pal,
-                        //                            tarjeta: self.item.tarjeta, asistencia: self.item.asistencia, observaciones: self.item.observaciones
-                        //                        }).then(
-                        //                            function (value2) {
-                        //                                console.log(value2);
-                        //                                if (!value2) {
-                        //                                    self.presentAlert('Falla', 'Error al Guardar, intente nuevamente');
-                        //                                }
-                        //                                self.cargar = false;
-                        //                            },
-                        //                            function () {
-                        //                                self.presentAlert('Falla', 'Error al Guardar, intente nuevamente');
-                        //                            }
-                        //                            );
+                        var old_res = {
+                            name: self.id_cliente,
+                            tour_id: self.tour_id[0],
+                            total_personas: parseInt(self.item.personas_pago) + parseInt(self.item.personas_all_in) + parseInt(self.item.personas_terceros), //calculado
+                            guia_id: self.guia_id,
+                            padrino: self.id_padrino,
+                            email: self.id_email,
+                            telefono: self.item.telefono, nombre_hotel: self.item.nombre_hotel,
+                            personas_terceros: self.item.personas_terceros,
+                            personas_all_in: self.item.personas_all_in,
+                            personas_pago: self.item.personas_pago, abonor_rublo: self.item.abonor_rublo,
+                            abono_euros: self.item.abono_euros, abono_dolar: self.item.abono_dolar,
+                            pay_pal: self.item.pay_pal,
+                            tarjeta: self.item.tarjeta, asistencia: self.item.asistencia,
+                            observaciones: self.item.observaciones
+                        };
+
+                        odoo.write('tours.clientes.middle', self.item.id, old_res).then(
+                            function (value2) {
+                                console.log(value2);
+                                if (!value2) {
+                                    self.presentAlert('Falla', 'Error al Guardar, intente nuevamente');
+                                }
+                                self.cargar = false;
+                                self.viewCtrl.dismiss(null);
+                            },
+                            function () {
+                                self.presentAlert('Falla', 'Error al Guardar, intente nuevamente');
+                            }
+                        );
                     }
 
                 },

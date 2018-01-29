@@ -10,9 +10,13 @@ export class ReservasPage {
 
     reservas;
     editable = false;
-
+    tour_id;
+    guia_id;
     constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController) {
         this.reservas = this.navParams.data.reservas;
+        this.tour_id = this.navParams.data.tour_id;
+        this.guia_id = this.navParams.data.id;
+        console.log(this.guia_id); 
     }
 
     ionViewDidLoad() {
@@ -21,14 +25,19 @@ export class ReservasPage {
     ejecute(item){
         console.log(item);
 //        this.navCtrl.push(ResDetailPage)
-        let profileModal = this.modalCtrl.create(ResDetailPage, {item:item});
+        let profileModal = this.modalCtrl.create(ResDetailPage, {item:item, tour_id:this.tour_id, guia_id:this.guia_id});
         profileModal.present();
 
     }
     
     addReserva(){ 
         
-        let profileModal = this.modalCtrl.create(ResDetailPage, {item:null});
+        let profileModal = this.modalCtrl.create(ResDetailPage, {item:null, tour_id:this.tour_id, guia_id:this.guia_id});
+        profileModal.onDidDismiss(data => {
+            if (data != null) {
+                this.reservas.push(data);
+            }
+        });
         profileModal.present();
     }
     

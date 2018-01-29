@@ -85,7 +85,7 @@ export class AsignarPage {
 
                             odoo.search_read('tours.clientes.middle', [['guia_id', 'in', ids]],
                                 ['tour_id', 'guia_id', 'name', 'telefono', 'email',
-                                    'nombre_hotel', 'personas_terceros', 'personas_all_in', 'total_personas', 'personas_pago',
+                                    'nombre_hotel', 'padrino', 'personas_terceros', 'personas_all_in', 'total_personas', 'personas_pago',
                                     'abonor_rublo', 'abono_euros', 'abono_dolar', 'dolar_exportado', 'euros_exportado', 'rublo_exportado', 'pay_pal', 'tarjeta', 'asistencia', 'observaciones', 'fecha']).then(
 
                                 function (middle) {
@@ -103,7 +103,7 @@ export class AsignarPage {
 //                                        self.events.push(guia[key]);
 
                                     }
-
+                                    console.log(ids);
                                     odoo.search_read('tours.clientes.reservar.futuras', [['guia_id', 'in', ids]],
                                         ['tour_id', 'guia_id', 'name', 'telefono', 'email',
                                             'nombre_hotel', 'personas_terceros', 'personas_all_in', 'total_personas', 'personas_pago',
