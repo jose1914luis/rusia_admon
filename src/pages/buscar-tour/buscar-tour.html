@@ -1,35 +1,214 @@
 <!--
-  Generated template for the BuscarTourPage page.
+  Generated template for the ReservasPage page.
 
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
 <ion-header>
-
     <ion-navbar>
-        <ion-title>Buscar Tour</ion-title> 
+        <ion-title>Detalles Futuras</ion-title>
         <ion-buttons end>
             <button ion-button icon-only (click)="closeModal('x')">
                     <ion-icon item-right name="ios-close-outline"></ion-icon>
             </button>
         </ion-buttons>
+
     </ion-navbar>
-    <ion-searchbar
-        [(ngModel)]="buscar"        
-        [showCancelButton]="shouldShowCancel"
-        (ionInput)="onInput($event)"
-        (ionCancel)="onCancel($event)">
-    </ion-searchbar>
+    <ion-segment color="primary">
+        <ion-segment-button *ngIf="!nueva" value="friends" (ionSelect)="editar()">
+            Editar
+        </ion-segment-button>
+        <ion-segment-button value="guardar" (ionSelect)="guardar()">
+            Guardar
+        </ion-segment-button>
+    </ion-segment>
+
+
 
 </ion-header>
 
 
 <ion-content>
 
-    <ion-list>
-        <ion-item *ngFor="let item of tours" (click)="closeModal(item)">
-            {{ item.name }}
-    </ion-item>
-</ion-list>
+    <div *ngIf="cargar" style="text-align: center">    
+        <ion-spinner name="circles"></ion-spinner><br>
+        <b>Guardando...</b>
+    </div>
+    <ion-grid >                 
+        <ion-row align-items-center>  
+
+            <ion-col col-3>
+                <b>Tour</b>                            
+            </ion-col>
+            <ion-col col-9 >        
+                <div class="autocomplete" *ngIf="editable">
+                    <ion-searchbar
+                        [(ngModel)]="buscarPadrino"        
+                        showCancelButton="false"
+                        (ionCancel)="onCancelPadrino($event)" 
+                        (keyup)="onKeyPadrino($event)"
+                        placeholder="Padrino">
+                    </ion-searchbar>
+
+                    <ion-list *ngIf="visible_list_padrino">
+                        <ion-item *ngFor="let item of padrino" (click)="selectPadrino(item)">
+                            {{ item.name }}
+                    </ion-item>
+                </ion-list>
+            </div>
+            <ion-input name="padrino" *ngIf="!editable" readonly="true"  type="text" placeholder="Nombre" [(ngModel)]="item.padrino[1]"></ion-input>
+        </ion-col> 
+    </ion-row>   
+
+    <ion-row align-items-center>     
+        <ion-col col-3>
+            <b>Fecha</b>                
+        </ion-col>                   
+        <ion-col col-8 >
+            <!--<ion-input name="name"  [readonly]="!editable" type="text" [(ngModel)]="item.name"></ion-input>-->
+            <ion-datetime displayFormat="YYYY/MM/DD" [(ngModel)]="item.dateStart" name="tem_date_begin"></ion-datetime>
+
+        </ion-col>   
+    </ion-row>
+    <ion-row align-items-center>  
+        <ion-col col-3>
+            <b>Cliente</b>
+            <ion-icon *ngIf="!nueva" ios="ios-copy" md="md-copy"></ion-icon>
+        </ion-col>
+        <ion-col col-9 (click)="copiar(item.name[1])">        
+                 <div class="autocomplete" *ngIf="editable">
+                <ion-searchbar
+                    [(ngModel)]="buscarCliente"        
+                    showCancelButton="false"
+                    (ionCancel)="onCancel($event)" 
+                    (keyup)="onKey($event)"
+                    placeholder="Nombre">
+                </ion-searchbar>
+
+                <ion-list *ngIf="visible_list">
+                    <ion-item *ngFor="let item of clientes" (click)="selectNombre(item)">
+                        {{ item.name }}
+                </ion-item>
+            </ion-list>
+        </div>
+        <ion-input name="name" *ngIf="!editable" readonly="true"  type="text" placeholder="Nombre" [(ngModel)]="item.name[1]"></ion-input>
+    </ion-col>  
+</ion-row>
+<ion-row align-items-center>  
+
+    <ion-col col-3>
+        <b>Email</b>
+        <ion-icon *ngIf="!nueva" ios="ios-copy" md="md-copy"></ion-icon>
+    </ion-col>
+    <ion-col col-9 (click)="copiar(item.email[1])">                
+             <div class="autocomplete" *ngIf="editable">
+            <ion-searchbar
+                [(ngModel)]="buscarEmail"        
+                showCancelButton="false"
+                (ionCancel)="onCancelEmail($event)" 
+                (keyup)="onKeyEmail($event)"
+                placeholder="Email">
+            </ion-searchbar>
+
+            <ion-list *ngIf="visible_list_email">
+                <ion-item *ngFor="let item of email" (click)="selectEmail(item)">
+                    {{ item.name }}
+            </ion-item>
+        </ion-list>
+    </div>
+
+    <ion-input name="email" *ngIf="!editable" readonly="true" type="text" placeholder="Email" [(ngModel)]="item.email[1]"></ion-input>
+</ion-col> 
+</ion-row>
+
+<ion-row align-items-center>  
+
+    <ion-col col-3>
+        <b>Teléfono</b>                
+        <ion-icon *ngIf="!nueva" ios="ios-copy" md="md-copy"></ion-icon>                
+    </ion-col>
+    <ion-col col-8 (click)="copiar(item.telefono)">
+             <ion-input name="telefono"  [readonly]="!editable" type="text" placeholder="Teléfono" [(ngModel)]="item.telefono"></ion-input>                
+    </ion-col> 
+</ion-row> 
+
+<ion-row align-items-center>  
+
+    <ion-col col-3>
+        <b>Hotel</b>                              
+    </ion-col>
+    <ion-col col-8 >
+        <ion-input name="telefono"  [readonly]="!editable" type="text" placeholder="Hotel" [(ngModel)]="item.nombre_hotel"></ion-input>                
+    </ion-col> 
+</ion-row>
+
+
+<ion-row align-items-center>  
+    <ion-col col-2>
+        <b>PAX Pago</b>
+    </ion-col>             
+    <ion-col col-3>
+        <b>Es Sim?</b>
+    </ion-col>   
+    <ion-col col-3>
+        <b>Es Museo?</b>
+    </ion-col>   
+</ion-row>
+<ion-row align-items-center>  
+    <ion-col col-2>
+        <ion-input name="cost_one"  [readonly]="!editable" type="number" [(ngModel)]="item.personas_pago"></ion-input>                
+    </ion-col>             
+    <ion-col col-3>
+        <ion-input name="cost_two"  [readonly]="!editable" type="number" [(ngModel)]="item.personas_terceros"></ion-input>
+
+    </ion-col>   
+    <ion-col col-3>
+        <ion-input name="cost_three"  [readonly]="!editable" type="number" [(ngModel)]="item.personas_all_in"></ion-input>
+
+    </ion-col>   
+</ion-row>
+
+
+<ion-row align-items-center >  
+    <ion-col col-2>
+        <b>EUR</b>
+    </ion-col>             
+    <ion-col col-2>
+        <b>USD</b>
+    </ion-col>   
+    <ion-col col-2>
+        <b>RUB</b>
+    </ion-col>   
+
+</ion-row>
+
+<ion-row align-items-center >  
+    <ion-col col-2>
+        <ion-input  name="gasto_one"  [readonly]="!editable" type="number" [(ngModel)]="item.abono_euros"></ion-input>
+
+    </ion-col>             
+    <ion-col col-2>
+        <ion-input  name="gasto_two"  [readonly]="!editable" type="number" [(ngModel)]="item.abono_dolar"></ion-input>
+
+    </ion-col>   
+    <ion-col col-2>
+        <ion-input  name="gasto_three"  [readonly]="!editable" type="number" [(ngModel)]="item.abonor_rublo"></ion-input>
+
+    </ion-col>   
+
+</ion-row>
+
+
+<ion-row align-items-center>  
+    <ion-col col-4>
+        <b>Observaciones</b>
+    </ion-col>             
+</ion-row>
+<ion-row align-items-center>  
+    <ion-col col-12>
+        <ion-textarea rows="3" placeholder="Observaciones" [readonly]="!editable" [(ngModel)]="item.observaciones"></ion-textarea>
+    </ion-col>             
+</ion-row>
+</ion-grid>
 
 </ion-content>

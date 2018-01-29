@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {NavController, NavParams, ModalController} from 'ionic-angular';
-
+import {BuscarTourPage} from '../../pages/buscar-tour/buscar-tour'
 
 
 @Component({
@@ -25,6 +25,17 @@ export class FuturasPage {
 //        let profileModal = this.modalCtrl.create(ResDetailPage, {item: item});
 //        profileModal.present();
 
+    }
+    
+    addFuturas(){ 
+        //, {item:null, tour_id:this.tour_id, guia_id:this.guia_id}
+        let profileModal = this.modalCtrl.create(BuscarTourPage);
+        profileModal.onDidDismiss(data => {
+//            if (data != null) {
+//                this.reservas.push(data);
+//            }
+        });
+        profileModal.present();
     }
 
 }
