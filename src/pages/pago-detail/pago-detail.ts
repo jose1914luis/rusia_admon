@@ -23,11 +23,17 @@ export class PagoDetailPage {
     constructor(public modalCtrl: ModalController, public viewCtrl: ViewController, public navCtrl: NavController, private storage: Storage, public navParams: NavParams, public alertCtrl: AlertController) {
         this.item = this.navParams.get('item');
         console.log(this.item)
-        this.item.tours_id.name = this.item.tours_id[1];
-        this.item.tours_id.id = this.item.tours_id[0];
+//        this.item.tours_id.name = this.item.tours_id[1];
+//        this.item.tours_id.id = this.item.tours_id[0];
 
         var dateStart = new Date(this.item.name);
         this.tem_date_begin = dateStart.toISOString();
+        
+        var self = this;
+        this.storage.get('tours').then((tours) => {
+            self.tours = tours;
+            self.tours2 = tours;
+        });
     }
 
     ionViewDidLoad() {

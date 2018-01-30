@@ -28,6 +28,11 @@ export class NomDetailPage {
         //        this.item.tours_id.id = this.item.tours_id[0];
         //        var dateStart = new Date(this.item.name);
         //        this.tem_date_begin = dateStart.toISOString();
+        var self = this;
+        this.storage.get('tours').then((tours) => {
+            self.tours = tours;
+            self.tours2 = tours;
+        });
     }
 
     ionViewDidLoad() {

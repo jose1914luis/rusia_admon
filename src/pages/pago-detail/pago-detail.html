@@ -56,7 +56,8 @@
                 <ion-col col-8 (click)="buscarTour()">
                          <div class="autocomplete" *ngIf="editable">
                         <ion-searchbar
-                            [(ngModel)]="buscarTour"        
+                            [(ngModel)]="buscarTour"  
+                            name="tours"
                             showCancelButton="false"
                             (ionCancel)="onCancelTour($event)" 
                             (keyup)="onKeyTour($event)"
@@ -69,7 +70,7 @@
                         </ion-item>
                     </ion-list>
                 </div>
-                <ion-input name="padrino" *ngIf="!editable" readonly="true"  type="text" placeholder="Nombre" [(ngModel)]="item.name[1]"></ion-input>
+                <ion-input name="padrino" *ngIf="!editable" readonly="true"  type="text" placeholder="Nombre" [(ngModel)]="item.tours_id[1]"></ion-input>
 
                 <!--<ion-icon ios="ios-search" md="md-search"></ion-icon>                
                 
