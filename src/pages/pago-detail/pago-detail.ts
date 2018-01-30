@@ -14,7 +14,12 @@ export class PagoDetailPage {
     item;
     editable = false;
     cargar = false;
-    tem_date_begin;
+    tem_date_begin
+    visible_list_tour = false
+    buscarTour = ''
+    tours = []
+    tours2 = []
+    id_tour = 0
     constructor(public modalCtrl: ModalController, public viewCtrl: ViewController, public navCtrl: NavController, private storage: Storage, public navParams: NavParams, public alertCtrl: AlertController) {
         this.item = this.navParams.get('item');
         console.log(this.item)
@@ -38,22 +43,34 @@ export class PagoDetailPage {
         }
     }
 
-    buscarTour() {
-        if (this.editable) {
-            var self = this;
-            let profileModal = this.modalCtrl.create(BuscarTourPage);
-            profileModal.onDidDismiss(data => {
-                if (data != null) {
-                    console.log(data);
-                    self.item.tours_id = data;
-                    self.item.tours_id.id = data.id
-                    self.item.tours_id.name = data.name;
-
-                    console.log(self.item.tours_id.name);
+     onKeyTour(e) {
+        //        console.log(e);
+        if (this.buscarTour.length > 0) {
+            this.visible_list_tour = true;
+            this.tours = [];
+            for (var key in this.tours2) {
+                if (String(this.tours2[key].name).toLowerCase().includes(this.buscarTour)) {
+                    console.log(this.tours2[key].name);
+                    this.tours.push(this.tours2[key]);
                 }
-            });
-            profileModal.present();
+            }
+        } else {
+            this.visible_list_tour = false;
         }
+
+        //this.buscar.
+    }
+
+    onCancelTour(e) {
+        self.
+            console.log(e);
+        this.visible_list_tour = false;
+    }
+
+    selectTour(valor) {
+        this.visible_list_tour = false;
+        this.buscarTour = valor.name;
+        this.id_tour = valor.id;
     }
 
     formatDate(date) {
@@ -99,7 +116,7 @@ export class PagoDetailPage {
                         total_rub: self.item.total_rub,
                         total_metro: self.item.total_metro,
                         pax_pago: self.item.pax_pago,
-                        tours_id: self.item.tours_id.id
+                        tours_id: self.id_tour
                     }).then(
                         function (value2) {
                             console.log(value2);

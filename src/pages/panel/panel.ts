@@ -31,7 +31,7 @@ export class PanelPage {
 //            console.log('-----x-----');
             console.log(conexion);
             if (conexion.is_guia) {
-
+// console.log(conexion.is_guia);
                 self.pages = [
                    
                     {title: 'Tours Asignados', component: AsignarPage},                   
@@ -47,6 +47,7 @@ export class PanelPage {
                     {title: 'Salir', component: ListPage}
                 ];
             } else {
+                console.log('deberia entrar aca');
                 self.pages = [
                     {title: 'Ciudades', component: CiudadPage},
                     {title: 'Asignar Guía', component: AsignarPage},

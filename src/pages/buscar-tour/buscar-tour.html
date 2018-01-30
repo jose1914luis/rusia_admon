@@ -43,20 +43,20 @@
             <ion-col col-9 >        
                 <div class="autocomplete" *ngIf="editable">
                     <ion-searchbar
-                        [(ngModel)]="buscarPadrino"        
+                        [(ngModel)]="buscarTour"        
                         showCancelButton="false"
-                        (ionCancel)="onCancelPadrino($event)" 
-                        (keyup)="onKeyPadrino($event)"
-                        placeholder="Padrino">
+                        (ionCancel)="onCancelTour($event)" 
+                        (keyup)="onKeyTour($event)"
+                        placeholder="Tour">
                     </ion-searchbar>
 
-                    <ion-list *ngIf="visible_list_padrino">
-                        <ion-item *ngFor="let item of padrino" (click)="selectPadrino(item)">
+                    <ion-list *ngIf="visible_list_tour">
+                        <ion-item *ngFor="let item of tours" (click)="selectTour(item)">
                             {{ item.name }}
                     </ion-item>
                 </ion-list>
             </div>
-            <ion-input name="padrino" *ngIf="!editable" readonly="true"  type="text" placeholder="Nombre" [(ngModel)]="item.padrino[1]"></ion-input>
+            <ion-input name="padrino" *ngIf="!editable" readonly="true"  type="text" placeholder="Nombre" [(ngModel)]="item.name[1]"></ion-input>
         </ion-col> 
     </ion-row>   
 
@@ -66,7 +66,7 @@
         </ion-col>                   
         <ion-col col-8 >
             <!--<ion-input name="name"  [readonly]="!editable" type="text" [(ngModel)]="item.name"></ion-input>-->
-            <ion-datetime displayFormat="YYYY/MM/DD" [(ngModel)]="item.dateStart" name="tem_date_begin"></ion-datetime>
+            <ion-datetime displayFormat="YYYY/MM/DD HH:mm" [(ngModel)]="item.fecha" name="tem_date_begin"></ion-datetime>
 
         </ion-col>   
     </ion-row>
@@ -159,15 +159,15 @@
         <ion-input name="cost_one"  [readonly]="!editable" type="number" [(ngModel)]="item.personas_pago"></ion-input>                
     </ion-col>             
     <ion-col col-3>
-        <ion-input name="cost_two"  [readonly]="!editable" type="number" [(ngModel)]="item.personas_terceros"></ion-input>
+        <!--ion-input name="cost_two"  [readonly]="!editable" type="number" [(ngModel)]="item.personas_terceros"></ion-input-->
+        <ion-checkbox  [disabled] = "!editable" [(ngModel)]="item.is_sim"></ion-checkbox>              
 
     </ion-col>   
     <ion-col col-3>
-        <ion-input name="cost_three"  [readonly]="!editable" type="number" [(ngModel)]="item.personas_all_in"></ion-input>
-
+        <!--ion-input name="cost_three"  [readonly]="!editable" type="number" [(ngModel)]="item.personas_all_in"></ion-input-->
+        <ion-checkbox  [disabled] = "!editable" [(ngModel)]="item.is_museo"></ion-checkbox>              
     </ion-col>   
 </ion-row>
-
 
 <ion-row align-items-center >  
     <ion-col col-2>

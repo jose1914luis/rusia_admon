@@ -32,6 +32,15 @@
         <ion-row align-items-center>  
 
             <ion-col col-3>
+                <b>Cliente</b>
+            </ion-col>
+            <ion-col col-8 >
+                {{item.name[1]}}                
+            </ion-col> 
+        </ion-row>
+        <ion-row align-items-center>  
+
+            <ion-col col-3>
                 <b>email</b>
             </ion-col>
             <ion-col col-8 >
@@ -45,15 +54,7 @@
             <ion-col col-8>
                 {{item.telefono}}  
             </ion-col>       
-        </ion-row>
-        <ion-row align-items-center>  
-            <ion-col col-3>
-                <b>Hotel</b>
-            </ion-col>
-            <ion-col col-8>
-                {{item.hotel}}  
-            </ion-col>       
-        </ion-row>
+        </ion-row>        
         <ion-row align-items-center>  
             <ion-col col-2>
                 <b>PAX Pago</b>
@@ -89,12 +90,7 @@
             <ion-col col-2>
                 <b>RUB</b>
             </ion-col>   
-            <ion-col col-2>
-                <b>PP</b>
-            </ion-col>   
-            <ion-col col-2>
-                <b>Tarj</b>
-            </ion-col>    
+            
         </ion-row>
 
         <ion-row align-items-center>  
@@ -110,47 +106,9 @@
                 {{item.abonor_rublo}}
 
             </ion-col>   
-            <ion-col col-2>
-                {{item.pay_pal}}
-
-            </ion-col>   
-            <ion-col col-2>
-                {{item.tarjeta}}
-
-            </ion-col>   
+          
         </ion-row>
 
-        <ion-row align-items-center>  
-            <ion-col col-4>
-                <b>EXP</b>
-            </ion-col>             
-        </ion-row>
-        <ion-row align-items-center>  
-            <ion-col col-2>
-                <b>EUR</b>
-            </ion-col>             
-            <ion-col col-2>
-                <b>USD</b>
-            </ion-col>   
-            <ion-col col-2>
-                <b>RUB</b>
-            </ion-col>  
-        </ion-row>
-
-        <ion-row align-items-center>  
-            <ion-col col-2>
-                {{item.euros_exportado}}
-
-            </ion-col>             
-            <ion-col col-2>
-                {{item.dolar_exportado}}
-
-            </ion-col>   
-            <ion-col col-2>
-                {{item.rublo_exportado}}
-
-            </ion-col> 
-        </ion-row>
 
         <ion-row align-items-center>  
             <ion-col col-4>

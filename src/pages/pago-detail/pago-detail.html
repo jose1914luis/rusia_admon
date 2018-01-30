@@ -4,7 +4,7 @@
         <ion-title>Detalles del Pago</ion-title>
         <ion-buttons end>
             <button ion-button icon-end (click)="closeModal('x')">
-                     <ion-icon ios="ios-close" md="md-close"></ion-icon>
+                    <ion-icon ios="ios-close" md="md-close"></ion-icon>
             </button>
         </ion-buttons>
     </ion-navbar>
@@ -54,55 +54,72 @@
                     <b>Tour</b>
                 </ion-col> 
                 <ion-col col-8 (click)="buscarTour()">
-                    <ion-icon ios="ios-search" md="md-search"></ion-icon>                
-                    {{item.tours_id.name}}
-                    <!--<ion-input type="text"  [(ngModel)]="item.tours_id[1]" [readonly]="!editable" name='tours_id' ></ion-input>-->
-                </ion-col>                 
-            </ion-row>
+                         <div class="autocomplete" *ngIf="editable">
+                        <ion-searchbar
+                            [(ngModel)]="buscarTour"        
+                            showCancelButton="false"
+                            (ionCancel)="onCancelTour($event)" 
+                            (keyup)="onKeyTour($event)"
+                            placeholder="Tour">
+                        </ion-searchbar>
 
-            <ion-row align-items-center>
-                <ion-col col-3>
-                    <b>EUR</b>
-                </ion-col> 
-                <ion-col col-3>
-                    <b>USD</b>
-                </ion-col> 
-                <ion-col col-3>
-                    <b>RUB</b>
-                </ion-col> 
-            </ion-row>
+                        <ion-list *ngIf="visible_list_tour">
+                            <ion-item *ngFor="let item of tours" (click)="selectTour(item)">
+                                {{ item.name }}
+                        </ion-item>
+                    </ion-list>
+                </div>
+                <ion-input name="padrino" *ngIf="!editable" readonly="true"  type="text" placeholder="Nombre" [(ngModel)]="item.name[1]"></ion-input>
 
-            <ion-row align-items-center>
-                <ion-col col-3>
-                    <ion-input type="text"  [(ngModel)]="item.total_eur" [readonly]="!editable" name='total_eur' ></ion-input>
-                </ion-col> 
-                <ion-col col-3>
-                    <ion-input type="text"  [(ngModel)]="item.total_usd" [readonly]="!editable" name='total_usd' ></ion-input>
-                </ion-col> 
-                <ion-col col-3>
-                    <ion-input type="text"  [(ngModel)]="item.total_rub" [readonly]="!editable" name='total_rub' ></ion-input>
-                </ion-col> 
-            </ion-row>
+                <!--<ion-icon ios="ios-search" md="md-search"></ion-icon>                
+                
+                <ion-input type="text"  [(ngModel)]="item.tours_id[1]" [readonly]="!editable" name='tours_id' ></ion-input>-->
+            </ion-col>                 
+        </ion-row>
 
-            <ion-row align-items-center>
-                <ion-col col-3>
-                    <b>Reserva</b>
-                </ion-col> 
-                <ion-col col-3>
-                    <b>Metro</b>
-                </ion-col> 
-            </ion-row>
+        <ion-row align-items-center>
+            <ion-col col-3>
+                <b>EUR</b>
+            </ion-col> 
+            <ion-col col-3>
+                <b>USD</b>
+            </ion-col> 
+            <ion-col col-3>
+                <b>RUB</b>
+            </ion-col> 
+        </ion-row>
+
+        <ion-row align-items-center>
+            <ion-col col-3>
+                <ion-input type="text"  [(ngModel)]="item.total_eur" [readonly]="!editable" name='total_eur' ></ion-input>
+            </ion-col> 
+            <ion-col col-3>
+                <ion-input type="text"  [(ngModel)]="item.total_usd" [readonly]="!editable" name='total_usd' ></ion-input>
+            </ion-col> 
+            <ion-col col-3>
+                <ion-input type="text"  [(ngModel)]="item.total_rub" [readonly]="!editable" name='total_rub' ></ion-input>
+            </ion-col> 
+        </ion-row>
+
+        <ion-row align-items-center>
+            <ion-col col-3>
+                <b>Reserva</b>
+            </ion-col> 
+            <ion-col col-3>
+                <b>Metro</b>
+            </ion-col> 
+        </ion-row>
 
 
-            <ion-row align-items-center>
-                <ion-col col-3>
-                    <ion-input type="text"  [(ngModel)]="item.total_res" [readonly]="!editable" name='total_res' ></ion-input>
-                </ion-col> 
-                <ion-col col-3>
-                    <ion-input type="text"  [(ngModel)]="item.total_metro" [readonly]="!editable" name='total_metro' ></ion-input>
-                </ion-col> 
-            </ion-row>            
+        <ion-row align-items-center>
+            <ion-col col-3>
+                <ion-input type="text"  [(ngModel)]="item.total_res" [readonly]="!editable" name='total_res' ></ion-input>
+            </ion-col> 
+            <ion-col col-3>
+                <ion-input type="text"  [(ngModel)]="item.total_metro" [readonly]="!editable" name='total_metro' ></ion-input>
+            </ion-col> 
+        </ion-row>            
 
-        </ion-grid>
-    </form>    
+    </ion-grid>
+</form>    
 </ion-content>

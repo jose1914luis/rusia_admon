@@ -15,9 +15,15 @@ export class NomDetailPage {
     cargar = false;
     texto = 'Cargando...';
     //    tem_date_begin;
+    visible_list_tour = false
+    buscarTour = ''
+    tours = []
+    tours2 = []
+    id_tour = 0
     constructor(public modalCtrl: ModalController, public navCtrl: NavController, private storage: Storage, public navParams: NavParams, public alertCtrl: AlertController) {
         console.log(this.navParams.get('item'))
         this.item = this.navParams.get('item');
+//        this.buscarTour = this.item.name[1]
         //        this.item.tours_id.name = this.item.tours_id[1];
         //        this.item.tours_id.id = this.item.tours_id[0];
         //        var dateStart = new Date(this.item.name);
@@ -45,21 +51,36 @@ export class NomDetailPage {
             this.editable = false;
         }
     }
-
-
-    buscarTour() {
-        if (this.editable) {
-            var self = this;
-            let profileModal = this.modalCtrl.create(BuscarTourPage);
-            profileModal.onDidDismiss(data => {
-                if (data != null) {
-                    self.item.tours_id = data;
-                    console.log(self.item.tours_id.name);
+    onKeyTour(e) {
+        //        console.log(e);
+        if (this.buscarTour.length > 0) {
+            this.visible_list_tour = true;
+            this.tours = [];
+            for (var key in this.tours2) {
+                if (String(this.tours2[key].name).toLowerCase().includes(this.buscarTour)) {
+                    console.log(this.tours2[key].name);
+                    this.tours.push(this.tours2[key]);
                 }
-            });
-            profileModal.present();
+            }
+        } else {
+            this.visible_list_tour = false;
         }
+
+        //this.buscar.
     }
+
+    onCancelTour(e) {
+        self.
+            console.log(e);
+        this.visible_list_tour = false;
+    }
+
+    selectTour(valor) {
+        this.visible_list_tour = false;
+        this.buscarTour = valor.name;
+        this.id_tour = valor.id;
+    }
+
 
     formatDate(date) {
         var d = new Date(date),
@@ -87,20 +108,20 @@ export class NomDetailPage {
                     for (var key in self.item.pago) {
 
                         (function (key) {
-//                            console.log(key);
-//                            console.log({
-//                                name: self.formatDate( self.item.pago[key].dateStart),
-//                                semana: self.item.pago[key].semana,
-//                                total_eur: self.item.pago[key].total_eur,
-//                                total_usd: self.item.pago[key].total_usd,
-//                                total_res: self.item.pago[key].total_res,
-//                                total_rub: self.item.pago[key].total_rub,
-//                                total_metro: self.item.pago[key].total_metro,
-//                                pax_pago: self.item.pago[key].pax_pago
-//                            });
+                            //                            console.log(key);
+                            //                            console.log({
+                            //                                name: self.formatDate( self.item.pago[key].dateStart),
+                            //                                semana: self.item.pago[key].semana,
+                            //                                total_eur: self.item.pago[key].total_eur,
+                            //                                total_usd: self.item.pago[key].total_usd,
+                            //                                total_res: self.item.pago[key].total_res,
+                            //                                total_rub: self.item.pago[key].total_rub,
+                            //                                total_metro: self.item.pago[key].total_metro,
+                            //                                pax_pago: self.item.pago[key].pax_pago
+                            //                            });
 
                             odoo.write('tours.pago.guia', self.item.pago[key].pago_id, {
-                                name: self.formatDate( self.item.pago[key].dateStart),
+                                name: self.formatDate(self.item.pago[key].dateStart),
                                 semana: self.item.pago[key].semana,
                                 total_eur: self.item.pago[key].total_eur,
                                 total_usd: self.item.pago[key].total_usd,

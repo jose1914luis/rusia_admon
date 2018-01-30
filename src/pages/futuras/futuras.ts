@@ -22,8 +22,8 @@ export class FuturasPage {
     ejecute(item) {
         console.log(item);
         //        this.navCtrl.push(ResDetailPage)
-//        let profileModal = this.modalCtrl.create(ResDetailPage, {item: item});
-//        profileModal.present();
+        let profileModal = this.modalCtrl.create(BuscarTourPage, {item: item});
+        profileModal.present();
 
     }
     

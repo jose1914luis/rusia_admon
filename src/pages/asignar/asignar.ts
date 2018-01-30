@@ -111,15 +111,15 @@ export class AsignarPage {
 
                                         function (futuras) {
                                             
-                                            
+                                            console.log(futuras)
                                             for (var key_g in guia) {
 
                                                 for (var key_f in futuras) {
                                                     //guia[key].reserva_id = middle[key2].id;
-                                                    if (guia[key_g].tour_id[0] == futuras[key_f].tour_id[0]) {
+//                                                    if (guia[key_g].tour_id[0] == futuras[key_f].tour_id[0]) {
                                                         guia[key_g].futuras.push(futuras[key_f]);
                                                         //console.log(middle[key2]);
-                                                    }
+//                                                    }
                                                 }
                                                 self.events.push(guia[key_g]);
                                             }
