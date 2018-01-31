@@ -13,7 +13,7 @@ export class ListPage {
 
     cargar = false;
     mensaje = '';
-    conexion = {tipo_a:'', grupos_id: [], bd: 'Tour_Gratis_Rusia', username: 'toursgratissanpetersburgo@gmail.com', password: 'IaozaK9yYncv0CdSMUux', is_guia: false, is_chofer: false, is_promotor: false};
+    conexion = {tipo_a: '', grupos_id: [], bd: 'Tour_Gratis_Rusia', username: 'toursgratissanpetersburgo@gmail.com', password: 'IaozaK9yYncv0CdSMUux', is_guia: false, is_chofer: false, is_promotor: false};
     constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage, public alertCtrl: AlertController) {
 
         var borrar = this.navParams.get('borrar');
@@ -62,13 +62,14 @@ export class ListPage {
                                 self.conexion.is_guia = users[0].is_guia;
                                 self.conexion.is_promotor = users[0].is_promotor;
                                 if (!users[0].is_chofer && !users[0].is_guia && !users[0].is_promotor) {
-                                    for (let key in users[0].grupos_id) {
+                                    console.log('entro al filtro')
+                                    for (let key in users[0].groups_id) {
                                         //si es 12=administrador, 14=administrador x ciudad, 15 gerente
-                                        if(users[0].grupos_id[key] == 15 || users[0].grupos_id[key] == 14){
+                                        if (users[0].groups_id[key] == 15 || users[0].groups_id[key] == 14) {
                                             self.conexion.tipo_a = 'xciudad'
                                             console.log('entro al filtro')
                                         }
-                                        
+
                                     }
                                 }
 
@@ -85,7 +86,13 @@ export class ListPage {
                                             function (email) {
                                                 console.log(email)
                                                 self.storage.set('email', email);//<--Todos los emails
-                                                odoo.search_read('tours.companies', [['id', '!=', 0]], ['name', 'administrador']).then(
+                                                var consulta;
+                                                if (self.conexion.tipo_a == 'xciudad') {
+                                                    consulta = [['administrador', '=', uid]]
+                                                } else {
+                                                    consulta = [['id', '!=', '0']]
+                                                }
+                                                odoo.search_read('tours.companies', consulta, ['name', 'administrador']).then(
                                                     function (companies) {
                                                         console.log(companies);
                                                         self.storage.set('companies', companies); //<--- Todas las Ciudades

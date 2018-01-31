@@ -14,6 +14,7 @@ export class ClienteDetailPage {
     item;
     cargar = false;
     nuevo = false;
+    mensaje = ''
     constructor(public viewCtrl: ViewController, public navCtrl: NavController, private storage: Storage, public navParams: NavParams, public alertCtrl: AlertController) {
         this.item = this.navParams.get('item');
 
@@ -26,6 +27,36 @@ export class ClienteDetailPage {
             this.nuevo = true;
             this.editable = true;
         } else {
+
+            var self = this;
+            this.cargar = true;
+            this.mensaje = 'Cargando...'
+            //        self.items = [];
+//            console.log(self.item.name)
+            this.storage.get('conexion').then((conexion) => {
+                var odoo = new OdooApi(global.url, conexion.bd);
+                odoo.login(conexion.username, conexion.password).then(
+                    function (uid) {
+                        odoo.search_read('tours.clientes.middle', [['name', '=', self.item.id]],
+                            ['tour_id', 'guia_id', 'name', 'telefono', 'email',
+                                'nombre_hotel', 'personas_terceros', 'personas_all_in', 'total_personas', 'personas_pago',
+                                'abonor_rublo', 'abono_euros', 'abono_dolar', 'dolar_exportado', 'euros_exportado', 'rublo_exportado', 'pay_pal', 'tarjeta', 'asistencia', 'observaciones', 'fecha']).then(
+                            function (middle) {
+
+                                self.item.middle = middle;
+                                console.log(self.item)
+                                self.cargar = false;
+                            },
+                            function () {
+                                self.presentAlert('Falla', 'Imposible Conectar');
+                            }
+                            );
+                    },
+                    function () {
+
+                    }
+                )
+            });
             this.item.observaciones = this.item.observaciones ? this.item.observaciones : '';
             this.item.telefono = this.item.telefono ? this.item.telefono : '';
             this.item.nombre_hotel = this.item.nombre_hotel ? this.item.nombre_hotel : '';
@@ -66,6 +97,7 @@ export class ClienteDetailPage {
     guardar() {
 
         this.cargar = true;
+        this.mensaje = 'Guardando...'
         var self = this;
         this.storage.get('conexion').then((conexion) => {
             var odoo = new OdooApi(global.url, conexion.bd);
@@ -92,7 +124,7 @@ export class ClienteDetailPage {
                                 if (!email) {
                                     self.presentAlert('Falla', 'Error al Guardar, intente nuevamente');
                                 }
-//                                self.cargar = false;
+                                //                                self.cargar = false;
                                 odoo.create('tours.clientes', {
                                     nombre_hotel: self.item.nombre_hotel,
                                     is_padrino: self.item.is_padrino,
