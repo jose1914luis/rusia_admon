@@ -82,7 +82,7 @@ export class AsignarPage {
 
                                 ids.push(guia[key].id);
                             }
-
+                            console.log(ids)
                             odoo.search_read('tours.clientes.middle', [['guia_id', 'in', ids]],
                                 ['tour_id', 'guia_id', 'name', 'telefono', 'email',
                                     'nombre_hotel', 'padrino', 'personas_terceros', 'personas_all_in', 'total_personas', 'personas_pago',
@@ -90,12 +90,16 @@ export class AsignarPage {
 
                                 function (middle) {
                                     //                                    self.storage.set('middle', middle);
-                                    //                                    console.log(middle);
+                                                                        console.log(middle);
                                     for (var key in guia) {
 
                                         for (var key2 in middle) {
                                             //guia[key].reserva_id = middle[key2].id;
-                                            if (guia[key].tour_id[0] == middle[key2].tour_id[0]) {
+                                            //String((guia[key]).date_begin).substring(0, 10)
+                                            //var dateStart = new Date(String(middle[key2].fecha).replace(' ', 'T'));
+//                                            console.log(String((guia[key]).date_begin).substring(0, 10))
+//                                            console.log(String(middle[key2].fecha))
+                                            if (guia[key].tour_id[0] == middle[key2].tour_id[0] && String((guia[key]).date_begin).substring(0, 10) == String(middle[key2].fecha)) {
                                                 guia[key].reservas.push(middle[key2]);
                                                 //console.log(middle[key2]);
                                             }

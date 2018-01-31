@@ -32,9 +32,19 @@ export class CiudadPage {
             self.items = null;
             odoo.login(conexion.username, conexion.password).then(
                 function (uid) {
-                    odoo.search_read('tours.companies', [['id', '!=', '0']], ['administrador', 'name']).then(
+                    console.log(uid);
+                    if(conexion)
+                    //si no es ni guia, ni chofer, ni promotor busco por groups_id
+                    //si es 12=administrador, 14=administrador x ciudad, 15 gerente
+                    var consulta;
+                    if(conexion.tipo_a == 'xciudad'){
+                        consulta = [['administrador', '=', uid]]
+                    }else{
+                        consulta = [['id', '!=', '0']]
+                    }
+                    odoo.search_read('tours.companies', consulta, ['administrador', 'name']).then(
                         function (companies) {
-                            
+                            console.log(companies);
                             var ids = [];
                             for (var key in companies) {
                                 ids.push(companies[key].id)

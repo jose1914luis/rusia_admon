@@ -13,7 +13,7 @@ export class ListPage {
 
     cargar = false;
     mensaje = '';
-    conexion = {bd: 'Tour_Gratis_Rusia_Test', username: 'fernandez.bermudez.jonatan@gmail.com', password: '123456', is_guia: false, is_chofer: false, is_promotor: false};
+    conexion = {tipo_a:'', grupos_id: [], bd: 'Tour_Gratis_Rusia', username: 'toursgratissanpetersburgo@gmail.com', password: 'IaozaK9yYncv0CdSMUux', is_guia: false, is_chofer: false, is_promotor: false};
     constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage, public alertCtrl: AlertController) {
 
         var borrar = this.navParams.get('borrar');
@@ -61,18 +61,30 @@ export class ListPage {
                                 self.conexion.is_chofer = users[0].is_chofer;
                                 self.conexion.is_guia = users[0].is_guia;
                                 self.conexion.is_promotor = users[0].is_promotor;
-                                self.storage.set('conexion', self.conexion);
+                                if (!users[0].is_chofer && !users[0].is_guia && !users[0].is_promotor) {
+                                    for (let key in users[0].grupos_id) {
+                                        //si es 12=administrador, 14=administrador x ciudad, 15 gerente
+                                        if(users[0].grupos_id[key] == 15 || users[0].grupos_id[key] == 14){
+                                            self.conexion.tipo_a = 'xciudad'
+                                            console.log('entro al filtro')
+                                        }
+                                        
+                                    }
+                                }
+
+                                //self.conexion.grupos_id  = ;
+                                self.storage.set('conexion', self.conexion);//<--- datos del usuario
                                 odoo.search_read('tours.clientes', [['id', '!=', 0]],
                                     ['name', 'telefono', 'nombre_hotel', 'email', 'is_padrino', 'active_email', 'pago_tarjeta', 'padre', 'observaciones']).then(
                                     function (clientes) {
                                         console.log(clientes)
-                                        self.storage.set('clientes', clientes);//<--Clientes  
+                                        self.storage.set('clientes', clientes);//<--Todos los clientes Clientes  
 
                                         odoo.search_read('tours.clientes.email', [['id', '!=', 0]],
                                             ['name']).then(
                                             function (email) {
                                                 console.log(email)
-                                                self.storage.set('email', email);//<--Clientes  
+                                                self.storage.set('email', email);//<--Todos los emails
                                                 odoo.search_read('tours.companies', [['id', '!=', 0]], ['name', 'administrador']).then(
                                                     function (companies) {
                                                         console.log(companies);
