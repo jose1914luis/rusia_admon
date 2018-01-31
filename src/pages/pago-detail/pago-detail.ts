@@ -23,14 +23,15 @@ export class PagoDetailPage {
     constructor(public modalCtrl: ModalController, public viewCtrl: ViewController, public navCtrl: NavController, private storage: Storage, public navParams: NavParams, public alertCtrl: AlertController) {
         this.item = this.navParams.get('item');
         console.log(this.item)
-//        this.item.tours_id.name = this.item.tours_id[1];
-//        this.item.tours_id.id = this.item.tours_id[0];
+        //        this.item.tours_id.name = this.item.tours_id[1];
+        //        this.item.tours_id.id = this.item.tours_id[0];
 
         var dateStart = new Date(this.item.name);
         this.tem_date_begin = dateStart.toISOString();
-        
+
         var self = this;
         this.storage.get('tours').then((tours) => {
+            console.log(tours);
             self.tours = tours;
             self.tours2 = tours;
         });
@@ -49,14 +50,14 @@ export class PagoDetailPage {
         }
     }
 
-     onKeyTour(e) {
+    onKeyTour(e) {
         //        console.log(e);
         if (this.buscarTour.length > 0) {
             this.visible_list_tour = true;
             this.tours = [];
             for (var key in this.tours2) {
                 if (String(this.tours2[key].name).toLowerCase().includes(this.buscarTour)) {
-                    console.log(this.tours2[key].name);
+                    //                    console.log(this.tours2[key].name);
                     this.tours.push(this.tours2[key]);
                 }
             }
@@ -101,18 +102,18 @@ export class PagoDetailPage {
             odoo.login(conexion.username, conexion.password).then(
                 function (uid) {
 
-                    //                    console.log({
-                    //                        name: self.formatDate(self.tem_date_begin),
-                    //                        semana: self.item.semana,
-                    //                        total_eur: self.item.total_eur,
-                    //                        total_usd: self.item.total_usd,
-                    //                        total_res: self.item.total_res,
-                    //                        total_rub: self.item.total_rub,
-                    //                        total_metro: self.item.total_metro,
-                    //                        pax_pago: self.item.pax_pago,
-                    //                        tours_id: self.item.tours_id.id
-                    //                    });
-
+//                    console.log({
+//                        name: self.formatDate(self.tem_date_begin),
+//                        semana: self.item.semana,
+//                        total_eur: self.item.total_eur,
+//                        total_usd: self.item.total_usd,
+//                        total_res: self.item.total_res,
+//                        total_rub: self.item.total_rub,
+//                        total_metro: self.item.total_metro,
+//                        pax_pago: self.item.pax_pago,
+//                        tours_id: self.id_tour
+//                    });
+                    console.log(self.item);
                     odoo.write('tours.pago.guia', self.item.id, {
                         name: self.formatDate(self.tem_date_begin),
                         semana: self.item.semana,
@@ -122,7 +123,7 @@ export class PagoDetailPage {
                         total_rub: self.item.total_rub,
                         total_metro: self.item.total_metro,
                         pax_pago: self.item.pax_pago,
-                        tours_id: self.id_tour
+//                        tours_id: self.id_tour
                     }).then(
                         function (value2) {
                             console.log(value2);
@@ -146,7 +147,7 @@ export class PagoDetailPage {
 
 
     }
-    
+
     closeModal(x) {
         if (x == 'x') {
             this.viewCtrl.dismiss(null);

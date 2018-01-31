@@ -1,6 +1,6 @@
 export const global = {
-    //url: '/api',
-    url: 'http://moscutourgratis.com:8069',
+    url: '/api',
+//    url: 'http://moscutourgratis.com:8069',
     port: '8069'
 }
 

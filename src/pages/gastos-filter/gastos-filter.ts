@@ -20,6 +20,7 @@ export class GastosFilterPage {
 
         var self = this;
         self.item = self.navParams.get('item');
+        console.log(self.item);
         if (self.item != null) {
                         
             self.item.nuevo = false;
@@ -96,7 +97,8 @@ export class GastosFilterPage {
             moneda: 'eur',
             price_unit: 0,
             unidades: 0,
-            sub_total: 0
+            sub_total: 0, 
+            id:null
         });
     }
 
@@ -137,6 +139,7 @@ export class GastosFilterPage {
     guardar() {
 
         var self = this;
+        self.cargar = true;
         self.mensaje = 'Guardando...';
         this.storage.get('conexion').then((conexion) => {
             var odoo = new OdooApi(global.url, conexion.bd);
@@ -183,13 +186,14 @@ export class GastosFilterPage {
                         }).then(
                             function (id_nuevo) {
 
+                                console.log(self.item.conceptos);
                                 for (var key = 0; self.item.conceptos.length > key; key++) {
-                                    //for (var key in self.item.conceptos) {
-                                    self.item.conceptos[key].gastos_id = id_nuevo;
+                                    console.log(self.item.conceptos[key]);
+//                                    self.item.conceptos[key].gastos_id = id_nuevo;
                                     console.log(self.item.conceptos[key]);
                                     (function (key) {
                                         if (self.item.conceptos[key].id != null) {
-                                             self.item.conceptos[key].gastos_id = self.item.id;
+                                            self.item.conceptos[key].gastos_id = self.item.id;
                                             odoo.write('tours.gastos.conceptos', self.item.conceptos[key].id, self.item.conceptos[key]).then(
                                                 function (id_conceptos) {
                                                     console.log(self.item.conceptos.length + '   ' + key)
@@ -200,9 +204,10 @@ export class GastosFilterPage {
                                                 }
                                             )
                                         } else {
+                                            self.item.conceptos[key].gastos_id = self.item.id;
                                             odoo.create('tours.gastos.conceptos', self.item.conceptos[key]).then(
                                                 function (id_conceptos) {
-                                                    //console.log(id_conceptos)
+                                                    console.log(id_conceptos)
                                                     console.log(self.item.conceptos.length + '   ' + key)
                                                     if (self.item.conceptos.length == key + 1) {
                                                         self.closeModal('n');

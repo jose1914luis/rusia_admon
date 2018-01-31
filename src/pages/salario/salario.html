@@ -8,9 +8,6 @@
             <button ion-button icon-only (click)="refresh()">
                     <ion-icon ios="ios-refresh" md="md-refresh"></ion-icon>
             </button>
-            <button ion-button icon-only (click)="nuevo()">
-                    <ion-icon name="add"></ion-icon>
-            </button>
         </ion-buttons>
     </ion-navbar>
 </ion-header>
@@ -61,5 +58,9 @@
         </ion-row>
 
     </ion-grid>
+    
+    <ion-fab bottom right >
+        <button ion-fab icon-only (click)="nuevo()">  <ion-icon ios="ios-add" md="md-add"></ion-icon></button>
+    </ion-fab>
 
 </ion-content>
