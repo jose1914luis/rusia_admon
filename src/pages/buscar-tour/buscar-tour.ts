@@ -286,11 +286,33 @@ export class BuscarTourPage {
 
                 },
                 function () {
-
+                    
                 }
             );
         });
     }
+    
+    apilar(dato, operacion, id) {
+
+        var self = this
+        var registro = {
+            operacion: operacion,
+            tabla: 'tours.clientes.middle',
+            dato: dato,
+            id: id
+        }
+        self.storage.get('offline').then((offline) => {
+
+            if (offline != null) {
+                offline.push(registro)
+            } else {
+                var pila = []
+                pila.push(registro)
+                self.storage.set('offline', pila)
+            }
+        })
+    }   
+
     presentAlert(titulo, texto) {
         const alert = this.alertCtrl.create({
             title: titulo,

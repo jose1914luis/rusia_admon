@@ -28,8 +28,8 @@ export class AsignarDetailPage {
             if (this.item.guia_id != "") this.item.guia_id.name = this.item.guia_id[1];
             this.item.tour_id.name = this.item.tour_id[1];
             this.no_editable = this.item.no_editable;
-            
-//            this.tem_date_begin = this.item
+
+            //            this.tem_date_begin = this.item
         } else {
             this.editable = true;
             this.nuevo = true;
@@ -97,39 +97,61 @@ export class AsignarDetailPage {
 
         this.cargar = true;
         var self = this;
+        var dato = {
+            date_begin: self.item.date_begin, date_end: self.item.date_end, personas_pago: self.item.personas_pago,
+            personas_terceros: self.item.personas_terceros, personas_all_in: self.item.personas_all_in,
+            total_personas: self.item.total_personas, total_rublo: self.item.total_rublo, total_euro: self.item.total_euro,
+            total_dolar: self.item.total_dolar, pay_pal: self.item.pay_pal, tarjeta: self.item.tarjeta,
+            entregado: self.item.entregado, state: self.item.state, observaciones: self.item.observaciones
+        }
         this.storage.get('conexion').then((conexion) => {
             var odoo = new OdooApi(global.url, conexion.bd);
             odoo.login(conexion.username, conexion.password).then(
                 function (uid) {
 
-                    odoo.write('tours.guia', self.item.id, {
-                        date_begin: self.item.date_begin, date_end: self.item.date_end, personas_pago: self.item.personas_pago,
-                        personas_terceros: self.item.personas_terceros, personas_all_in: self.item.personas_all_in,
-                        total_personas: self.item.total_personas, total_rublo: self.item.total_rublo, total_euro:self.item.total_euro,
-                        total_dolar: self.item.total_dolar, pay_pal: self.item.pay_pal, tarjeta: self.item.tarjeta,
-                        entregado: self.item.entregado, state: self.item.state, observaciones: self.item.observaciones
-                    }).then(
+                    odoo.write('tours.guia', self.item.id, dato).then(
                         function (value2) {
                             console.log(value2);
                             if (!value2) {
                                 self.presentAlert('Falla', 'Error al Guardar, intente nuevamente');
                             }
                             self.cargar = false;
-//                            self.viewCtrl.dismiss();
+                            //                            self.viewCtrl.dismiss();
                         },
                         function () {
-                            self.presentAlert('Falla', 'Error al Guardar, intente nuevamente');
+                            self.apilar(dato, self.item.id)
                         }
-                        );
+                    );
 
                 },
                 function () {
-
+                    self.apilar(dato, self.item.id)
                 }
             );
         });
 
 
+    }
+
+    apilar(dato, id) {
+
+        var self = this
+        var registro = {
+            operacion: 'write',
+            tabla: 'tours.guia',
+            dato: dato,
+            id: id
+        }
+        self.storage.get('offline').then((offline) => {
+
+            if (offline != null) {
+                offline.push(registro)
+            } else {
+                var pila = []
+                pila.push(registro)
+                self.storage.set('offline', pila)
+            }
+        })        
     }
 
     presentAlert(titulo, texto) {
@@ -140,9 +162,9 @@ export class AsignarDetailPage {
         });
         alert.present();
     }
-    
-    calcular(){
-        this.item.total_personas =  parseInt(this.item.personas_pago) +  parseInt(this.item.personas_terceros) +  parseInt(this.item.personas_all_in);
+
+    calcular() {
+        this.item.total_personas = parseInt(this.item.personas_pago) + parseInt(this.item.personas_terceros) + parseInt(this.item.personas_all_in);
     }
 
 

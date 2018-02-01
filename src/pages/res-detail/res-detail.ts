@@ -195,6 +195,22 @@ export class ResDetailPage {
 
         this.cargar = true;
         var self = this;
+        var dato = {
+            name: self.id_cliente,
+            tour_id: self.tour_id[0],
+            total_personas: parseInt(self.item.personas_pago) + parseInt(self.item.personas_all_in) + parseInt(self.item.personas_terceros), //calculado
+            guia_id: self.guia_id,
+            padrino: self.id_padrino,
+            email: self.id_email,
+            telefono: self.item.telefono, nombre_hotel: self.item.nombre_hotel,
+            personas_terceros: self.item.personas_terceros,
+            personas_all_in: self.item.personas_all_in,
+            personas_pago: self.item.personas_pago, abonor_rublo: self.item.abonor_rublo,
+            abono_euros: self.item.abono_euros, abono_dolar: self.item.abono_dolar,
+            pay_pal: self.item.pay_pal,
+            tarjeta: self.item.tarjeta, asistencia: self.item.asistencia,
+            observaciones: self.item.observaciones
+        };
         this.storage.get('conexion').then((conexion) => {
             var odoo = new OdooApi(global.url, conexion.bd);
             odoo.login(conexion.username, conexion.password).then(
@@ -202,58 +218,43 @@ export class ResDetailPage {
 
                     if (self.nueva) {
 
-                        var new_res = {
-                            name: self.id_cliente,
-                            tour_id: self.tour_id[0],
-                            total_personas: parseInt(self.item.personas_pago) + parseInt(self.item.personas_all_in) + parseInt(self.item.personas_terceros), //calculado
-                            guia_id: self.guia_id,
-                            padrino: self.id_padrino,
-                            email: self.id_email,
-                            telefono: self.item.telefono, nombre_hotel: self.item.nombre_hotel,
-                            personas_terceros: self.item.personas_terceros,
-                            personas_all_in: self.item.personas_all_in,
-                            personas_pago: self.item.personas_pago, abonor_rublo: self.item.abonor_rublo,
-                            abono_euros: self.item.abono_euros, abono_dolar: self.item.abono_dolar,
-                            pay_pal: self.item.pay_pal,
-                            tarjeta: self.item.tarjeta, asistencia: self.item.asistencia,
-                            observaciones: self.item.observaciones
-                        };
-                        console.log(new_res);
 
-                        odoo.create('tours.clientes.middle', new_res).then(
+                        console.log(dato);
+
+                        odoo.create('tours.clientes.middle', dato).then(
                             function (value2) {
                                 console.log(value2);
                                 if (!value2) {
                                     self.presentAlert('Falla', 'Error al Guardar, intente nuevamente');
                                 }
                                 self.cargar = false;
-                                self.viewCtrl.dismiss(new_res)
+                                self.viewCtrl.dismiss(dato)
                             },
                             function () {
-                                self.presentAlert('Falla', 'Error al Guardar, intente nuevamente');
+                                self.apilar(dato, 'create',  null)
                             }
                         );
 
                     } else {
 
-                        var old_res = {
-                            name: self.id_cliente,
-                            tour_id: self.tour_id[0],
-                            total_personas: parseInt(self.item.personas_pago) + parseInt(self.item.personas_all_in) + parseInt(self.item.personas_terceros), //calculado
-                            guia_id: self.guia_id,
-                            padrino: self.id_padrino,
-                            email: self.id_email,
-                            telefono: self.item.telefono, nombre_hotel: self.item.nombre_hotel,
-                            personas_terceros: self.item.personas_terceros,
-                            personas_all_in: self.item.personas_all_in,
-                            personas_pago: self.item.personas_pago, abonor_rublo: self.item.abonor_rublo,
-                            abono_euros: self.item.abono_euros, abono_dolar: self.item.abono_dolar,
-                            pay_pal: self.item.pay_pal,
-                            tarjeta: self.item.tarjeta, asistencia: self.item.asistencia,
-                            observaciones: self.item.observaciones
-                        };
+//                        var old_res = {
+//                            name: self.id_cliente,
+//                            tour_id: self.tour_id[0],
+//                            total_personas: parseInt(self.item.personas_pago) + parseInt(self.item.personas_all_in) + parseInt(self.item.personas_terceros), //calculado
+//                            guia_id: self.guia_id,
+//                            padrino: self.id_padrino,
+//                            email: self.id_email,
+//                            telefono: self.item.telefono, nombre_hotel: self.item.nombre_hotel,
+//                            personas_terceros: self.item.personas_terceros,
+//                            personas_all_in: self.item.personas_all_in,
+//                            personas_pago: self.item.personas_pago, abonor_rublo: self.item.abonor_rublo,
+//                            abono_euros: self.item.abono_euros, abono_dolar: self.item.abono_dolar,
+//                            pay_pal: self.item.pay_pal,
+//                            tarjeta: self.item.tarjeta, asistencia: self.item.asistencia,
+//                            observaciones: self.item.observaciones
+//                        };
 
-                        odoo.write('tours.clientes.middle', self.item.id, old_res).then(
+                        odoo.write('tours.clientes.middle', self.item.id, dato).then(
                             function (value2) {
                                 console.log(value2);
                                 if (!value2) {
@@ -263,19 +264,43 @@ export class ResDetailPage {
                                 self.viewCtrl.dismiss(null);
                             },
                             function () {
-                                self.presentAlert('Falla', 'Error al Guardar, intente nuevamente');
+                                self.apilar(dato, 'write',  self.item.id)
                             }
                         );
                     }
-
                 },
                 function () {
+                    if (self.nueva) {
+                        self.apilar(dato, 'create',  null)
 
+                    }else{
+                        self.apilar(dato, 'write',  self.item.id)
+                    }
                 }
             );
         });
     }
 
+    apilar(dato, operacion, id) {
+
+        var self = this
+        var registro = {
+            operacion: operacion,
+            tabla: 'tours.clientes.middle',
+            dato: dato,
+            id: id
+        }
+        self.storage.get('offline').then((offline) => {
+
+            if (offline != null) {
+                offline.push(registro)
+            } else {
+                var pila = []
+                pila.push(registro)
+                self.storage.set('offline', pila)
+            }
+        })
+    }
     presentAlert(titulo, texto) {
         const alert = this.alertCtrl.create({
             title: titulo,
