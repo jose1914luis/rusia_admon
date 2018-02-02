@@ -31,11 +31,11 @@ export class BuscarTourPage {
     visible_list_tour = false
     visible_list = false;
     visible_list_email = false;
-    guia_id;
+    id_guia;
     constructor(public viewCtrl: ViewController, private clipboard: Clipboard, public alertCtrl: AlertController, public navCtrl: NavController, public navParams: NavParams, private storage: Storage) {
 
         this.item = this.navParams.get('item');
-        this.guia_id = this.navParams.get('guia_id');
+        this.id_guia = this.navParams.get('guia_id');
         if (this.item == null) {
             this.item = {
                 tour_id: ['', ''],
@@ -56,12 +56,14 @@ export class BuscarTourPage {
             this.nueva = true;
             this.editable = true;
         } else {
+            console.log(this.item)
             this.buscarCliente = this.item.name[1]
             this.buscarEmail = this.item.email[1]
             this.buscarTour = this.item.tour_id[1]
             this.id_cliente = this.item.name[0]
             this.id_email = this.item.email[0]
             this.id_tour = this.item.tour_id[0]
+            
             this.item.fecha = new Date(this.item.fecha).toISOString()
 
         }
@@ -208,8 +210,26 @@ export class BuscarTourPage {
 
     guardar() {
 
-        this.cargar = true;
+
         var self = this;
+        var data = {
+
+            tour_id: self.id_tour,
+            name: self.id_cliente,
+            telefono: self.item.telefono,
+            nombre_hotel: self.item.nombre_hotel,
+            email: self.id_email,
+            guia_id: self.id_guia,
+            personas_pago: self.item.personas_pago,
+            abonor_rublo: self.item.abonor_rublo,
+            abono_euros: self.item.abono_euros,
+            abono_dolar: self.item.abono_dolar,
+            is_sim: self.item.is_sim,
+            is_museo: self.item.is_museo,
+            observaciones: self.item.observaciones,
+            fecha: self.formatDate(self.item.fecha)
+        };
+        this.cargar = true;
         this.storage.get('conexion').then((conexion) => {
             var odoo = new OdooApi(global.url, conexion.bd);
             odoo.login(conexion.username, conexion.password).then(
@@ -217,81 +237,56 @@ export class BuscarTourPage {
 
                     if (self.nueva) {
 
-                        var new_res = {
 
-                            tour_id: self.id_tour,
-                            name: self.id_cliente,
-                            telefono: self.item.telefono,
-                            nombre_hotel: self.item.nombre_hotel,
-                            email: self.id_email,
-                            guia_id: self.guia_id,
-                            personas_pago: self.item.personas_pago,
-                            abonor_rublo: self.item.abonor_rublo,
-                            abono_euros: self.item.abono_euros,
-                            abono_dolar: self.item.abono_dolar,
-                            is_sim: self.item.is_sim,
-                            is_museo: self.item.is_museo,
-                            observaciones: self.item.observaciones,
-                            fecha: self.formatDate(self.item.fecha)
-                        };
-                        console.log(new_res);
+                        console.log(data);
 
-                        odoo.create('tours.clientes.reservar.futuras', new_res).then(
+                        odoo.create('tours.clientes.reservar.futuras', data).then(
                             function (value2) {
                                 console.log(value2);
                                 if (!value2) {
                                     self.presentAlert('Falla', 'Error al Guardar, intente nuevamente');
                                 }
                                 self.cargar = false;
-                                self.viewCtrl.dismiss(new_res)
+                                self.viewCtrl.dismiss(data)
                             },
                             function () {
-                                self.presentAlert('Falla', 'Error al Guardar, intente nuevamente');
+                                self.apilar(data, 'create',  null)
                             }
                         );
 
                     } else {
 
-                        var old_res = {
-                            name: self.id_cliente,
-                            //                            tour_id: self.tour_id[0],
-                            total_personas: parseInt(self.item.personas_pago) + parseInt(self.item.personas_all_in) + parseInt(self.item.personas_terceros), //calculado
-                            //                            guia_id: self.guia_id,
-                            //                            padrino: self.id_padrino,
-                            email: self.id_email,
-                            telefono: self.item.telefono, nombre_hotel: self.item.nombre_hotel,
-                            personas_terceros: self.item.personas_terceros,
-                            personas_all_in: self.item.personas_all_in,
-                            personas_pago: self.item.personas_pago, abonor_rublo: self.item.abonor_rublo,
-                            abono_euros: self.item.abono_euros, abono_dolar: self.item.abono_dolar,
-                            pay_pal: self.item.pay_pal,
-                            tarjeta: self.item.tarjeta, asistencia: self.item.asistencia,
-                            observaciones: self.item.observaciones
-                        };
 
-                        //                        odoo.write('tours.clientes.middle', self.item.id, old_res).then(
-                        //                            function (value2) {
-                        //                                console.log(value2);
-                        //                                if (!value2) {
-                        //                                    self.presentAlert('Falla', 'Error al Guardar, intente nuevamente');
-                        //                                }
-                        //                                self.cargar = false;
-                        //                                self.viewCtrl.dismiss(null);
-                        //                            },
-                        //                            function () {
-                        //                                self.presentAlert('Falla', 'Error al Guardar, intente nuevamente');
-                        //                            }
-                        //                        );
+                        console.log(self.item.id)
+                        console.log(data)
+                        odoo.write('tours.clientes.reservar.futuras', self.item.id, data).then(
+                            function (value2) {
+                                console.log(value2);
+                                if (!value2) {
+                                    self.presentAlert('Falla', 'Error al Guardar, intente nuevamente');
+                                }
+                                self.cargar = false;
+                                self.viewCtrl.dismiss(null);
+                            },
+                            function () {
+                                self.apilar(data, 'write',  self.item.id)
+                            }
+                        );
                     }
 
                 },
                 function () {
-                    
+                  if (self.nueva) {
+                        self.apilar(data, 'create',  null)
+
+                    }else{
+                        self.apilar(data, 'write',  self.item.id)
+                    }
                 }
             );
         });
     }
-    
+
     apilar(dato, operacion, id) {
 
         var self = this
@@ -311,7 +306,7 @@ export class BuscarTourPage {
                 self.storage.set('offline', pila)
             }
         })
-    }   
+    }
 
     presentAlert(titulo, texto) {
         const alert = this.alertCtrl.create({

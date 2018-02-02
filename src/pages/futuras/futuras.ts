@@ -11,9 +11,12 @@ export class FuturasPage {
 
     futuras;
     editable = false;
-
+    tour_id;
+    guia_id;
     constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController) {
         this.futuras = this.navParams.data.futuras;
+        this.tour_id = this.navParams.data.tour_id;
+        this.guia_id = this.navParams.data.id;
     }
 
     ionViewDidLoad() {
@@ -22,18 +25,18 @@ export class FuturasPage {
     ejecute(item) {
         console.log(item);
         //        this.navCtrl.push(ResDetailPage)
-        let profileModal = this.modalCtrl.create(BuscarTourPage, {item: item});
+        let profileModal = this.modalCtrl.create(BuscarTourPage, {item: item, guia_id:this.guia_id});
         profileModal.present();
 
     }
-    
-    addFuturas(){ 
+
+    addFuturas() { 
         //, {item:null, tour_id:this.tour_id, guia_id:this.guia_id}
-        let profileModal = this.modalCtrl.create(BuscarTourPage);
+        let profileModal = this.modalCtrl.create(BuscarTourPage, {item:null, guia_id:this.guia_id});
         profileModal.onDidDismiss(data => {
-//            if (data != null) {
-//                this.reservas.push(data);
-//            }
+            //            if (data != null) {
+            //                this.reservas.push(data);
+            //            }
         });
         profileModal.present();
     }

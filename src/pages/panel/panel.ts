@@ -30,7 +30,7 @@ export class PanelPage {
 
 //            console.log('-----x-----');
             console.log(conexion);
-            if (conexion.is_guia) {
+            if (conexion.is_guia || conexion.is_promotor) {
 // console.log(conexion.is_guia);
                 self.pages = [
                    

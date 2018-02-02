@@ -15,17 +15,18 @@ export class ListPage {
     mensaje = '';
     //toursgratissanpetersburgo@gmail.com
     //IaozaK9yYncv0CdSMUux
-    conexion = {tipo_a: '', grupos_id: [], bd: 'Tour_Gratis_Rusia', username: '', password: '', is_guia: false, is_chofer: false, is_promotor: false};
+    conexion = {tipo_a: '', grupos_id: [], bd: 'Tour_Gratis_Rusia_Test', username: '', password: '', is_guia: false, is_chofer: false, is_promotor: false};
     constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage, public alertCtrl: AlertController) {
 
         var borrar = this.navParams.get('borrar');
         //        this.storage.get('conexion').then((conexion) => {
         //            console.log(conexion); 
         //        });
-        //this.storage.remove('conexion');
+        this.storage.remove('conexion');
         if (borrar == true) {
             this.cargar = false;
             this.storage.remove('conexion');
+            this.storage.remove('offline')
         } else {
 
             this.conectarApp(false);
