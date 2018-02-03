@@ -10,13 +10,14 @@ import {ListPage} from '../pages/list/list';
 export class MyApp {
     rootPage: any = ListPage;
 
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
-    platform.ready().then(() => {
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {   
+    this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
-      statusBar.styleDefault();
-      splashScreen.hide();
-      statusBar.overlaysWebView(false);
+      this.statusBar.styleDefault();
+      this.splashScreen.hide();
+      this.statusBar.overlaysWebView(false);      
+      this.statusBar.show();
     });
   }
 }
