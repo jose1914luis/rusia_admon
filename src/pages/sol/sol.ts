@@ -29,8 +29,9 @@ export class SolPage {
         this.items = null;
 
         this.storage.get('solicitudes').then((solicitudes) => {
+            console.log(solicitudes);
             if (solicitudes != null) {
-                self.items = solicitudes
+                self.items = solicitudes;
                 self.cargar = false;
             } else {
                 self.cargarConDatos();

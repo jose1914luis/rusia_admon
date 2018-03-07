@@ -18,10 +18,17 @@ export class CiudadPage {
 
     }
     refresh() {
-        this.ionViewDidLoad();
+        this.cargarConDatos();
     }
     ionViewDidLoad() {
-        this.cargarConDatos();
+        this.storage.get('ciudad_tmp').then((ciudad_tmp) => {
+            if(ciudad_tmp != null){
+                this.cargarSinDatos();
+            }else{
+                this.cargarConDatos();
+            }
+        })
+        
     }
 
     cargarConDatos() {
@@ -71,6 +78,7 @@ export class CiudadPage {
                                     }
                                     console.log(companies);
                                     self.storage.set('companies', companies)
+                                    self.storage.set('ciudad_tmp', 1)
                                     self.items = companies
                                     self.cargar = false
 

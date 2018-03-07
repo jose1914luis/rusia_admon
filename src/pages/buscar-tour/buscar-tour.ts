@@ -102,11 +102,16 @@ export class BuscarTourPage {
     onKeyTour(e) {
                 console.log(e);
         if (this.buscarTour.length > 0) {
+            console.log('entro en el key ');
             this.visible_list_tour = true;
             this.tours = [];
             for (var key in this.tours2) {
-                if (String(this.tours2[key].name).toLowerCase().includes(this.buscarTour)) {
-                    console.log(this.tours2[key].name);
+                //console.log(this.tours2[key].name);
+                //console.log('INSTR ' + this.buscarTour.toLowerCase())
+                //console.log('condicion' + String(this.tours2[key].name).toLowerCase().includes(this.buscarTour.toLowerCase()))
+                if (String(this.tours2[key].name).toLowerCase().includes(this.buscarTour.toLowerCase())) {
+                    //console.log('entro en el if');
+                    //console.log(this.tours2[key].name);
                     this.tours.push(this.tours2[key]);
                 }
             }
@@ -144,7 +149,7 @@ export class BuscarTourPage {
             this.visible_list = true;
             this.clientes = [];
             for (var key in this.clientes2) {
-                if (String(this.clientes2[key].name).toLowerCase().includes(this.buscarCliente)) {
+                if (String(this.clientes2[key].name).toLowerCase().includes(this.buscarCliente.toLowerCase())) {
                     //                console.log(this.tours2[key].name);
                     this.clientes.push(this.clientes2[key]);
                 }
@@ -176,7 +181,7 @@ export class BuscarTourPage {
             this.visible_list_email = true;
             this.email = [];
             for (var key in this.email2) {
-                if (String(this.email2[key].name).toLowerCase().includes(this.buscarEmail)) {
+                if (String(this.email2[key].name).toLowerCase().includes(this.buscarEmail.toLowerCase())) {
                     //                console.log(this.tours2[key].name);
                     this.email.push(this.email2[key]);
                 }

@@ -129,8 +129,14 @@ var AsignarPage = /** @class */ (function () {
                                 self.storage.set('guia', self.events);
                                 self.cargar = false;
                                 self.calendar.eventSource = self.events;
-                                odoo.search_read('tours.clientes', [['id', '!=', 0]], ['name', 'telefono', 'nombre_hotel', 'email', 'is_padrino', 'active_email', 'pago_tarjeta', 'padre', 'observaciones']).then(function (clientes) {
+                                odoo.search_read('tours.clientes', [['id', '!=', 0]], ['name', 'ilike', 'email', 'telefono', 'nombre_hotel',
+                                    'active_email', 'is_padrino', 'pago_tarjeta', 'padre', 'observaciones']).then(function (clientes) {
                                     console.log(clientes);
+                                    for (var key_1 in clientes) {
+                                        clientes[key_1].visible = true;
+                                        clientes[key_1].middle = [];
+                                        //ids.push(clientes[key].id)
+                                    }
                                     self.storage.set('clientes', clientes); //<--Todos los clientes Clientes  
                                     self.storage.get('conexion').then(function (val_p) {
                                         console.log('muestre val_p 2');
@@ -148,6 +154,7 @@ var AsignarPage = /** @class */ (function () {
                                         }
                                         odoo.search_read('tours.companies', consulta, ['name', 'administrador']).then(function (companies) {
                                             console.log(companies);
+                                            self.storage.remove('ciudad_tmp');
                                             self.storage.set('companies', companies); //<--- Todas las Ciudades
                                             var ban = true;
                                             for (var key = 0; companies.length > key; key++) {
@@ -202,8 +209,13 @@ var AsignarPage = /** @class */ (function () {
         self.events = [];
         this.storage.get('guia').then(function (guia) {
             if (guia != null) {
+                for (var key in guia) {
+                    guia[key].startTime = new Date(guia[key].startTime);
+                    guia[key].endTime = new Date(guia[key].endTime);
+                    self.events.push(guia[key]);
+                }
                 self.cargar = false;
-                self.calendar.eventSource = guia;
+                self.calendar.eventSource = self.events;
             }
             else {
                 self.cargarConDatos();

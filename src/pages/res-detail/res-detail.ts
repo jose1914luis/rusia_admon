@@ -92,7 +92,7 @@ export class ResDetailPage {
             this.visible_list_padrino = true;
             this.padrino = [];
             for (var key in this.padrino2) {
-                if (String(this.padrino2[key].name).toLowerCase().includes(this.buscarPadrino)) {
+                if (String(this.padrino2[key].name).toLowerCase().includes(this.buscarPadrino.toLowerCase())) {
                     //                console.log(this.tours2[key].name);
                     this.padrino.push(this.padrino2[key]);
                 }

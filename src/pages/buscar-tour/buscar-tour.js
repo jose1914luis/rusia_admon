@@ -103,10 +103,15 @@ var BuscarTourPage = /** @class */ (function () {
     BuscarTourPage.prototype.onKeyTour = function (e) {
         console.log(e);
         if (this.buscarTour.length > 0) {
+            console.log('entro en el key ');
             this.visible_list_tour = true;
             this.tours = [];
             for (var key in this.tours2) {
+                console.log(this.tours2[key].name);
+                console.log('INSTR' + String(this.tours2[key].name).toLowerCase());
+                console.log('condicion' + String(this.tours2[key].name).toLowerCase().includes(this.buscarTour));
                 if (String(this.tours2[key].name).toLowerCase().includes(this.buscarTour)) {
+                    console.log('entro en el if');
                     console.log(this.tours2[key].name);
                     this.tours.push(this.tours2[key]);
                 }
@@ -126,8 +131,7 @@ var BuscarTourPage = /** @class */ (function () {
         }
     };
     BuscarTourPage.prototype.onCancelTour = function (e) {
-        self.
-            console.log(e);
+        console.log(e);
         this.visible_list_tour = false;
     };
     BuscarTourPage.prototype.selectTour = function (valor) {

@@ -125,12 +125,12 @@ export class ClientesPage {
         this.cargar = true;
         this.storage.get('clientes').then((clientes) => {
             if (clientes != null) {
-                console.log('entra directo')
+                console.log('clientes')
                 self.items = clientes
                 self.cargar = false;
             } else {
 
-
+                console.log('cargo sin datos');
                 self.cargarConDatos();
             }
         })

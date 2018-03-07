@@ -161,9 +161,16 @@ export class AsignarPage {
                                                 self.cargar = false;
                                                 self.calendar.eventSource = self.events;
                                                 odoo.search_read('tours.clientes', [['id', '!=', 0]],
-                                                    ['name', 'telefono', 'nombre_hotel', 'email', 'is_padrino', 'active_email', 'pago_tarjeta', 'padre', 'observaciones']).then(
+                                                    ['name', 'ilike', 'email', 'telefono', 'nombre_hotel',
+                                                        'active_email', 'is_padrino', 'pago_tarjeta', 'padre', 'observaciones']).then(
                                                     function (clientes) {
                                                         console.log(clientes)
+                                                        for (let key in clientes) {
+
+                                                            clientes[key].visible = true;
+                                                            clientes[key].middle = [];
+                                                            //ids.push(clientes[key].id)
+                                                        }
                                                         self.storage.set('clientes', clientes);//<--Todos los clientes Clientes  
                                                         self.storage.get('conexion').then((val_p) => {
                                                             console.log('muestre val_p 2')
@@ -183,6 +190,7 @@ export class AsignarPage {
                                                                 odoo.search_read('tours.companies', consulta, ['name', 'administrador']).then(
                                                                     function (companies) {
                                                                         console.log(companies);
+                                                                        self.storage.remove('ciudad_tmp')
                                                                         self.storage.set('companies', companies); //<--- Todas las Ciudades
                                                                         var ban = true;
 
@@ -265,9 +273,16 @@ export class AsignarPage {
         self.events = [];
         this.storage.get('guia').then((guia) => {
             if (guia != null) {
+
+                for (var key in guia) {
+                    guia[key].startTime = new Date(guia[key].startTime);
+                    guia[key].endTime = new Date(guia[key].endTime);
+                    self.events.push(guia[key]);
+                }
                 
                 self.cargar = false;
-                self.calendar.eventSource = guia;
+
+                self.calendar.eventSource = self.events;
             } else {
                 self.cargarConDatos();
             }

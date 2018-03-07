@@ -37,7 +37,8 @@ var SalarioPage = /** @class */ (function () {
                     self.storage.set('generales', generales);
                     self.cargar = false;
                 }, function () {
-                    self.cargarSinDatos();
+                    self.presentAlert('Falla', 'Imposible Cargar Datos.');
+                    self.cargar = false;
                 });
             }, function () {
                 self.presentAlert('Falla', 'Imposible Cargar Datos.');

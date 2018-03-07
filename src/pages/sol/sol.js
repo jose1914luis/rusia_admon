@@ -27,6 +27,7 @@ var SolPage = /** @class */ (function () {
         var self = this;
         this.items = null;
         this.storage.get('solicitudes').then(function (solicitudes) {
+            console.log(solicitudes);
             if (solicitudes != null) {
                 self.items = solicitudes;
                 self.cargar = false;

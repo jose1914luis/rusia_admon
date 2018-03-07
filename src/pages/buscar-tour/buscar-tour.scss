@@ -1,3 +1,38 @@
 page-buscar-tour {
 
 }
+.autocomplete {
+	width: 100%;
+
+	ion-searchbar {
+		padding: 1px !important;
+	}
+        .searchbar-search-icon { display:none; width:0; height:0; }
+        .searchbar-md .searchbar-input {
+            padding: 0px 0px !important;
+            font-size: 14px;
+        }
+	ion-list {
+		position: absolute;
+		width: inherit;
+		overflow-y: hidden;
+		max-height: 200%;
+		z-index: 999;
+
+		ion-item {
+                        padding-left: 0px;                         
+                        font-size: 14px;
+			img {
+				max-height: 2.5rem;
+				width: auto;
+				margin: auto;
+				display: block;
+			}
+		}
+
+		ion-item:hover {
+			cursor: pointer;
+			background: #f1f1f1
+		}
+	}
+}

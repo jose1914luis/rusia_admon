@@ -21,10 +21,18 @@ var CiudadPage = /** @class */ (function () {
         this.cargar = true;
     }
     CiudadPage.prototype.refresh = function () {
-        this.ionViewDidLoad();
+        this.cargarConDatos();
     };
     CiudadPage.prototype.ionViewDidLoad = function () {
-        this.cargarConDatos();
+        var _this = this;
+        this.storage.get('ciudad_tmp').then(function (ciudad_tmp) {
+            if (ciudad_tmp != null) {
+                _this.cargarSinDatos();
+            }
+            else {
+                _this.cargarConDatos();
+            }
+        });
     };
     CiudadPage.prototype.cargarConDatos = function () {
         var self = this;
@@ -69,6 +77,7 @@ var CiudadPage = /** @class */ (function () {
                         }
                         console.log(companies);
                         self.storage.set('companies', companies);
+                        self.storage.set('ciudad_tmp', 1);
                         self.items = companies;
                         self.cargar = false;
                     }, function () {
