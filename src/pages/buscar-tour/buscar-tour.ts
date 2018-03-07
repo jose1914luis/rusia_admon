@@ -70,6 +70,7 @@ export class BuscarTourPage {
         var self = this;
         this.storage.get('tours').then((tours) => {
             self.tours = tours;
+            console.log(tours)
             self.tours2 = tours;
         });
 
@@ -99,7 +100,7 @@ export class BuscarTourPage {
     }
 
     onKeyTour(e) {
-        //        console.log(e);
+                console.log(e);
         if (this.buscarTour.length > 0) {
             this.visible_list_tour = true;
             this.tours = [];
@@ -126,8 +127,7 @@ export class BuscarTourPage {
     }
 
     onCancelTour(e) {
-        self.
-            console.log(e);
+        console.log(e);
         this.visible_list_tour = false;
     }
 

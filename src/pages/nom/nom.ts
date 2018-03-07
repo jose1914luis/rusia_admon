@@ -22,7 +22,7 @@ export class NomPage {
 
     ionViewDidLoad() {
 
-        this.cargarConDatos();
+        this.cargarSinDatos();
 
     }
 
@@ -86,19 +86,22 @@ export class NomPage {
                                     self.cargar = false;
                                 },
                                 function () {
-                                    self.cargarSinDatos()
+                                    self.presentAlert('Falla', 'Imposible Cargar Datos.');
+                                    self.cargar = false;
                                 }
                                 );
                         },
                         function () {
-                            self.cargarSinDatos()
+                            self.presentAlert('Falla', 'Imposible Cargar Datos.');
+                            self.cargar = false;
 
                         }
                         );
 
                 },
                 function () {
-                    self.cargarSinDatos()
+                    self.presentAlert('Falla', 'Imposible Cargar Datos.');
+                    self.cargar = false;
                 }
             );
         });
@@ -113,7 +116,7 @@ export class NomPage {
                 self.items = nomina;
                 self.cargar = false;
             } else {
-                self.presentAlert('Falla', 'Imposible Cargar Datos.');
+                self.cargarConDatos();
             }
         });
     }
@@ -133,7 +136,7 @@ export class NomPage {
     }
 
     refresh() {
-        this.ionViewDidLoad();
+        this.cargarConDatos();
     }
 
     buscar() {

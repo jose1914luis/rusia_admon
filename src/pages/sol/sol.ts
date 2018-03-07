@@ -19,7 +19,7 @@ export class SolPage {
 
     ionViewDidLoad() {
 
-        this.cargarConDatos();
+        this.cargarSinDatos();
     }
 
     cargarSinDatos() {
@@ -31,8 +31,9 @@ export class SolPage {
         this.storage.get('solicitudes').then((solicitudes) => {
             if (solicitudes != null) {
                 self.items = solicitudes
+                self.cargar = false;
             } else {
-                self.presentAlert('Falla', 'Imposible Cargar Datos');
+                self.cargarConDatos();
             }
         });
     }
@@ -80,19 +81,22 @@ export class SolPage {
                                     self.cargar = false;
                                 },
                                 function () {
-                                    self.cargarSinDatos();
+                                    self.presentAlert('Falla', 'Imposible Cargar Datos');
+                                    self.cargar = false;
                                 }
                                 );
 
                         },
                         function () {
-                            self.cargarSinDatos();
+                            self.presentAlert('Falla', 'Imposible Cargar Datos');
+                            self.cargar = false;
                         }
                         );
 
                 },
                 function () {
-                    self.cargarSinDatos();
+                    self.presentAlert('Falla', 'Imposible Cargar Datos');
+                    self.cargar = false;
                 }
             );
         });
@@ -146,7 +150,7 @@ export class SolPage {
 
     }
     refresh() {
-        this.ionViewDidLoad();
+        this.cargarConDatos();
     }
 
 }

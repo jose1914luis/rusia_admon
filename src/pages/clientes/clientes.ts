@@ -45,7 +45,7 @@ export class ClientesPage {
     }
 
     refresh() {
-        this.ionViewDidLoad();
+        this.cargarConDatos();
     }
 
     nuevo() {
@@ -62,7 +62,7 @@ export class ClientesPage {
 
     ionViewDidLoad() {
 
-        this.cargarConDatos();
+        this.cargarSinDatos();
     }
 
     cargarConDatos() {
@@ -100,18 +100,21 @@ export class ClientesPage {
                                     self.cargar = false;
                                 },
                                 function () {
-                                    self.cargarSinDatos()
+                                    self.presentAlert('Falla', 'Imposible Cargar Datos.');
+                                    self.cargar = false;
                                 }
                                 );
                         },
                         function () {
-                            self.cargarSinDatos()
+                            self.presentAlert('Falla', 'Imposible Cargar Datos.');
+                            self.cargar = false;
                         }
                         )
 
                 },
                 function () {
-                    self.cargarSinDatos()
+                    self.presentAlert('Falla', 'Imposible Cargar Datos.');
+                    self.cargar = false;
                 }
             );
         });
@@ -122,11 +125,13 @@ export class ClientesPage {
         this.cargar = true;
         this.storage.get('clientes').then((clientes) => {
             if (clientes != null) {
+                console.log('entra directo')
                 self.items = clientes
                 self.cargar = false;
             } else {
 
-                self.presentAlert('Falla', 'Imposible Cargar Datos.');
+
+                self.cargarConDatos();
             }
         })
     }

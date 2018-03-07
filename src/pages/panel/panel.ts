@@ -62,7 +62,7 @@ export class PanelPage {
             }
         });
 
-
+        
     }
 
     openPage(page) {

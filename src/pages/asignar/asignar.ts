@@ -35,7 +35,7 @@ export class AsignarPage {
 
     ionViewDidLoad() {
 
-        this.cargarConDatos();
+        this.cargarSinDatos();
     }
 
     cargarConDatos() {
@@ -50,7 +50,7 @@ export class AsignarPage {
             }
 
             var odoo = new OdooApi(global.url, conexion.bd);
-            self.cargar = true;
+            self.cargar = true; 
             self.calendar.eventSource = [];
             self.events = [];
             odoo.login(conexion.username, conexion.password).then(
@@ -157,32 +157,100 @@ export class AsignarPage {
                                                 }
                                                 console.log(futuras);
                                                 console.log(guia);
-                                                self.storage.set('guia', guia);
+                                                self.storage.set('guia', self.events);
                                                 self.cargar = false;
                                                 self.calendar.eventSource = self.events;
+                                                odoo.search_read('tours.clientes', [['id', '!=', 0]],
+                                                    ['name', 'telefono', 'nombre_hotel', 'email', 'is_padrino', 'active_email', 'pago_tarjeta', 'padre', 'observaciones']).then(
+                                                    function (clientes) {
+                                                        console.log(clientes)
+                                                        self.storage.set('clientes', clientes);//<--Todos los clientes Clientes  
+                                                        self.storage.get('conexion').then((val_p) => {
+                                                            console.log('muestre val_p 2')
+                                                            console.log(val_p)
+                                                        })
+                                                        odoo.search_read('tours.clientes.email', [['id', '!=', 0]],
+                                                            ['name']).then(
+                                                            function (email) {
+                                                                console.log(email)
+                                                                self.storage.set('email', email);//<--Todos los emails
+                                                                var consulta;
+                                                                if (conexion.tipo_a == 'xciudad') {
+                                                                    consulta = [['administrador', '=', uid]]
+                                                                } else {
+                                                                    consulta = [['id', '!=', '0']]
+                                                                }
+                                                                odoo.search_read('tours.companies', consulta, ['name', 'administrador']).then(
+                                                                    function (companies) {
+                                                                        console.log(companies);
+                                                                        self.storage.set('companies', companies); //<--- Todas las Ciudades
+                                                                        var ban = true;
 
+                                                                        for (var key = 0; companies.length > key; key++) {
+
+                                                                            (function (key) {
+                                                                                console.log(key);
+
+                                                                                if (companies[key].administrador[0] == uid) {
+                                                                                    odoo.search_read('res.users', [['city_id', '=', companies[key].name[0]], ['active', '=', 1]],
+                                                                                        ['name']).then(
+                                                                                        function (guias) {
+                                                                                            console.log(guias)
+                                                                                            self.storage.set('guias', guias);//<--Guias si los hay                      
+                                                                                        }, function () {
+                                                                                            self.presentAlert('Falla', 'Imposible Cargar Informacion.');
+                                                                                            self.cargar = false;
+                                                                                        }
+                                                                                        )
+                                                                                }
+                                                                            })(key);
+                                                                        }
+
+                                                                        
+
+                                                                    },
+                                                                    function () {
+                                                                        self.presentAlert('Falla', 'Imposible Cargar Informacion.');
+                                                                        self.cargar = false;
+                                                                    });
+
+                                                            }, function () {
+                                                                self.presentAlert('Falla', 'Imposible Cargar Informacion.');
+                                                                self.cargar = false;
+                                                            }
+                                                            )
+
+                                                    }, function () {
+                                                        self.presentAlert('Falla', 'Imposible Cargar Informacion.');
+                                                        self.cargar = false;
+                                                    }
+                                                    )
 
                                             },
                                             function () {
-                                                self.cargarSinDatos();
+                                                self.presentAlert('Falla', 'Imposible Cargar Informacion.');
+                                                self.cargar = false;
                                             }
                                             );
 
                                     },
                                     function () {
-                                        self.cargarSinDatos();
+                                        self.presentAlert('Falla', 'Imposible Cargar Informacion.');
+                                        self.cargar = false;
                                     }
                                     );
                             },
                             function () {
-                                self.cargarSinDatos();
+                                self.presentAlert('Falla', 'Imposible Cargar Informacion.');
+                                self.cargar = false;
                             }
                             )
                     })
 
                 },
                 function () {
-                    self.cargarSinDatos();
+                    self.presentAlert('Falla', 'Imposible Cargar Informacion.');
+                    self.cargar = false;
                 }
             );
         });
@@ -197,49 +265,11 @@ export class AsignarPage {
         self.events = [];
         this.storage.get('guia').then((guia) => {
             if (guia != null) {
-                for (var key in guia) {
-                    var dateStart = new Date(String((guia[key]).date_begin).replace(' ', 'T'));
-                    var dateEnd = new Date(String((guia[key]).date_end).replace(' ', 'T'));
-                    var startTime = new Date(dateStart.getFullYear(), dateStart.getMonth(), dateStart.getDate(), dateStart.getHours(), dateStart.getMinutes());
-                    var endTime = new Date(dateEnd.getFullYear(), dateEnd.getMonth(), dateEnd.getDate(), dateEnd.getHours(), dateEnd.getMinutes());
-                    guia[key].startTime = startTime;
-                    guia[key].endTime = endTime;
-                    guia[key].title = (guia[key]).tour_id[1];
-                    guia[key].allDay = false;
-                    guia[key].reservas = [];
-                    guia[key].guia_id = guia[key].guia_id ? guia[key].guia_id : '';
-                    guia[key].observaciones = guia[key].observaciones ? guia[key].observaciones : '';
-                }
-                this.storage.get('middle').then((middle) => {
-                    if (middle != null) {
-                        console.log(middle);
-                        for (var key in guia) {
-
-                            for (var key2 in middle) {
-                                //guia[key].reserva_id = middle[key2].id;
-                                if (guia[key].tour_id[0] == middle[key2].tour_id[0]) {
-                                    guia[key].reservas.push(middle[key2]);
-                                    //console.log(middle[key2]);
-                                }
-                            }
-                            self.events.push(guia[key]);
-
-                        }
-                        self.cargar = false;
-
-
-                        //                                            console.log(guia);
-                        self.calendar.eventSource = self.events;
-
-                    } else {
-                        self.presentAlert('Falla', 'Imposible Cargar Informacion.');
-                        self.cargar = false;
-                    }
-
-                });
-            } else {
-                self.presentAlert('Falla', 'Imposible Cargar Informacion.');
+                
                 self.cargar = false;
+                self.calendar.eventSource = guia;
+            } else {
+                self.cargarConDatos();
             }
         });
 
@@ -254,7 +284,7 @@ export class AsignarPage {
         alert.present();
     }
     refresh() {
-        this.ionViewDidLoad();
+        this.cargarConDatos();
     }
 
     onViewTitleChanged(title) {

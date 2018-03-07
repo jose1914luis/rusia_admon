@@ -20,7 +20,7 @@ export class PagoPage {
 
     ionViewDidLoad() {
 
-        this.cargarConDatos()
+        this.cargarSinDatos()
     }
 
     cargarConDatos() {
@@ -46,13 +46,15 @@ export class PagoPage {
                             self.cargar = false;
                         },
                         function () {
-                            self.cargarSinDatos();
+                            self.presentAlert('Falla', 'Imposible Cargar Datos.');
+                            self.cargar = false;
                         }
                         );
 
                 },
                 function () {
-                    self.cargarSinDatos();
+                    self.presentAlert('Falla', 'Imposible Cargar Datos.');
+                    self.cargar = false;
                 }
             );
 
@@ -68,7 +70,7 @@ export class PagoPage {
 
             if (pago != null) {
 
-                console.log(pago);
+                //console.log(pago);
                 self.items = pago
 
                 for (let key in self.items) {
@@ -77,7 +79,8 @@ export class PagoPage {
                 }
                 self.cargar = false;
             } else {
-                self.presentAlert('Falla', 'Imposible Cargar Datos.');
+                
+                self.cargarConDatos();
             }
         });
     }
@@ -106,7 +109,7 @@ export class PagoPage {
     }
 
     refresh() {
-        this.ionViewDidLoad();
+        this.cargarConDatos();
     }
     
     

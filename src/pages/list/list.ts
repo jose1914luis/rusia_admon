@@ -1,3 +1,4 @@
+
 import {NavController, NavParams, AlertController} from 'ionic-angular';
 import {Component} from '@angular/core';
 import {Storage} from '@ionic/storage';
@@ -15,18 +16,20 @@ export class ListPage {
     mensaje = '';
     //toursgratissanpetersburgo@gmail.com
     //IaozaK9yYncv0CdSMUux
-    conexion = {tipo_a: '', grupos_id: [], bd: 'Tour_Gratis_Rusia_Test', username: '', password: '', is_guia: false, is_chofer: false, is_promotor: false};
+    conexion = {tipo_a: '', grupos_id: [], bd: 'Tour_Gratis_Rusia', username: 'toursgratissanpetersburgo@gmail.com', password: 'IaozaK9yYncv0CdSMUux', is_guia: false, is_chofer: false, is_promotor: false};
     constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage, public alertCtrl: AlertController) {
 
         var borrar = this.navParams.get('borrar');
         //        this.storage.get('conexion').then((conexion) => {
         //            console.log(conexion); 
         //        });
-        this.storage.remove('conexion');
+        //this.storage.remove('conexion');
+        //this.storage.remove('guia');
         if (borrar == true) {
             this.cargar = false;
             this.storage.remove('conexion');
-            this.storage.remove('offline')
+            this.storage.remove('offline');
+            this.storage.remove('guia');
         } else {
 
             this.conectarApp(false);
@@ -48,7 +51,8 @@ export class ListPage {
         var self = this;
         
         this.storage.get('conexion').then((val) => {
-
+            //console.log('muestre val 1')
+            console.log(val)
             if (val == null) {//no existe datos         
                 self.cargar = false;
                 //                    con = self.CONEXION;
@@ -95,64 +99,11 @@ export class ListPage {
 
                                     //self.conexion.grupos_id  = ;
                                     self.storage.set('conexion', self.conexion);//<--- datos del usuario
-                                    odoo.search_read('tours.clientes', [['id', '!=', 0]],
-                                        ['name', 'telefono', 'nombre_hotel', 'email', 'is_padrino', 'active_email', 'pago_tarjeta', 'padre', 'observaciones']).then(
-                                        function (clientes) {
-                                            console.log(clientes)
-                                            self.storage.set('clientes', clientes);//<--Todos los clientes Clientes  
-
-                                            odoo.search_read('tours.clientes.email', [['id', '!=', 0]],
-                                                ['name']).then(
-                                                function (email) {
-                                                    console.log(email)
-                                                    self.storage.set('email', email);//<--Todos los emails
-                                                    var consulta;
-                                                    if (self.conexion.tipo_a == 'xciudad') {
-                                                        consulta = [['administrador', '=', uid]]
-                                                    } else {
-                                                        consulta = [['id', '!=', '0']]
-                                                    }
-                                                    odoo.search_read('tours.companies', consulta, ['name', 'administrador']).then(
-                                                        function (companies) {
-                                                            console.log(companies);
-                                                            self.storage.set('companies', companies); //<--- Todas las Ciudades
-                                                            var ban = true;
-
-                                                            for (var key = 0; companies.length > key; key++) {
-
-                                                                (function (key) {
-                                                                    console.log(key);
-
-                                                                    if (companies[key].administrador[0] == uid) {
-                                                                        odoo.search_read('res.users', [['city_id', '=', companies[key].name[0]], ['active', '=', 1]],
-                                                                            ['name']).then(
-                                                                            function (guias) {
-                                                                                console.log(guias)
-                                                                                self.storage.set('guias', guias);//<--Guias si los hay                      
-                                                                            }, function () {
-                                                                                self.loginSinDatos();
-                                                                            }
-                                                                            )
-                                                                    }
-                                                                })(key);
-                                                            }
-
-                                                            self.navCtrl.setRoot(PanelPage);
-
-                                                        },
-                                                        function () {
-                                                            self.loginSinDatos();
-                                                        });
-
-                                                }, function () {
-                                                    self.loginSinDatos();
-                                                }
-                                                )
-
-                                        }, function () {
-                                            self.loginSinDatos();
-                                        }
-                                        )
+                                    /*self.storage.get('conexion').then((val_p) => {
+                                        console.log('muestre val_p 1')
+                                        console.log(val_p)
+                                    })*/
+                                    self.navCtrl.setRoot(PanelPage);
 
 
                                 },

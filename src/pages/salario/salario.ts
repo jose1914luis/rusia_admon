@@ -21,7 +21,7 @@ export class SalarioPage {
 
     ionViewDidLoad() {
 
-        this.cargarConDatos();
+        this.cargarSinDatos();
     }
 
     cargarConDatos() {
@@ -42,13 +42,16 @@ export class SalarioPage {
                             self.cargar = false;
                         },
                         function () {
-                            self.cargarSinDatos();
+                            self.presentAlert('Falla', 'Imposible Cargar Datos.');
+                            self.cargar = false;
                         }
                         );
 
                 },
                 function () {
-                    self.cargarSinDatos();
+                    self.presentAlert('Falla', 'Imposible Cargar Datos.');
+                    self.cargar = false;
+                    
                 }
             );
         });
@@ -66,7 +69,7 @@ export class SalarioPage {
                 self.items = generales
                 self.cargar = false;
             } else {
-                self.presentAlert('Falla', 'Imposible Cargar Datos.');
+                self.cargarConDatos();
             }
 
         });
@@ -111,7 +114,7 @@ export class SalarioPage {
     }
 
     refresh() {
-        this.ionViewDidLoad();
+        this.cargarConDatos();
     }
 }
 
