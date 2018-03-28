@@ -34,7 +34,6 @@ import { ResDetailPage } from '../pages/res-detail/res-detail';
 import { NomFilterPage } from '../pages/nom-filter/nom-filter';
 import { GastosFilterPage } from '../pages/gastos-filter/gastos-filter';
 import { BuscarTourPage } from '../pages/buscar-tour/buscar-tour';
-import { BuscarGuiaPage } from '../pages/buscar-guia/buscar-guia';
 import { IonicStorageModule } from '@ionic/storage';
 import { Network } from '@ionic-native/network';
 import { NgCalendarModule } from 'ionic2-calendar';
@@ -71,7 +70,6 @@ var AppModule = /** @class */ (function () {
                 NomFilterPage,
                 PanelPage,
                 GastosFilterPage,
-                BuscarGuiaPage,
                 BuscarTourPage
             ],
             imports: [
@@ -107,7 +105,6 @@ var AppModule = /** @class */ (function () {
                 NomFilterPage,
                 PanelPage,
                 GastosFilterPage,
-                BuscarGuiaPage,
                 BuscarTourPage
             ],
             providers: [

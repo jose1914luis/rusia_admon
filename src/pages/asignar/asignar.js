@@ -73,8 +73,8 @@ var AsignarPage = /** @class */ (function () {
                             })(key);
                         }
                     }
-                    odoo.search_read('tours.guia', [['date_begin', '>=', '2017-12-01']], ['id', 'guia_id', 'tour_id', 'date_begin',
-                        'date_end', 'personas_terceros', 'personas_all_in', 'total_personas', 'total_rublo', 'total_dolar', 'total_euro', 'total_rublo_res',
+                    odoo.search_read('tours.guia', [['date_begin', '>=', '2017-12-01']], //, '', 'date_begin',
+                    ['id', 'guia_id', 'tour_id', 'date_begin', 'date_end', 'personas_terceros', 'personas_all_in', 'total_personas', 'total_rublo', 'total_dolar', 'total_euro', 'total_rublo_res',
                         'total_euro_res', 'total_dolar_res', 'pay_pal', 'tarjeta', 'is_free', 'personas_pago', 'is_private', 'entregado', 'state', 'observaciones']).then(function (guia) {
                         console.log(guia);
                         var ids = [];
@@ -157,14 +157,18 @@ var AsignarPage = /** @class */ (function () {
                                             self.storage.remove('ciudad_tmp');
                                             self.storage.set('companies', companies); //<--- Todas las Ciudades
                                             var ban = true;
+                                            console.log('ACA SE CONSULTA LAS GUIAS');
                                             for (var key = 0; companies.length > key; key++) {
                                                 (function (key) {
                                                     console.log(key);
                                                     if (companies[key].administrador[0] == uid) {
+                                                        console.log('companies[key].administrador[0]' + );
+                                                        companies[key].administrador[0] == uid;
                                                         odoo.search_read('res.users', [['city_id', '=', companies[key].name[0]], ['active', '=', 1]], ['name']).then(function (guias) {
                                                             console.log(guias);
                                                             self.storage.set('guias', guias); //<--Guias si los hay                      
                                                         }, function () {
+                                                            console.log('1');
                                                             self.presentAlert('Falla', 'Imposible Cargar Informacion.');
                                                             self.cargar = false;
                                                         });
@@ -172,31 +176,38 @@ var AsignarPage = /** @class */ (function () {
                                                 })(key);
                                             }
                                         }, function () {
+                                            console.log('2');
                                             self.presentAlert('Falla', 'Imposible Cargar Informacion.');
                                             self.cargar = false;
                                         });
                                     }, function () {
+                                        console.log('3');
                                         self.presentAlert('Falla', 'Imposible Cargar Informacion.');
                                         self.cargar = false;
                                     });
                                 }, function () {
+                                    console.log('4');
                                     self.presentAlert('Falla', 'Imposible Cargar Informacion.');
                                     self.cargar = false;
                                 });
                             }, function () {
+                                console.log('5');
                                 self.presentAlert('Falla', 'Imposible Cargar Informacion.');
                                 self.cargar = false;
                             });
                         }, function () {
+                            console.log('6');
                             self.presentAlert('Falla', 'Imposible Cargar Informacion.');
                             self.cargar = false;
                         });
                     }, function () {
+                        console.log('7');
                         self.presentAlert('Falla', 'Imposible Cargar Informacion.');
                         self.cargar = false;
                     });
                 });
             }, function () {
+                console.log('8');
                 self.presentAlert('Falla', 'Imposible Cargar Informacion.');
                 self.cargar = false;
             });

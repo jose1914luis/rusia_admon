@@ -15,8 +15,10 @@ export class TabsPage {
     tab2Root;
     tab3Root;
     item;
+    item2 = {item:null};
     constructor(public navCtrl: NavController, public navParams: NavParams) {
         this.item = this.navParams.get('item');
+        this.item2.item  = this.navParams.get('item');
         console.log(this.item);
         this.tab1Root = AsignarDetailPage;
         this.tab2Root = ReservasPage;

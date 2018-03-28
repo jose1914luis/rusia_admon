@@ -31,7 +31,6 @@ import {ResDetailPage} from '../pages/res-detail/res-detail';
 import {NomFilterPage} from '../pages/nom-filter/nom-filter';
 import {GastosFilterPage} from '../pages/gastos-filter/gastos-filter';
 import {BuscarTourPage} from '../pages/buscar-tour/buscar-tour';
-import {BuscarGuiaPage} from '../pages/buscar-guia/buscar-guia';
 
 
 import {IonicStorageModule} from '@ionic/storage';
@@ -67,7 +66,6 @@ import {SplashScreen} from '@ionic-native/splash-screen';
         NomFilterPage,
         PanelPage,
         GastosFilterPage,
-        BuscarGuiaPage,
         BuscarTourPage
     ],
     imports: [
@@ -103,7 +101,6 @@ import {SplashScreen} from '@ionic-native/splash-screen';
         NomFilterPage,
         PanelPage,
         GastosFilterPage,
-        BuscarGuiaPage,
         BuscarTourPage
     ],
     providers: [

@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {Storage} from '@ionic/storage';
-import {NavController, NavParams, AlertController} from 'ionic-angular';
+import {NavController, NavParams, AlertController, ModalController} from 'ionic-angular';
 import {global} from '../../components/credenciales/credenciales';
 import {TabsPage} from '../../pages/tabs/tabs';
 import {AsignarDetailPage} from '../../pages/asignar-detail/asignar-detail';
@@ -29,7 +29,7 @@ export class AsignarPage {
     tours;
     events = [];
     add = true;
-    constructor(public alertCtrl: AlertController, public navCtrl: NavController, public navParams: NavParams, private storage: Storage) {
+    constructor(public alertCtrl: AlertController, public navCtrl: NavController, public navParams: NavParams, private storage: Storage, public modalCtrl: ModalController) {
 
     }
 
@@ -38,7 +38,7 @@ export class AsignarPage {
         this.cargarSinDatos();
     }
 
-    cargarConDatos() {
+    cargarConDatos(cargarAdd) {
         var self = this;
         this.storage.get('conexion').then((conexion) => {
 
@@ -91,9 +91,9 @@ export class AsignarPage {
 
                         }
 
-                        odoo.search_read('tours.guia', [['date_begin', '>=', '2017-12-01']], ['id', 'guia_id', 'tour_id', 'date_begin',
-                            'date_end', 'personas_terceros', 'personas_all_in', 'total_personas', 'total_rublo', 'total_dolar', 'total_euro', 'total_rublo_res'
-                            , 'total_euro_res', 'total_dolar_res', 'pay_pal', 'tarjeta', 'is_free', 'personas_pago', 'is_private', 'entregado', 'state', 'observaciones']).then(
+                        odoo.search_read('tours.guia', [['date_begin', '>=', '2017-12-01']], //, '', 'date_begin',
+                            ['id', 'guia_id', 'tour_id', 'date_begin', 'date_end', 'personas_terceros', 'personas_all_in', 'total_personas', 'total_rublo', 'total_dolar', 'total_euro', 'total_rublo_res',
+                            'total_euro_res', 'total_dolar_res', 'pay_pal', 'tarjeta', 'is_free', 'personas_pago', 'is_private', 'entregado', 'state', 'observaciones']).then(
                             function (guia) {
 
                                 console.log(guia);
@@ -106,6 +106,7 @@ export class AsignarPage {
                                     guia[key].startTime = startTime;
                                     guia[key].endTime = endTime;
                                     guia[key].title = (guia[key]).tour_id[1];
+                                    //guia[key].title = 'cualquiercosa';
                                     guia[key].allDay = false;
                                     guia[key].reservas = [];
                                     guia[key].futuras = [];
@@ -115,7 +116,13 @@ export class AsignarPage {
 
                                     ids.push(guia[key].id);
                                 }
+                                
+                            
+                                //self.calendar.eventSource = guia;
+
                                 console.log(ids)
+
+
                                 odoo.search_read('tours.clientes.middle', [['guia_id', 'in', ids]],
                                     ['tour_id', 'guia_id', 'name', 'telefono', 'email',
                                         'nombre_hotel', 'padrino', 'personas_terceros', 'personas_all_in', 'total_personas', 'personas_pago',
@@ -158,9 +165,12 @@ export class AsignarPage {
                                                 console.log(futuras);
                                                 console.log(guia);
                                                 self.storage.set('guia', self.events);
-                                                self.cargar = false;
+                                                //self.cargar = false;
                                                 self.calendar.eventSource = self.events;
-                                                odoo.search_read('tours.clientes', [['id', '!=', 0]],
+
+                                                if(cargarAdd){
+
+                                                    odoo.search_read('tours.clientes', [['id', '!=', 0]],
                                                     ['name', 'ilike', 'email', 'telefono', 'nombre_hotel',
                                                         'active_email', 'is_padrino', 'pago_tarjeta', 'padre', 'observaciones']).then(
                                                     function (clientes) {
@@ -193,23 +203,35 @@ export class AsignarPage {
                                                                         self.storage.remove('ciudad_tmp')
                                                                         self.storage.set('companies', companies); //<--- Todas las Ciudades
                                                                         var ban = true;
-
+                                                                        console.log('ACA SE CONSULTA LAS GUIAS');
+                                                                        if(companies.length == 0){
+                                                                            self.cargar = false;
+                                                                        }
                                                                         for (var key = 0; companies.length > key; key++) {
 
                                                                             (function (key) {
                                                                                 console.log(key);
 
-                                                                                if (companies[key].administrador[0] == uid) {
-                                                                                    odoo.search_read('res.users', [['city_id', '=', companies[key].name[0]], ['active', '=', 1]],
+                                                                                if (companies[key].administrador[0] == 7) {
+                                                                                //if (companies[key].administrador[0] == uid) {
+                                                                                    console.log('companies[key].administrador[0]:' + companies[key].administrador[0] + ' uid:' +uid)
+                                                                                    //console.log('uid')
+                                                                                    //companies[key].administrador[0] == uid
+                                                                                    odoo.search_read('res.users', [['city_id', '=', 1], ['active', '=', 1]],
+//                                                                                    odoo.search_read('res.users', [['city_id', '=', companies[key].name[0]], ['active', '=', 1]],
                                                                                         ['name']).then(
                                                                                         function (guias) {
                                                                                             console.log(guias)
                                                                                             self.storage.set('guias', guias);//<--Guias si los hay                      
                                                                                         }, function () {
+                                                                                            console.log('1');
                                                                                             self.presentAlert('Falla', 'Imposible Cargar Informacion.');
                                                                                             self.cargar = false;
                                                                                         }
                                                                                         )
+                                                                                }
+                                                                                if(companies.length-1 == key){
+                                                                                    self.cargar = false;
                                                                                 }
                                                                             })(key);
                                                                         }
@@ -218,24 +240,31 @@ export class AsignarPage {
 
                                                                     },
                                                                     function () {
+                                                                        console.log('2');
                                                                         self.presentAlert('Falla', 'Imposible Cargar Informacion.');
                                                                         self.cargar = false;
                                                                     });
 
                                                             }, function () {
+                                                                console.log('3');
                                                                 self.presentAlert('Falla', 'Imposible Cargar Informacion.');
                                                                 self.cargar = false;
                                                             }
                                                             )
 
                                                     }, function () {
+                                                        console.log('4');
                                                         self.presentAlert('Falla', 'Imposible Cargar Informacion.');
                                                         self.cargar = false;
                                                     }
                                                     )
+                                                }else{
+                                                    self.cargar = false;
+                                                }                                                
 
                                             },
                                             function () {
+                                                console.log('5');
                                                 self.presentAlert('Falla', 'Imposible Cargar Informacion.');
                                                 self.cargar = false;
                                             }
@@ -243,12 +272,13 @@ export class AsignarPage {
 
                                     },
                                     function () {
+                                        console.log('6');
                                         self.presentAlert('Falla', 'Imposible Cargar Informacion.');
                                         self.cargar = false;
                                     }
-                                    );
-                            },
+                                    );                            },
                             function () {
+                                console.log('7');
                                 self.presentAlert('Falla', 'Imposible Cargar Informacion.');
                                 self.cargar = false;
                             }
@@ -257,6 +287,7 @@ export class AsignarPage {
 
                 },
                 function () {
+                    console.log('8');
                     self.presentAlert('Falla', 'Imposible Cargar Informacion.');
                     self.cargar = false;
                 }
@@ -267,6 +298,7 @@ export class AsignarPage {
 
     cargarSinDatos() {
 
+        console.log('cargarSinDatos')
         var self = this;
         self.cargar = true;
         self.calendar.eventSource = [];
@@ -284,7 +316,7 @@ export class AsignarPage {
 
                 self.calendar.eventSource = self.events;
             } else {
-                self.cargarConDatos();
+                self.cargarConDatos(true);
             }
         });
 
@@ -299,7 +331,7 @@ export class AsignarPage {
         alert.present();
     }
     refresh() {
-        this.cargarConDatos();
+        this.cargarConDatos(true);
     }
 
     onViewTitleChanged(title) {
@@ -316,8 +348,37 @@ export class AsignarPage {
     onEventSelected(evt) {
         console.log(evt);
         this.navCtrl.push(TabsPage, {item: evt});
+
     }
     addEvent() {
-        this.navCtrl.push(AsignarDetailPage, false);
+        //this.navCtrl.push(AsignarDetailPage, false);
+        var self = this;
+        let profileModal = this.modalCtrl.create(AsignarDetailPage, {item:false});
+        profileModal.onDidDismiss(data => {
+            if (data != null) {
+                if (data.nuevo == true) {
+
+                    /*var dateStart = new Date(String((data).date_begin).replace(' ', 'T'));
+                    var dateEnd = new Date(String((data).date_end).replace(' ', 'T'));
+                    var startTime = new Date(dateStart.getFullYear(), dateStart.getMonth(), dateStart.getDate(), dateStart.getHours(), dateStart.getMinutes());
+                    var endTime = new Date(dateEnd.getFullYear(), dateEnd.getMonth(), dateEnd.getDate(), dateEnd.getHours(), dateEnd.getMinutes());
+                    data.startTime = startTime;
+                    data.endTime = endTime;
+
+                    console.log(data);
+                    
+                    self.storage.get('guia').then((guia) => {
+
+                        guia.push(data);
+                        self.storage.set('guia', guia).then((val) => {
+                            self.cargarSinDatos();    
+                        })
+
+                    });          */          
+                    self.cargarConDatos(false);
+                }
+            }
+        });
+        profileModal.present();
     }
 }

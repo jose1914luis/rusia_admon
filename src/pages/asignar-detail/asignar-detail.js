@@ -11,8 +11,6 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, AlertController, ModalController, ViewController } from 'ionic-angular';
 import { global } from '../../components/credenciales/credenciales';
 import { Storage } from '@ionic/storage';
-import { BuscarTourPage } from '../../pages/buscar-tour/buscar-tour';
-import { BuscarGuiaPage } from '../../pages/buscar-guia/buscar-guia';
 var AsignarDetailPage = /** @class */ (function () {
     function AsignarDetailPage(viewCtrl, modalCtrl, navCtrl, storage, navParams, alertCtrl) {
         this.viewCtrl = viewCtrl;
@@ -27,14 +25,25 @@ var AsignarDetailPage = /** @class */ (function () {
         this.nuevo = false;
         this.tem_date_end = new Date().toISOString();
         this.tem_date_begin = new Date().toISOString();
+        this.tours = [];
+        this.tours2 = [];
+        this.buscarTour = '';
+        this.visible_list_tour = false;
+        this.id_tour = 0;
+        this.guias = [];
+        this.guias2 = [];
+        this.buscarGuia = '';
+        this.visible_list_guia = false;
+        this.id_guia = 0;
         console.log(this.navParams.data);
         if (this.navParams.data != false) {
             this.item = this.navParams.data;
-            if (this.item.guia_id != "")
-                this.item.guia_id.name = this.item.guia_id[1];
-            this.item.tour_id.name = this.item.tour_id[1];
-            this.no_editable = this.item.no_editable;
-            //            this.tem_date_begin = this.item
+            this.buscarTour = this.item.tour_id[1];
+            this.id_tour = this.item.tour_id[0];
+            if (this.item.guia_id != "") {
+                this.buscarGuia = this.item.guia_id[1];
+                this.id_guia = this.item.guia_id[0];
+            }
         }
         else {
             this.editable = true;
@@ -58,15 +67,26 @@ var AsignarDetailPage = /** @class */ (function () {
                 observaciones: ''
             };
         }
+        var self = this;
+        this.storage.get('tours').then(function (tours) {
+            self.tours = tours;
+            console.log(tours);
+            self.tours2 = tours;
+        });
+        this.storage.get('guias').then(function (guias) {
+            console.log(guias);
+            self.guias = guias;
+            self.guias2 = guias;
+        });
     }
     AsignarDetailPage.prototype.ionViewDidLoad = function () {
         console.log('ionViewDidLoad AsignarDetailPage');
     };
-    AsignarDetailPage.prototype.buscarGuia = function () {
+    /*buscarGuia() {
         if (this.editable && this.no_editable) {
             var self = this;
-            var profileModal = this.modalCtrl.create(BuscarGuiaPage);
-            profileModal.onDidDismiss(function (data) {
+            let profileModal = this.modalCtrl.create(BuscarGuiaPage);
+            profileModal.onDidDismiss(data => {
                 if (data != null) {
                     self.item.guia_id = data;
                     console.log(self.item.guia_id.name);
@@ -74,12 +94,74 @@ var AsignarDetailPage = /** @class */ (function () {
             });
             profileModal.present();
         }
+    }*/
+    AsignarDetailPage.prototype.onCancelTour = function (e) {
+        console.log(e);
+        this.visible_list_tour = false;
     };
-    AsignarDetailPage.prototype.buscarTour = function () {
+    AsignarDetailPage.prototype.selectTour = function (valor) {
+        this.visible_list_tour = false;
+        this.buscarTour = valor.name;
+        this.id_tour = valor.id;
+    };
+    AsignarDetailPage.prototype.onKeyTour = function (e) {
+        console.log(e);
+        if (this.buscarTour.length > 0) {
+            console.log('entro en el key ');
+            this.visible_list_tour = true;
+            this.tours = [];
+            for (var key in this.tours2) {
+                //console.log(this.tours2[key].name);
+                //console.log('INSTR ' + this.buscarTour.toLowerCase())
+                //console.log('condicion' + String(this.tours2[key].name).toLowerCase().includes(this.buscarTour.toLowerCase()))
+                if (String(this.tours2[key].name).toLowerCase().includes(this.buscarTour.toLowerCase())) {
+                    //console.log('entro en el if');
+                    //console.log(this.tours2[key].name);
+                    this.tours.push(this.tours2[key]);
+                }
+            }
+        }
+        else {
+            this.visible_list_tour = false;
+        }
+        //this.buscar.
+    };
+    AsignarDetailPage.prototype.onCancelGuia = function (e) {
+        console.log(e);
+        this.visible_list_guia = false;
+    };
+    AsignarDetailPage.prototype.selectGuia = function (valor) {
+        this.visible_list_guia = false;
+        this.buscarGuia = valor.name;
+        this.id_guia = valor.id;
+    };
+    AsignarDetailPage.prototype.onKeyGuia = function (e) {
+        console.log(e);
+        if (this.buscarGuia.length > 0) {
+            console.log('entro en el key ');
+            this.visible_list_guia = true;
+            this.guias = [];
+            for (var key in this.guias2) {
+                //console.log(this.guias2[key].name);
+                //console.log('INSTR ' + this.buscarGuia.toLowerCase())
+                //console.log('condicion' + String(this.guias2[key].name).toLowerCase().includes(this.buscarGuia.toLowerCase()))
+                if (String(this.guias2[key].name).toLowerCase().includes(this.buscarGuia.toLowerCase())) {
+                    //console.log('entro en el if');
+                    //console.log(this.guias2[key].name);
+                    this.guias.push(this.guias2[key]);
+                }
+            }
+        }
+        else {
+            this.visible_list_guia = false;
+        }
+        //this.buscar.
+    };
+    /*buscarTour() {
         if (this.editable && this.no_editable) {
             var self = this;
-            var profileModal = this.modalCtrl.create(BuscarTourPage);
-            profileModal.onDidDismiss(function (data) {
+            let profileModal = this.modalCtrl.create(BuscarTourPage);
+            profileModal.onDidDismiss(data => {
                 if (data != null) {
                     self.item.tour_id = data;
                     console.log(self.item.tour_id.name);
@@ -87,7 +169,7 @@ var AsignarDetailPage = /** @class */ (function () {
             });
             profileModal.present();
         }
-    };
+    }*/
     AsignarDetailPage.prototype.editar = function () {
         if (!this.editable) {
             this.editable = true;
@@ -100,6 +182,7 @@ var AsignarDetailPage = /** @class */ (function () {
         this.cargar = true;
         var self = this;
         var dato = {
+            guia_id: self.id_guia, tour_id: self.id_tour,
             date_begin: self.item.date_begin, date_end: self.item.date_end, personas_pago: self.item.personas_pago,
             personas_terceros: self.item.personas_terceros, personas_all_in: self.item.personas_all_in,
             total_personas: self.item.total_personas, total_rublo: self.item.total_rublo, total_euro: self.item.total_euro,
@@ -109,16 +192,30 @@ var AsignarDetailPage = /** @class */ (function () {
         this.storage.get('conexion').then(function (conexion) {
             var odoo = new OdooApi(global.url, conexion.bd);
             odoo.login(conexion.username, conexion.password).then(function (uid) {
-                odoo.write('tours.guia', self.item.id, dato).then(function (value2) {
-                    console.log(value2);
-                    if (!value2) {
-                        self.presentAlert('Falla', 'Error al Guardar, intente nuevamente');
-                    }
-                    self.cargar = false;
-                    //                            self.viewCtrl.dismiss();
-                }, function () {
-                    self.apilar(dato, self.item.id);
-                });
+                if (this.nuevo) {
+                    odoo.create('tours.guia', dato).then(function (value2) {
+                        console.log(value2);
+                        if (!value2) {
+                            self.presentAlert('Falla', 'Error al Guardar, intente nuevamente');
+                        }
+                        self.cargar = false;
+                        //                            self.viewCtrl.dismiss();
+                    }, function () {
+                        self.apilar(dato, self.item.id);
+                    });
+                }
+                else {
+                    odoo.write('tours.guia', self.item.id, dato).then(function (value2) {
+                        console.log(value2);
+                        if (!value2) {
+                            self.presentAlert('Falla', 'Error al Guardar, intente nuevamente');
+                        }
+                        self.cargar = false;
+                        //                            self.viewCtrl.dismiss();
+                    }, function () {
+                        self.apilar(dato, self.item.id);
+                    });
+                }
             }, function () {
                 self.apilar(dato, self.item.id);
             });

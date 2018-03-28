@@ -22,7 +22,8 @@ var ListPage = /** @class */ (function () {
         this.mensaje = '';
         //toursgratissanpetersburgo@gmail.com
         //IaozaK9yYncv0CdSMUux
-        this.conexion = { tipo_a: '', grupos_id: [], bd: 'Tour_Gratis_Rusia', username: 'toursgratissanpetersburgo@gmail.com', password: 'IaozaK9yYncv0CdSMUux', is_guia: false, is_chofer: false, is_promotor: false };
+        //conexion = {tipo_a: '', grupos_id: [], bd: 'Tour_Gratis_Rusia_Test', username: 'tourgratisrusia@gmail.com', password: '123456', is_guia: false, is_chofer: false, is_promotor: false};
+        this.conexion = { tipo_a: '', grupos_id: [], bd: 'Tour_Gratis_Rusia', username: 'fernandez.bermudez.jonatan@gmail.com', password: '1jLl0bFcMR8TU4UI2Kh9', is_guia: false, is_chofer: false, is_promotor: false };
         var borrar = this.navParams.get('borrar');
         //        this.storage.get('conexion').then((conexion) => {
         //            console.log(conexion); 
