@@ -12,36 +12,13 @@ declare var OdooApi: any;
 })
 export class ClientesPage {
 
-    items;
+    private items = [];
+    private clientes;
     cargar = true;
+    private max = 10;
 
     constructor(public modalCtrl: ModalController, public navCtrl: NavController, private storage: Storage, public navParams: NavParams, public alertCtrl: AlertController) {
 
-        //        var self = this;
-        //        this.cargar = true;
-        //        self.items = [];
-        //        this.storage.get('conexion').then((conexion) => {
-        //            var odoo = new OdooApi(global.url, conexion.bd);
-        //            odoo.login(conexion.username, conexion.password).then(
-        //                function (uid) {
-        ////                    odoo.delete('tours.clientes.email', [396],
-        //                    odoo.search_read('tours.clientes.email', [['id', '!=', '0']],
-        //                        ['email']).then(
-        //                        function (clientes) {
-        //                            console.log(clientes);
-        //
-        //                        },
-        //                        function () {
-        ////                            self.cargarSinDatos()
-        //                        }
-        //                        );
-        //
-        //                },
-        //                function () {
-        ////                    self.cargarSinDatos()
-        //                }
-        //            );
-        //        });
     }
 
     refresh() {
@@ -94,9 +71,9 @@ export class ClientesPage {
                                         clientes[key].middle = [];
                                         ids.push(clientes[key].id)
                                     }
-                                    console.log(clientes);
-                                    self.items = clientes
-                                    self.storage.set('clientes', self.items)
+                                    self.clientes = clientes;
+                                    self.initItems();
+                                    self.storage.set('clientes', self.clientes)
                                     self.cargar = false;
                                 },
                                 function () {
@@ -125,8 +102,17 @@ export class ClientesPage {
         this.cargar = true;
         this.storage.get('clientes').then((clientes) => {
             if (clientes != null) {
-                console.log('clientes')
-                self.items = clientes
+                //console.log('clientes')
+                //console.log(JSON.stringify(clientes));
+                //var con = 10;
+                
+
+                /*for (var key in clientes) {
+                    console.log(JSON.stringify(clientes[key]));
+                    self.items.push(clientes[key]);
+                }*/
+                self.clientes = clientes;
+                self.initItems();
                 self.cargar = false;
             } else {
 
@@ -135,6 +121,30 @@ export class ClientesPage {
             }
         })
     }
+
+    private initItems(){
+
+        for (var i = 0; i <  this.clientes.length && i < this.max; i++) {
+            this.items.push(this.clientes[i]);
+        }
+    }
+
+    doInfinite(infiniteScroll) {
+        console.log('Begin async operation');
+
+        var self = this;
+        setTimeout(() => {
+          
+          let i;
+          for (i = self.max; i < this.clientes.length && i < this.max + 10 ; i++) {
+            this.items.push(this.clientes[i]);
+          }
+          this.max = i;
+
+          console.log('Async operation has ended');
+          infiniteScroll.complete();
+        }, 500);
+      }
 
     presentAlert(titulo, texto) {
         const alert = this.alertCtrl.create({

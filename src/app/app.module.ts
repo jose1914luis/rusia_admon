@@ -17,6 +17,8 @@ import {SincPage} from '../pages/sinc/sinc';
 import {ReservasPage} from '../pages/reservas/reservas';
 import {FuturasPage} from '../pages/futuras/futuras';
 import {PanelPage} from '../pages/panel/panel';
+import {CaledarioGenPage } from '../pages/caledario-gen/caledario-gen';
+import {CaledarioGuiaPage } from '../pages/caledario-guia/caledario-guia';
 
 import {TabsPage} from '../pages/tabs/tabs';
 
@@ -38,6 +40,7 @@ import {Network} from '@ionic-native/network';
 import {NgCalendarModule} from 'ionic2-calendar';
 import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
+import { UtilProvider } from '../providers/util/util';
 
 @NgModule({
     declarations: [
@@ -66,7 +69,9 @@ import {SplashScreen} from '@ionic-native/splash-screen';
         NomFilterPage,
         PanelPage,
         GastosFilterPage,
-        BuscarTourPage
+        BuscarTourPage,
+        CaledarioGenPage,
+        CaledarioGuiaPage
     ],
     imports: [
         BrowserModule,
@@ -78,6 +83,7 @@ import {SplashScreen} from '@ionic-native/splash-screen';
     entryComponents: [
         MyApp,
         HomePage,
+        CaledarioGenPage,
         ListPage,
         AsignarPage,
         CiudadPage,
@@ -101,14 +107,16 @@ import {SplashScreen} from '@ionic-native/splash-screen';
         NomFilterPage,
         PanelPage,
         GastosFilterPage,
-        BuscarTourPage
+        BuscarTourPage,
+        CaledarioGuiaPage
     ],
     providers: [
         Clipboard,
         Network,
         StatusBar,
         SplashScreen,
-        {provide: ErrorHandler, useClass: IonicErrorHandler}
+        {provide: ErrorHandler, useClass: IonicErrorHandler},
+    UtilProvider
     ]
 })
 export class AppModule {}

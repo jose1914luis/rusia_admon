@@ -87,6 +87,8 @@
     <plugin name="cordova-clipboard" spec="^1.1.1" />
     <allow-navigation href="http://192.168.1.12:8100" />
     <plugin name="cordova-sqlite-storage" spec="^2.2.1" />
-    <engine name="android" spec="7.0.0" />
     <engine name="ios" spec="4.5.4" />
+    <engine name="android" spec="~7.0.0" />
+    <allow-navigation href="http://192.168.0.26:8100" />
+    <allow-navigation href="http://192.168.1.197:8100" />
 </widget>

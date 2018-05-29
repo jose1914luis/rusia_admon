@@ -12,6 +12,8 @@ import {NomPage} from '../../pages/nom/nom';
 import {PagoPage} from '../../pages/pago/pago';
 import {SalarioPage} from '../../pages/salario/salario';
 import {SolPage} from '../../pages/sol/sol';
+import {CaledarioGenPage } from '../../pages/caledario-gen/caledario-gen';
+import {CaledarioGuiaPage } from '../../pages/caledario-guia/caledario-guia';
 
 //@IonicPage()
 @Component({
@@ -22,7 +24,7 @@ export class PanelPage {
     @ViewChild(Nav) nav: Nav;
     pages: Array<{title: string, component: any}>;
 
-    rootPage: any = AsignarPage;
+    rootPage: any;
     constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage) {
 
         var self = this;
@@ -34,7 +36,9 @@ export class PanelPage {
 // console.log(conexion.is_guia);
                 self.pages = [
                    
-                    {title: 'Tours Asignados', component: AsignarPage},                   
+                    {title: 'Tours Asignados', component: AsignarPage},      
+                    {title: 'Calendario General', component: CaledarioGenPage},
+                    {title: 'Calendario Guía', component: CaledarioGuiaPage},             
                     {title: 'Nomina', component: NomPage},
                     {title: 'Pago Diario', component: PagoPage},
                     {title: 'Salir', component: ListPage}
@@ -44,6 +48,8 @@ export class PanelPage {
 
                 self.pages = [
                     {title: 'Tours Asignados', component: AsignarPage},
+                    {title: 'Calendario General', component: CaledarioGenPage},
+                    {title: 'Calendario Guía', component: CaledarioGuiaPage},
                     {title: 'Salir', component: ListPage}
                 ];
             } else {
@@ -51,6 +57,8 @@ export class PanelPage {
                 self.pages = [
                     {title: 'Ciudades', component: CiudadPage},
                     {title: 'Asignar Guía', component: AsignarPage},
+                    {title: 'Calendario General', component: CaledarioGenPage},
+                    {title: 'Calendario Guía', component: CaledarioGuiaPage},
                     {title: 'Clientes', component: ClientesPage},
                     {title: 'Solicitudes', component: SolPage},
                     {title: 'Nomina', component: NomPage},
@@ -60,6 +68,8 @@ export class PanelPage {
                     {title: 'Salir', component: ListPage}
                 ];
             }
+
+            self.rootPage = AsignarPage;
         });
 
         

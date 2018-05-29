@@ -18,7 +18,8 @@ export class ListPage {
     //IaozaK9yYncv0CdSMUux
     //conexion = {tipo_a: '', grupos_id: [], bd: 'Tour_Gratis_Rusia_Test', username: 'fernandez.bermudez.jonatan@gmail.com', password: '123456', is_guia: false, is_chofer: false, is_promotor: false};
     //conexion = {tipo_a: '', grupos_id: [], bd: 'Tour_Gratis_Rusia', username: 'fernandez.bermudez.jonatan@gmail.com', password: '1jLl0bFcMR8TU4UI2Kh9', is_guia: false, is_chofer: false, is_promotor: false};
-    conexion = {tipo_a: '', grupos_id: [], bd: 'Tour_Gratis_Rusia', username: '', password: '', is_guia: false, is_chofer: false, is_promotor: false};
+    conexion = {tipo_a: '', grupos_id: [], bd: 'Tour_Gratis_Rusia', username: 'toursgratissanpetersburgo@gmail.com', password: 'IaozaK9yYncv0CdSMUux', is_guia: false, is_chofer: false, is_promotor: false, url:''};
+    //conexion = {tipo_a: '', grupos_id: [], bd: 'Tour_Gratis_Rusia', username: '', password: '', is_guia: false, is_chofer: false, is_promotor: false};
     constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage, public alertCtrl: AlertController) {
 
         var borrar = this.navParams.get('borrar');
@@ -81,12 +82,13 @@ export class ListPage {
                             self.storage.set('tours', tours)//<--- lista de los tours 
                             odoo.read('res.users', [uid],
                                 ['name', 'email', 'city_id', 'is_guia', 'is_chofer', 'is_promotor', 'salario_ext', 'salario_min',
-                                    'active', 'groups_id']).then(
+                                    'active', 'groups_id', 'url']).then(
                                 function (users) {
-                                    console.log(users);
+                                    console.log(JSON.stringify(users));
                                     self.conexion.is_chofer = users[0].is_chofer;
                                     self.conexion.is_guia = users[0].is_guia;
                                     self.conexion.is_promotor = users[0].is_promotor;
+                                    self.conexion.url = users[0].url;
                                     if (!users[0].is_chofer && !users[0].is_guia && !users[0].is_promotor) {
                                         console.log('entro al filtro')
                                         for (let key in users[0].groups_id) {
