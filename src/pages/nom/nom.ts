@@ -13,8 +13,11 @@ declare var OdooApi: any;
 })
 export class NomPage {
 
-    items;
+    private items = [];
     cargar = true;
+    private nomina;
+    private max = 10;
+
     constructor(public modalCtrl: ModalController, private storage: Storage, public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController) {
 
 
@@ -79,10 +82,13 @@ export class NomPage {
                                             }
                                         }
                                     }
-                                    console.log(nomina);
-                                    self.items = nomina;
+                                    //console.log(nomina);
+                                    //self.items = nomina;
 
-                                    self.storage.set('nomina', self.items);
+                                    self.nomina = nomina;
+                                    self.initItems();
+                    
+                                    self.storage.set('nomina', self.nomina);
                                     self.cargar = false;
                                 },
                                 function () {
@@ -110,15 +116,44 @@ export class NomPage {
     cargarSinDatos() {
 
         var self = this;
+        self.cargar = true;
         this.storage.get('nomina').then((nomina) => {
 
             if (nomina != null) {
-                self.items = nomina;
+                //self.items = nomina;
+                //self.cargar = false;
+
+                self.nomina = nomina;
+                self.initItems();
                 self.cargar = false;
             } else {
                 self.cargarConDatos();
             }
         });
+    }
+
+    private initItems(){
+
+        for (var i = 0; i <  this.nomina.length && i < this.max; i++) {
+            this.items.push(this.nomina[i]);
+        }
+    }
+
+    doInfinite(infiniteScroll) {
+        console.log('Begin async operation');
+
+        var self = this;
+        setTimeout(() => {
+          
+          let i;
+          for (i = self.max; i < this.nomina.length && i < this.max + 10 ; i++) {
+            this.items.push(this.nomina[i]);
+          }
+          this.max = i;
+
+          console.log('Async operation has ended');
+          infiniteScroll.complete();
+        }, 500);
     }
 
     presentAlert(titulo, texto) {

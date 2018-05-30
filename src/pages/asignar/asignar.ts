@@ -126,14 +126,14 @@ export class AsignarPage {
                     //ids.push(clientes[key].id)
                 }
                 self.storage.set('clientes', clientes);//<--Todos los clientes Clientes  
-                self.storage.get('conexion').then((val_p) => {
-                    console.log('muestre val_p 2')
-                    console.log(val_p)
-                })
+                //self.storage.get('conexion').then((val_p) => {
+                    //console.log('muestre val_p 2')
+                    //console.log(val_p)
+                //})
                 self.odoo.search_read('tours.clientes.email', [['id', '!=', 0]],
                     ['name']).then(
                     function (email) {
-                        console.log(email)
+                        //console.log(email)
                         self.storage.set('email', email);//<--Todos los emails
                         var consulta;
                         if (conexion.tipo_a == 'xciudad') {
@@ -143,11 +143,11 @@ export class AsignarPage {
                         }
                         self.odoo.search_read('tours.companies', consulta, ['name', 'administrador']).then(
                             function (companies) {
-                                console.log(JSON.stringify(companies));
+                                //console.log(JSON.stringify(companies));
                                 self.storage.remove('ciudad_tmp')
                                 self.storage.set('companies', companies); //<--- Todas las Ciudades
                                 var ban = true;
-                                console.log('ACA SE CONSULTA LAS GUIAS');
+                                //console.log('ACA SE CONSULTA LAS GUIAS');
                                 if(companies.length == 0){
                                     self.cargar = false;
                                 }
@@ -158,7 +158,7 @@ export class AsignarPage {
 
                                         if (companies[key].administrador[0] == 7) {
                                         //if (companies[key].administrador[0] == uid) {
-                                            console.log('companies[key].administrador[0]:' + companies[key].administrador[0] + ' uid:' +uid)
+                                            //console.log('companies[key].administrador[0]:' + companies[key].administrador[0] + ' uid:' +uid)
                                             //console.log('uid')
                                             //companies[key].administrador[0] == uid
                                             self.odoo.search_read('res.users', [['city_id', '=', 1], ['active', '=', 1]],

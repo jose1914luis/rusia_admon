@@ -16,10 +16,10 @@ export class ListPage {
     mensaje = '';
     //toursgratissanpetersburgo@gmail.com
     //IaozaK9yYncv0CdSMUux
-    //conexion = {tipo_a: '', grupos_id: [], bd: 'Tour_Gratis_Rusia_Test', username: 'fernandez.bermudez.jonatan@gmail.com', password: '123456', is_guia: false, is_chofer: false, is_promotor: false};
+    //conexion = {tipo_a: '', grupos_id: [], bd: 'Tour_Gratis_Rusia', username: 'danielsubero@gmail.com', password: '123456', is_guia: false, is_chofer: false, is_promotor: false, url:""};
     //conexion = {tipo_a: '', grupos_id: [], bd: 'Tour_Gratis_Rusia', username: 'fernandez.bermudez.jonatan@gmail.com', password: '1jLl0bFcMR8TU4UI2Kh9', is_guia: false, is_chofer: false, is_promotor: false};
-    conexion = {tipo_a: '', grupos_id: [], bd: 'Tour_Gratis_Rusia', username: 'toursgratissanpetersburgo@gmail.com', password: 'IaozaK9yYncv0CdSMUux', is_guia: false, is_chofer: false, is_promotor: false, url:''};
-    //conexion = {tipo_a: '', grupos_id: [], bd: 'Tour_Gratis_Rusia', username: '', password: '', is_guia: false, is_chofer: false, is_promotor: false};
+    //conexion = {tipo_a: '', grupos_id: [], bd: 'Tour_Gratis_Rusia', username: 'toursgratissanpetersburgo@gmail.com', password: 'IaozaK9yYncv0CdSMUux', is_guia: false, is_chofer: false, is_promotor: false, url:''};
+    conexion = {tipo_a: '', grupos_id: [], bd: 'Tour_Gratis_Rusia', username: '', password: '', is_guia: false, is_chofer: false, is_promotor: false, url:''};
     constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage, public alertCtrl: AlertController) {
 
         var borrar = this.navParams.get('borrar');

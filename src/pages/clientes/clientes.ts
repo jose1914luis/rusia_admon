@@ -46,6 +46,7 @@ export class ClientesPage {
         var self = this;
         this.cargar = true;
         self.items = [];
+        self.max = 10;
         this.storage.get('conexion').then((conexion) => {
             var odoo = new OdooApi(global.url, conexion.bd);
             odoo.login(conexion.username, conexion.password).then(
@@ -144,7 +145,7 @@ export class ClientesPage {
           console.log('Async operation has ended');
           infiniteScroll.complete();
         }, 500);
-      }
+    }
 
     presentAlert(titulo, texto) {
         const alert = this.alertCtrl.create({
