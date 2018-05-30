@@ -33,7 +33,7 @@ export class NomPage {
         var self = this;
         this.storage.get('conexion').then((conexion) => {
             self.cargar = true;
-            self.items = null;
+            self.items = [];
             var odoo = new OdooApi(global.url, conexion.bd);
             odoo.login(conexion.username, conexion.password).then(
                 function (uid) {
